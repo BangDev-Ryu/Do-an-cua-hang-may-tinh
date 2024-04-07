@@ -1,5 +1,6 @@
 package gui;
 
+import gui.model.IconModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -53,11 +54,8 @@ public class LoginGUI extends JFrame implements MouseListener {
         lb_exit.setBackground(Color.decode("#FFFFFF"));
         lb_exit.setPreferredSize(new Dimension(30, 30));
         
-        ImageIcon icon = new ImageIcon(getClass().getResource("/img/close-1.png"));
-        Image img = icon.getImage();
-        Image newimg = img.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newimg);
-        lb_exit.setIcon(icon);
+        IconModel icon_exit = new IconModel(10, 10, "close-1.png");
+        lb_exit.setIcon(icon_exit.createIcon());
         
         lb_exit.addMouseListener(new MouseListener() {
             @Override
@@ -104,11 +102,8 @@ public class LoginGUI extends JFrame implements MouseListener {
         JLabel lb_icon_login = new JLabel("", JLabel.CENTER);
         lb_icon_login.setPreferredSize(new Dimension(110, 110));
         
-        ImageIcon icon = new ImageIcon(getClass().getResource("/img/user-circle-1.png"));
-        Image img = icon.getImage();
-        Image newimg = img.getScaledInstance(110, 110, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newimg);
-        lb_icon_login.setIcon(icon);
+        IconModel icon_user = new IconModel(110, 110, "user-circle-1.png");
+        lb_icon_login.setIcon(icon_user.createIcon());
         
         Font font_login = new Font("Bordeaux Roman Bold LET", Font.BOLD, 25);
         JLabel lb_text_login = new JLabel("LOGIN", JLabel.CENTER);
@@ -153,23 +148,20 @@ public class LoginGUI extends JFrame implements MouseListener {
         // set icon show
         this.tf_password.setLayout(null);
         lb_show = new JLabel("", JLabel.CENTER);
-        ImageIcon icon_show = new ImageIcon(getClass().getResource("/img/password-is-show.png"));
-        Image img_show = icon_show.getImage();
-        Image newimg_show = img_show.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        icon_show = new ImageIcon(newimg_show);
-        lb_show.setIcon(icon_show);
         lb_show.setOpaque(true);
         lb_show.setBackground(Color.decode("#FFFFFF"));
+        IconModel icon_show = new IconModel(20, 20, "password-is-show.png");
+        lb_show.setIcon(icon_show.createIcon());
+        
         
         // set icon hide 
         lb_hide = new JLabel("", JLabel.CENTER);
-        ImageIcon icon_hide = new ImageIcon(getClass().getResource("/img/password-is-hide.png"));
-        Image img_hide = icon_hide.getImage();
-        Image newimg_hide = img_hide.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        icon_hide = new ImageIcon(newimg_hide);
-        lb_hide.setIcon(icon_hide);
         lb_hide.setOpaque(true);
         lb_hide.setBackground(Color.decode("#FFFFFF"));
+
+        IconModel icon_hide = new IconModel(20, 20, "password-is-hide.png");
+        lb_hide.setIcon(icon_hide.createIcon());
+        
               
         this.lb_show.setBounds(225, 5, 20, 20);
         this.lb_hide.setBounds(225, 5, 20, 20);
