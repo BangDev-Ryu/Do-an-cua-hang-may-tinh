@@ -5,16 +5,16 @@ import javax.swing.ImageIcon;
 
 public class IconModel {
     private int width, height;
-    private String src_icon;
+    private String srcIcon;
     
     public IconModel(int w, int h, String s) {
         this.width = w;
         this.height = h;
-        this.src_icon = s;
+        this.srcIcon = s;
     }
     
     public ImageIcon createIcon() {
-        ImageIcon icon = new ImageIcon(getClass().getResource("/img/" + this.src_icon));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/img/" + this.srcIcon));
         Image img = icon.getImage();
         Image newimg = img.getScaledInstance(this.width, this.height, Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);

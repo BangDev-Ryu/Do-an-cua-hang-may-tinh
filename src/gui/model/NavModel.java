@@ -11,18 +11,18 @@ import javax.swing.JPanel;
 public class NavModel extends JPanel implements MouseListener {
     private int width, height;
     private JLabel icon, label;
-    private Color color_normal, color_hover;
+    private Color colorNormal, colorHover;
     private boolean active;
-    private String nav_name, nav_icon, nav_icon_hover;
+    private String navName, navIcon, navIconHover;
     
     public NavModel(String n, int w, int h, String icon, String icon_hover, Color normal, Color hover) {
-        this.nav_name = n;
+        this.navName = n;
         this.width = w;
         this.height = h;
-        this.nav_icon = icon;
-        this.nav_icon_hover = icon_hover;
-        this.color_normal = normal;
-        this.color_hover = hover;
+        this.navIcon = icon;
+        this.navIconHover = icon_hover;
+        this.colorNormal = normal;
+        this.colorHover = hover;
         this.init();
     }
     
@@ -31,14 +31,14 @@ public class NavModel extends JPanel implements MouseListener {
         Font font = new Font("Segoe UI",Font.BOLD,13);
         this.setPreferredSize(new Dimension(this.width, this.height));
         this.setLayout(null);
-        this.setBackground(this.color_normal);
+        this.setBackground(this.colorNormal);
         
         // khoi tao icon va label
         this.icon = new JLabel("", JLabel.CENTER);
-        this.label = new JLabel(this.nav_name);
+        this.label = new JLabel(this.navName);
         
         // thiet ke label icon
-        IconModel icon_model = new IconModel(20, 20, this.nav_icon);
+        IconModel icon_model = new IconModel(20, 20, this.navIcon);
         this.icon.setBounds(0, 0, 50, 50);
         this.icon.setIcon(icon_model.createIcon());
         
@@ -46,7 +46,7 @@ public class NavModel extends JPanel implements MouseListener {
         this.label.setBounds(60, 0, 150, 50);
         this.label.setFont(font);
         this.label.setForeground(Color.decode("#FFFFFF"));
-        this.label.setBackground(this.color_normal);
+        this.label.setBackground(this.colorNormal);
         
         this.add(icon);
         this.add(label);
@@ -66,17 +66,17 @@ public class NavModel extends JPanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        this.setBackground(this.color_hover);
-        this.label.setForeground(color_normal);
-        IconModel i = new IconModel(20, 20, this.nav_icon_hover);
+        this.setBackground(this.colorHover);
+        this.label.setForeground(colorNormal);
+        IconModel i = new IconModel(20, 20, this.navIconHover);
         this.icon.setIcon(i.createIcon());
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        this.setBackground(this.color_normal);
-        this.label.setForeground(color_hover);
-        IconModel i = new IconModel(20, 20, this.nav_icon);
+        this.setBackground(this.colorNormal);
+        this.label.setForeground(colorHover);
+        IconModel i = new IconModel(20, 20, this.navIcon);
         this.icon.setIcon(i.createIcon());
     }
 }

@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 public class MainGUI extends JFrame implements MouseListener {
     private int width = 1200, height = 700;
     private JPanel header, nav, main;
-    private ArrayList<String> nav_name = new ArrayList<>();
-    private ArrayList<NavModel> nav_model = new ArrayList<>(); 
+    private ArrayList<String> navName = new ArrayList<>();
+    private ArrayList<NavModel> navModel = new ArrayList<>(); 
     
     public MainGUI() {
         this.init();
@@ -32,10 +32,12 @@ public class MainGUI extends JFrame implements MouseListener {
         
         this.header = createHeader();
         this.nav = createNav();
+        this.main = new SanPhamGUI(1000, 670);
         
         this.setLayout(new BorderLayout());
         this.add(this.header, BorderLayout.NORTH);
         this.add(this.nav, BorderLayout.WEST);
+        this.add(this.main, BorderLayout.CENTER);
         
         this.setVisible(true);
     }
@@ -107,23 +109,23 @@ public class MainGUI extends JFrame implements MouseListener {
         pn_nav.add(lb_ava);
         
         // add menu
-        this.nav_name.add("Bán hàng:cart-white.png:cart-1.png");
-        this.nav_name.add("Sản phẩm:laptop-white.png:laptop-1.png");
-        this.nav_name.add("Nhân viên:employee-white.png:employee-1.png");
-        this.nav_name.add("Khách hàng:people-white.png:people-1.png");
-        this.nav_name.add("Nhập xuất:task-white.png:task-1.png");
-        this.nav_name.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
-        this.nav_name.add("Tài khoản:employee-white.png:employee-1.png");
+        this.navName.add("Bán hàng:cart-white.png:cart-1.png");
+        this.navName.add("Sản phẩm:laptop-white.png:laptop-1.png");
+        this.navName.add("Nhân viên:employee-white.png:employee-1.png");
+        this.navName.add("Khách hàng:people-white.png:people-1.png");
+        this.navName.add("Nhập xuất:task-white.png:task-1.png");
+        this.navName.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
+        this.navName.add("Tài khoản:employee-white.png:employee-1.png");
         
         
         // tao nav item menu
-        for (int i = 0; i < nav_name.size(); i++) {
-            String[] parts = nav_name.get(i).split(":");
-            nav_model.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], Color.decode("#006270"), Color.decode("#FFFFFF")));
-            nav_model.get(i).addMouseListener(this);
+        for (int i = 0; i < navName.size(); i++) {
+            String[] parts = navName.get(i).split(":");
+            navModel.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], Color.decode("#006270"), Color.decode("#FFFFFF")));
+            navModel.get(i).addMouseListener(this);
         }
         
-        for (NavModel obj : nav_model) {
+        for (NavModel obj : navModel) {
             pn_nav.add(obj);
         }
         

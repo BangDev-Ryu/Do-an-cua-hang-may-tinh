@@ -1,5 +1,7 @@
 package gui;
 
+import bus.UserBUS;
+import dto.UserDTO;
 import gui.model.IconModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,7 +9,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -22,6 +25,8 @@ public class LoginGUI extends JFrame implements MouseListener {
     private JLabel lb_error_noti;
     private JLabel lb_show;
     private JLabel lb_hide;
+    private MainGUI mainGUI;
+    private UserBUS userBUS = new UserBUS();
     
     public LoginGUI() {
         init();
@@ -199,8 +204,33 @@ public class LoginGUI extends JFrame implements MouseListener {
         this.btn_login.setBackground(Color.decode("#009394"));
         this.btn_login.setForeground(Color.decode("#FFFFFF"));
         
+        Font font = new Font("Bordeaux Roman Bold LET", Font.BOLD, 11);
         this.lb_error_noti = new JLabel("", JLabel.CENTER);
-        this.lb_error_noti.setPreferredSize(new Dimension(200, 30));
+        this.lb_error_noti.setFont(font);
+        this.lb_error_noti.setForeground(Color.red);
+        this.lb_error_noti.setPreferredSize(new Dimension(300, 30));
+        
+        Font font_btn = new Font("Bordeaux Roman Bold LET", Font.BOLD, 15);
+        this.btn_login.setFont(font_btn);
+        this.btn_login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (userBUS.getUserList() == null) {
+                    userBUS.list();
+                }
+                String username = tf_user.getText();
+                char[] password = tf_password.getPassword();
+                UserDTO user = userBUS.checkUser(username, password);
+                if (user == null) {
+                    lb_error_noti.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
+//                    JOptionPane.showMessageDialog(null, "Sai tên tài khoản hoặc mật khẩu");
+                    return;
+                }
+                mainGUI = new MainGUI();
+                dispose();
+            }
+        
+        });
         
         pn_footer.add(this.btn_login);
         pn_footer.add(this.lb_error_noti);
