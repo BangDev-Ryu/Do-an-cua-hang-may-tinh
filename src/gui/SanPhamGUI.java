@@ -1,10 +1,13 @@
 package gui;
 
+import bus.SanPhamBUS;
+import dto.SanPhamDTO;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -32,7 +35,7 @@ public class SanPhamGUI extends JPanel{
     private JComboBox cmbNCC;
     private JComboBox cmbSortLoai;
     private JComboBox cmbSortNCC;
-    
+    private SanPhamBUS sanPhamBUS = new SanPhamBUS();
     
     //        
 
@@ -47,7 +50,7 @@ public class SanPhamGUI extends JPanel{
     {
         this.setLayout(null);
         this.setBackground(null);
-        this.setBounds(new Rectangle(50, 0, this.DEFALUT_WIDTH, 1000));
+        this.setBounds(new Rectangle(0, 0, this.DEFALUT_WIDTH, 1000));
         
         //FONT CHỮ
         Font font0 = new Font("Segoe UI",Font.PLAIN,13);
@@ -338,34 +341,33 @@ public class SanPhamGUI extends JPanel{
         header.add("Số lượng");
         header.add("Đơn Giá");
         header.add("Loại");
-        header.add("Mã NCC");
         header.add("IMG"); 
         model = new DefaultTableModel(header,0)
         {
-             public Class getColumnClass(int column)
-             {
+            public Class getColumnClass(int column)
+            {
                  switch(column){
-                     case 2:
-                         return Integer.class;
-                     case 3:
-                         return Integer.class;
-                     default:
-                         return String.class;
-                 }
-             }
+                    case 2:
+                        return Integer.class;
+                    case 3:
+                        return Integer.class;
+                    default:
+                        return String.class;
+                }
+            }
                         
         };
         
         tbl = new JTable(model);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>(model);
         tbl.setRowSorter(rowSorter);
+        list();
         
-        tbl.getColumnModel().getColumn(0).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(4).setPreferredWidth(100);
-        tbl.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tbl.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tbl.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tbl.getColumnModel().getColumn(4).setPreferredWidth(40);
 
         DefaultTableCellRenderer leftAlign = new DefaultTableCellRenderer();
         leftAlign.setHorizontalAlignment(JLabel.LEFT);
@@ -393,7 +395,22 @@ public class SanPhamGUI extends JPanel{
         add(scroll);
         add(ItemView);
         add(sort);
+        
     }
+    
+    public void listSP() {
+        if (sanPhamBUS.getSpList() == null) {
+            sanPhamBUS.list();
+        }
+        ArrayList<SanPhamDTO> spList = sanPhamBUS.getSpList();
 
+        for (SanPhamDTO sp : spList) {
+            
+            model.addRow(new Object[]{
+                sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham()
+            });
+        }
+        tbl.setModel(model);
+    }
    
 }

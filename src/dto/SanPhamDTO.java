@@ -16,6 +16,7 @@ public class SanPhamDTO {
         this.idSanPham = idSanPham;
         this.tenSanPham = tenSanPham;
         this.soLuong = soLuong;
+//        this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.hang = hang;
         this.imgSanPham = imgSanPham;
@@ -44,6 +45,14 @@ public class SanPhamDTO {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
+
+//    public int getGiaNhap() {
+//        return giaNhap;
+//    }
+//
+//    public void setGiaNhap(int giaNhap) {
+//        this.giaNhap = giaNhap;
+//    }
 
     public int getGiaBan() {
         return giaBan;

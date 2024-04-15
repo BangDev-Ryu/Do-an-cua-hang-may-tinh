@@ -47,4 +47,15 @@ public class MySQLConnect {
         }
         return rs;
     }
+    
+    public void executeUpdate(String sql) {
+        try {
+            connect();
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            disConnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLConnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

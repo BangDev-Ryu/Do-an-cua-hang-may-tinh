@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th4 09, 2024 lúc 05:25 PM
+-- Thời gian đã tạo: Th4 15, 2024 lúc 07:36 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `computerstore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `SANPHAM`
+--
+
+CREATE TABLE `SANPHAM` (
+  `id` varchar(5) NOT NULL,
+  `ten` varchar(50) NOT NULL,
+  `so_luong` int(11) DEFAULT NULL,
+  `gia_ban` int(11) DEFAULT NULL,
+  `hang` varchar(50) NOT NULL,
+  `img` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `SANPHAM`
+--
+
+INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
+('SP001', 'Acer Aspire 7', 5, 15000000, 'Acer', 'SP001.png'),
+('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png');
 
 -- --------------------------------------------------------
 
@@ -45,6 +68,12 @@ INSERT INTO `USER` (`id_user`, `password`, `username`, `role`, `enable`) VALUES
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `SANPHAM`
+--
+ALTER TABLE `SANPHAM`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `USER`

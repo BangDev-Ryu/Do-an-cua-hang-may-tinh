@@ -32,7 +32,7 @@ public class MainGUI extends JFrame implements MouseListener {
         
         this.header = createHeader();
         this.nav = createNav();
-        this.main = new SanPhamGUI(1000, 670);
+        this.main = new JPanel(null);
         
         this.setLayout(new BorderLayout());
         this.add(this.header, BorderLayout.NORTH);
@@ -108,15 +108,15 @@ public class MainGUI extends JFrame implements MouseListener {
         
         pn_nav.add(lb_ava);
         
-        // add menu
+        // add navigation menu
         this.navName.add("Bán hàng:cart-white.png:cart-1.png");
+        this.navName.add("Nhập hàng:cart-white.png:cart-1.png");
         this.navName.add("Sản phẩm:laptop-white.png:laptop-1.png");
         this.navName.add("Nhân viên:employee-white.png:employee-1.png");
         this.navName.add("Khách hàng:people-white.png:people-1.png");
-        this.navName.add("Nhập xuất:task-white.png:task-1.png");
         this.navName.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
-        this.navName.add("Tài khoản:employee-white.png:employee-1.png");
-        
+        this.navName.add("Hóa đơn:task-white.png:task-1.png");
+        this.navName.add("Phiếu nhập:task-white.png:task-1.png");        
         
         // tao nav item menu
         for (int i = 0; i < navName.size(); i++) {
@@ -134,6 +134,37 @@ public class MainGUI extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        for (int i = 0; i < navModel.size(); i++) {
+            NavModel item = navModel.get(i);
+            if (e.getSource() == item) {
+                changeMain(i);
+            }
+        }
+    }
+    
+    public void changeMain(int i) {
+        switch (i) {
+            case 0: // ban hang
+                break;
+            case 1: // nhap hang
+                break;
+            case 2: // san pham 
+                main.removeAll();
+                main.add(new TestGUI(1000, 670));
+                main.repaint();
+                main.validate();
+                break;
+            case 3: // nhan vien
+                break;
+            case 4: // khach hang
+                break;
+            case 5: // nha cung cap
+                break;
+            case 6: // hoa don
+                break;
+            case 7: // phieu nhap
+                break;
+        }
     }
 
     @Override
