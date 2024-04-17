@@ -3,19 +3,25 @@ package dto;
 public class UserDTO {
     private String idUser;
     private String password;
-    private String userName;
+    private String tenUser;
+    private String gioiTinh;
+    private String sdt;
     private String role;
+    private String imgUser;
     private boolean enable;
 
     public UserDTO() {
         
     }
 
-    public UserDTO(String idUser, String password, String userName, String role, boolean enable) {
+    public UserDTO(String idUser, String password, String tenUser, String gioiTinh, String sdt, String role, String imgUser, boolean enable) {
         this.idUser = idUser;
         this.password = password;
-        this.userName = userName;
+        this.tenUser = tenUser;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
         this.role = role;
+        this.imgUser = imgUser;
         this.enable = enable;
     }
 
@@ -35,12 +41,28 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getTenUser() {
+        return tenUser;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setTenUser(String tenUser) {
+        this.tenUser = tenUser;
+    }
+
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
     }
 
     public String getRole() {
@@ -49,6 +71,14 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImgUser() {
+        return imgUser;
+    }
+
+    public void setImgUser(String imgUser) {
+        this.imgUser = imgUser;
     }
 
     public boolean isEnable() {

@@ -14,16 +14,19 @@ public class UserDAO {
         ArrayList<UserDTO> userList = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM USER WHERE 1";
+            String sql = "SELECT * FROM USER";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
-                String idUser = rs.getString("id_user");
+                String id = rs.getString("id");
                 String password = rs.getString("password");
-                String username = rs.getString("username");
+                String ten = rs.getString("ten");
+                String gioi_tinh = rs.getString("gioi_tinh");
+                String sdt = rs.getString("sdt");
                 String role = rs.getString("role");
+                String img = rs.getString("img");
                 boolean enable = rs.getBoolean("enable");
                 
-                UserDTO user = new UserDTO(idUser, password, username, role, enable);
+                UserDTO user = new UserDTO(id, password, ten, gioi_tinh, sdt, role, img, enable);
                 userList.add(user);
             }
             rs.close();

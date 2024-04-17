@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th4 15, 2024 lúc 07:36 PM
+-- Thời gian đã tạo: Th4 17, 2024 lúc 04:02 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `computerstore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `KHACHHANG`
+--
+
+CREATE TABLE `KHACHHANG` (
+  `id` varchar(6) NOT NULL,
+  `ten` varchar(50) NOT NULL,
+  `dia_chi` varchar(50) NOT NULL,
+  `sdt` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `NHACUNGCAP`
+--
+
+CREATE TABLE `NHACUNGCAP` (
+  `id` varchar(6) NOT NULL,
+  `ten` varchar(50) NOT NULL,
+  `dia_chi` varchar(50) NOT NULL,
+  `sdt` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -41,8 +67,9 @@ CREATE TABLE `SANPHAM` (
 --
 
 INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
-('SP001', 'Acer Aspire 7', 5, 15000000, 'Acer', 'SP001.png'),
-('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png');
+('SP001', 'Acer Aspire 7', 20, 15000000, 'Acer', 'SP001.png'),
+('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png'),
+('SP003', 'Acer Nitro 5', 5, 20000000, 'Acer', 'SP003.png');
 
 -- --------------------------------------------------------
 
@@ -51,10 +78,13 @@ INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 --
 
 CREATE TABLE `USER` (
-  `id_user` varchar(10) NOT NULL,
+  `id` varchar(6) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `ten` varchar(50) DEFAULT NULL,
+  `gioi_tinh` varchar(5) DEFAULT NULL,
+  `sdt` varchar(15) DEFAULT NULL,
   `role` varchar(50) NOT NULL,
+  `img` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -62,8 +92,8 @@ CREATE TABLE `USER` (
 -- Đang đổ dữ liệu cho bảng `USER`
 --
 
-INSERT INTO `USER` (`id_user`, `password`, `username`, `role`, `enable`) VALUES
-('us000', '123456', 'admin', 'admin', 1);
+INSERT INTO `USER` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
+('us000', '123456', 'admin', '', '', 'admin', '', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -79,7 +109,7 @@ ALTER TABLE `SANPHAM`
 -- Chỉ mục cho bảng `USER`
 --
 ALTER TABLE `USER`
-  ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

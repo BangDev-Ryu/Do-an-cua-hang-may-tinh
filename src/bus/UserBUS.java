@@ -29,7 +29,7 @@ public class UserBUS {
     public UserDTO checkUser(String userName, char[] password) {
         for (UserDTO user : userList) {
             char[] correctPass = user.getPassword().toCharArray();
-            if (user.getUserName().equals(userName) && Arrays.equals(password, correctPass) && user.isEnable()) {
+            if (user.getTenUser().equals(userName) && Arrays.equals(password, correctPass) && user.isEnable()) {
                 return user;
             }
         }

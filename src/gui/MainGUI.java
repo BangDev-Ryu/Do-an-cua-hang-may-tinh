@@ -9,7 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -49,7 +48,6 @@ public class MainGUI extends JFrame implements MouseListener {
         pn_header.setLayout(new BorderLayout());
         pn_header.setPreferredSize(new Dimension(this.width, 30));
         pn_header.setBackground(Color.decode("#006270"));
-//        pn_header.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
 
         JLabel lb_exit = new JLabel("", JLabel.CENTER);
         lb_exit.setOpaque(true);
