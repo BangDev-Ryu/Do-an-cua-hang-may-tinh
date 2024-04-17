@@ -12,7 +12,7 @@ public class NavModel extends JPanel implements MouseListener {
     private int width, height;
     private JLabel icon, label;
     private Color colorNormal, colorHover;
-    private boolean active;
+    private boolean isActive;
     private String navName, navIcon, navIconHover;
     
     public NavModel(String n, int w, int h, String icon, String icon_hover, Color normal, Color hover) {
@@ -51,6 +51,22 @@ public class NavModel extends JPanel implements MouseListener {
         this.add(icon);
         this.add(label);
     }
+    
+    public void actived() {
+        this.isActive = true;
+        this.setBackground(Color.white);
+        this.label.setForeground(colorNormal);
+        IconModel i = new IconModel(20, 20, this.navIconHover);
+        this.icon.setIcon(i.createIcon());
+    }
+    
+    public void noActived() {
+        this.isActive = false;
+        this.setBackground(this.colorNormal);
+        this.label.setForeground(Color.white);
+        IconModel i = new IconModel(20, 20, this.navIcon);
+        this.icon.setIcon(i.createIcon());
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -66,17 +82,20 @@ public class NavModel extends JPanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        this.setBackground(this.colorHover);
-        this.label.setForeground(colorNormal);
-        IconModel i = new IconModel(20, 20, this.navIconHover);
-        this.icon.setIcon(i.createIcon());
+        if (!this.isActive) {
+            this.setBackground(this.colorHover);
+//            IconModel i = new IconModel(20, 20, this.navIconHover);
+//            this.icon.setIcon(i.createIcon());
+        }
+        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        this.setBackground(this.colorNormal);
-        this.label.setForeground(colorHover);
-        IconModel i = new IconModel(20, 20, this.navIcon);
-        this.icon.setIcon(i.createIcon());
+        if (!this.isActive) {
+            this.setBackground(this.colorNormal);
+            IconModel i = new IconModel(20, 20, this.navIcon);
+            this.icon.setIcon(i.createIcon());
+        }
     }
 }

@@ -54,7 +54,7 @@ public class SanPhamDAO {
         sql += "'" + sp.getSoLuong() + "', ";
         sql += "'" + sp.getGiaBan() + "', ";
         sql += "'" + sp.getHang() + "', ";
-        sql += "'" + sp.getImgSanPham() + "'";
+        sql += "'" + sp.getImgSanPham() + "')";
         db.executeUpdate(sql);
     }
     

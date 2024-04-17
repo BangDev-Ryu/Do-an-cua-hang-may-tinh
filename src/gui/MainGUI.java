@@ -32,7 +32,8 @@ public class MainGUI extends JFrame implements MouseListener {
         
         this.header = createHeader();
         this.nav = createNav();
-        this.main = new JPanel(null);
+        this.main = new JPanel(new BorderLayout());
+        this.main.setBackground(Color.decode("#FFFFFF"));
         
         this.setLayout(new BorderLayout());
         this.add(this.header, BorderLayout.NORTH);
@@ -48,7 +49,7 @@ public class MainGUI extends JFrame implements MouseListener {
         pn_header.setLayout(new BorderLayout());
         pn_header.setPreferredSize(new Dimension(this.width, 30));
         pn_header.setBackground(Color.decode("#006270"));
-        pn_header.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
+//        pn_header.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
 
         JLabel lb_exit = new JLabel("", JLabel.CENTER);
         lb_exit.setOpaque(true);
@@ -95,16 +96,13 @@ public class MainGUI extends JFrame implements MouseListener {
         pn_nav.setLayout(new FlowLayout(1, 0, 0));
         pn_nav.setPreferredSize(new Dimension(200, this.height - 30));
         pn_nav.setBackground(Color.decode("#006270"));
-        pn_nav.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
+//        pn_nav.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
         
         // add avatar
         JLabel lb_ava = new JLabel();
-        lb_ava.setPreferredSize(new Dimension(200, 200));
+        lb_ava.setPreferredSize(new Dimension(200, 100));
         lb_ava.setOpaque(true);
-        lb_ava.setBackground(Color.decode("#00E0C7"));
-        
-        IconModel icon_ava = new IconModel(200, 200, "avatar-1.png");
-        lb_ava.setIcon(icon_ava.createIcon());
+        lb_ava.setBackground(Color.decode("#009394"));
         
         pn_nav.add(lb_ava);
         
@@ -121,7 +119,7 @@ public class MainGUI extends JFrame implements MouseListener {
         // tao nav item menu
         for (int i = 0; i < navName.size(); i++) {
             String[] parts = navName.get(i).split(":");
-            navModel.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], Color.decode("#006270"), Color.decode("#FFFFFF")));
+            navModel.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], Color.decode("#006270"), Color.decode("#009394")));
             navModel.get(i).addMouseListener(this);
         }
         
@@ -137,8 +135,12 @@ public class MainGUI extends JFrame implements MouseListener {
         for (int i = 0; i < navModel.size(); i++) {
             NavModel item = navModel.get(i);
             if (e.getSource() == item) {
+                item.actived();
                 changeMain(i);
             }
+            else {
+                item.noActived();
+            }    
         }
     }
     
@@ -150,7 +152,7 @@ public class MainGUI extends JFrame implements MouseListener {
                 break;
             case 2: // san pham 
                 main.removeAll();
-                main.add(new TestGUI(1000, 670));
+                main.add(new SanPhamGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;

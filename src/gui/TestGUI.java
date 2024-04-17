@@ -7,8 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Image;
-import static java.awt.SystemColor.text;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -39,6 +38,11 @@ import javax.swing.table.TableRowSorter;
 
 public class TestGUI extends JPanel {
     private int width, height;
+    private Color colorBackground = Color.decode("#FFFFFF");
+    private Color color1 = Color.decode("#006270");
+    private Color color2 = Color.decode("#009394");
+    private Color color3 = Color.decode("#00E0C7");
+
     private JPanel pnInfor, pnFilter, pnTable;
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
@@ -63,13 +67,13 @@ public class TestGUI extends JPanel {
     
     public void init() {
         this.setSize(this.width, this.height);
-        this.setBackground(Color.decode("#FFFFFF"));
+        this.setLayout(new BorderLayout());
+        this.setBackground(this.colorBackground);
         
         this.pnInfor = this.createPnInfor();
         this.pnFilter = this.createPnFilter();
         this.pnTable = this.createPnTable();
         
-        this.setLayout(new BorderLayout());
         this.add(this.pnInfor, BorderLayout.NORTH);
         this.add(this.pnFilter, BorderLayout.CENTER);
         this.add(this.pnTable, BorderLayout.SOUTH);
@@ -98,8 +102,10 @@ public class TestGUI extends JPanel {
         this.arrTfInfor = new ArrayList<>();
         
         Dimension d_pn = new Dimension(450, 30);
-        Dimension d_lb = new Dimension(150, 30);
+        Dimension d_lb = new Dimension(130, 30);
         Dimension d_tf = new Dimension(250, 30);
+        Color color_font = this.color1;
+        Font font_infor = new Font("Segoe UI", Font.PLAIN, 15);
         for (int i = 0; i < len; i++) {
             this.arrPnInfor.add(new JPanel(new FlowLayout(0, 0, 0)));
             this.arrPnInfor.get(i).setPreferredSize(d_pn);
@@ -108,6 +114,11 @@ public class TestGUI extends JPanel {
             this.arrLbInfor.get(i).setPreferredSize(d_lb);
             this.arrTfInfor.add(new JTextField());
             this.arrTfInfor.get(i).setPreferredSize(d_tf);
+
+            this.arrLbInfor.get(i).setForeground(color_font);
+            this.arrLbInfor.get(i).setFont(font_infor);
+            this.arrTfInfor.get(i).setForeground(color_font);
+            this.arrTfInfor.get(i).setFont(font_infor);
             
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
@@ -117,13 +128,19 @@ public class TestGUI extends JPanel {
         
         JPanel pn_brand = new JPanel(new FlowLayout(0, 0, 0));
         pn_brand.setPreferredSize(d_pn);
+        pn_brand.setForeground(color_font);
+        pn_brand.setFont(font_infor);
         
         JLabel lb_brand = new JLabel("Hãng");
         lb_brand.setPreferredSize(d_lb);
+        lb_brand.setForeground(color_font);
+        lb_brand.setFont(font_infor);
         
         String[] brand = {"Acer", "Asus", "Dell", "LG", "Mac", "MSI"};    
         this.cbBrand = new JComboBox(brand);
         this.cbBrand.setPreferredSize(d_tf);
+        this.cbBrand.setForeground(color_font);
+        this.cbBrand.setFont(font_infor);
         
         pn_brand.add(lb_brand);
         pn_brand.add(this.cbBrand);
@@ -142,9 +159,10 @@ public class TestGUI extends JPanel {
         
         // các nút chức năng phụ
         JButton btn_hoan_thanh = new JButton("Hoàn thành");
-        JButton btn_huy = new JButton("Hủy");
+        JButton btn_tro_ve = new JButton("Trở về");
         JButton btn_chon_anh = new JButton("Chọn ảnh");
         
+        // Thiết kế giao diện nút
         Dimension d_btn = new Dimension(150, 30);
         btn_them.setPreferredSize(d_btn);
         btn_sua.setPreferredSize(d_btn);
@@ -153,11 +171,44 @@ public class TestGUI extends JPanel {
         btn_xuat_excel.setPreferredSize(d_btn);
         
         btn_hoan_thanh.setPreferredSize(d_btn);
-        btn_huy.setPreferredSize(d_btn);
+        btn_tro_ve.setPreferredSize(d_btn);
         btn_chon_anh.setPreferredSize(d_btn);
         btn_hoan_thanh.setVisible(false);
-        btn_huy.setVisible(false);
+        btn_tro_ve.setVisible(false);
         btn_chon_anh.setVisible(false);
+        
+        Color color_button = this.color2;
+        btn_them.setBackground(color_button);
+        btn_sua.setBackground(color_button);
+        btn_xoa.setBackground(color_button);
+        btn_nhap_excel.setBackground(color_button);
+        btn_xuat_excel.setBackground(color_button);
+
+        btn_hoan_thanh.setBackground(color_button);
+        btn_tro_ve.setBackground(color_button);
+        btn_chon_anh.setBackground(color_button);
+        
+        Color color_font_btn = this.colorBackground;
+        btn_them.setForeground(color_font_btn);
+        btn_sua.setForeground(color_font_btn);
+        btn_xoa.setForeground(color_font_btn);
+        btn_nhap_excel.setForeground(color_font_btn);
+        btn_xuat_excel.setForeground(color_font_btn);
+
+        btn_hoan_thanh.setForeground(color_font_btn);
+        btn_tro_ve.setForeground(color_font_btn);
+        btn_chon_anh.setForeground(color_font_btn);
+        
+        Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
+        btn_them.setFont(font_btn);
+        btn_sua.setFont(font_btn);
+        btn_xoa.setFont(font_btn);
+        btn_nhap_excel.setFont(font_btn);
+        btn_xuat_excel.setFont(font_btn);
+
+        btn_hoan_thanh.setFont(font_btn);
+        btn_tro_ve.setFont(font_btn);
+        btn_chon_anh.setFont(font_btn);
         
         // thêm các nút
         pn_btn.add(btn_them);
@@ -166,7 +217,7 @@ public class TestGUI extends JPanel {
         pn_btn.add(btn_nhap_excel);
         pn_btn.add(btn_xuat_excel);
         pn_btn.add(btn_hoan_thanh);
-        pn_btn.add(btn_huy);
+        pn_btn.add(btn_tro_ve);
         pn_btn.add(btn_chon_anh);
         
         // khi ấn nút thêm
@@ -186,7 +237,7 @@ public class TestGUI extends JPanel {
                 btn_xuat_excel.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
-                btn_huy.setVisible(true);
+                btn_tro_ve.setVisible(true);
                 btn_chon_anh.setVisible(true);
                 
                 table.clearSelection();
@@ -213,7 +264,7 @@ public class TestGUI extends JPanel {
                 btn_xuat_excel.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
-                btn_huy.setVisible(true);
+                btn_tro_ve.setVisible(true);
                 btn_chon_anh.setVisible(true);
                 
                 table.setEnabled(false);
@@ -288,8 +339,8 @@ public class TestGUI extends JPanel {
             }
         });
         
-        // khi ấn nút hủy
-        btn_huy.addMouseListener(new MouseAdapter() {
+        // khi ấn nút trở về
+        btn_tro_ve.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
@@ -304,7 +355,7 @@ public class TestGUI extends JPanel {
                 btn_xuat_excel.setVisible(true);
                 
                 btn_hoan_thanh.setVisible(false);
-                btn_huy.setVisible(false);
+                btn_tro_ve.setVisible(false);
                 btn_chon_anh.setVisible(false);
                 
                 table.setEnabled(true);
@@ -430,6 +481,30 @@ public class TestGUI extends JPanel {
             }
         });
         
+        // giao diện filter
+        Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
+        Color color_font = this.color1;
+        
+        lb_tim_kiem.setFont(font_filter);
+        tf_tim_kiem.setFont(font_filter);
+        lb_hang.setFont(font_filter);
+        cb_hang.setFont(font_filter);
+        lb_gia.setFont(font_filter);
+        tf_min_price.setFont(font_filter);
+        tf_max_price.setFont(font_filter);
+        
+        lb_tim_kiem.setForeground(color1);
+        tf_tim_kiem.setForeground(color1);
+        lb_hang.setForeground(color1);
+        cb_hang.setForeground(color1);
+        lb_gia.setForeground(color1);
+        tf_min_price.setForeground(color1);
+        tf_max_price.setForeground(color1);
+        
+        btn_loc.setBackground(color2);
+        btn_loc.setFont(font_filter);
+        btn_loc.setForeground(this.colorBackground);
+        
         pn_filter.add(lb_tim_kiem);
         pn_filter.add(tf_tim_kiem);
         pn_filter.add(lb_hang);
@@ -456,7 +531,7 @@ public class TestGUI extends JPanel {
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setPreferredSize(new Dimension(900, 250));
+        scroll.setPreferredSize(new Dimension(900, 280));
         
         table.getColumnModel().getColumn(0).setPreferredWidth(30);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -493,6 +568,20 @@ public class TestGUI extends JPanel {
                 else lockInfor(true);
             }
         });
+        
+        // giao diện table
+        Font font_table = new Font("Segoe UI", Font.BOLD, 13);
+        table.getTableHeader().setBackground(color1);
+        table.getTableHeader().setFont(font_table);
+        table.getTableHeader().setForeground(this.colorBackground);
+        table.getTableHeader().setOpaque(false); 
+        
+        table.setFocusable(false);
+        table.setShowVerticalLines(false);
+        table.setIntercellSpacing(new Dimension(0, 0));
+        table.setFillsViewportHeight(true);
+        table.setSelectionBackground(color3);
+        table.setRowHeight(30);
         
         return pn_table;
     }
