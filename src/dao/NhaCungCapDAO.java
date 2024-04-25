@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 public class NhaCungCapDAO {
     private MySQLConnect db = new MySQLConnect();
 
+
     public ArrayList<NhaCungCapDTO> list() {
         ArrayList<NhaCungCapDTO> nccList = new ArrayList<>();
 
@@ -30,6 +31,7 @@ public class NhaCungCapDAO {
         } catch (SQLException ex) {
             Logger.getLogger(NhaCungCapDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
         return nccList;
     }

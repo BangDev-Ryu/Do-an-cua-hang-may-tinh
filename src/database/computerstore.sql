@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th4 17, 2024 lúc 04:02 PM
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 25, 2024 lúc 10:10 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `KHACHHANG`
+-- Cấu trúc bảng cho bảng `khachhang`
 --
 
-CREATE TABLE `KHACHHANG` (
+CREATE TABLE `khachhang` (
   `id` varchar(6) NOT NULL,
   `ten` varchar(50) NOT NULL,
   `dia_chi` varchar(50) NOT NULL,
@@ -37,23 +37,30 @@ CREATE TABLE `KHACHHANG` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `NHACUNGCAP`
+-- Cấu trúc bảng cho bảng `nhacungcap`
 --
 
-CREATE TABLE `NHACUNGCAP` (
+CREATE TABLE `nhacungcap` (
   `id` varchar(6) NOT NULL,
   `ten` varchar(50) NOT NULL,
-  `dia_chi` varchar(50) NOT NULL,
+  `dia_chi` varchar(60) NOT NULL,
   `sdt` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhacungcap`
+--
+
+INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`) VALUES
+('NCC001', 'Công Ty TNHH Điều Khiển Tự Động An Phát', '86/21 Phan Tây Hồ, P. 7, Q. Phú Nhuận TP. Hồ Chí Minh', '02835109735');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `SANPHAM`
+-- Cấu trúc bảng cho bảng `sanpham`
 --
 
-CREATE TABLE `SANPHAM` (
+CREATE TABLE `sanpham` (
   `id` varchar(5) NOT NULL,
   `ten` varchar(50) NOT NULL,
   `so_luong` int(11) DEFAULT NULL,
@@ -63,10 +70,10 @@ CREATE TABLE `SANPHAM` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `SANPHAM`
+-- Đang đổ dữ liệu cho bảng `sanpham`
 --
 
-INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
+INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 ('SP001', 'Acer Aspire 7', 20, 15000000, 'Acer', 'SP001.png'),
 ('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png'),
 ('SP003', 'Acer Nitro 5', 5, 20000000, 'Acer', 'SP003.png');
@@ -74,10 +81,10 @@ INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `USER`
+-- Cấu trúc bảng cho bảng `user`
 --
 
-CREATE TABLE `USER` (
+CREATE TABLE `user` (
   `id` varchar(6) NOT NULL,
   `password` varchar(50) NOT NULL,
   `ten` varchar(50) DEFAULT NULL,
@@ -89,10 +96,10 @@ CREATE TABLE `USER` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `USER`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `USER` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
+INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
 ('us000', '123456', 'admin', '', '', 'admin', '', 1);
 
 --
@@ -100,15 +107,21 @@ INSERT INTO `USER` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, 
 --
 
 --
--- Chỉ mục cho bảng `SANPHAM`
+-- Chỉ mục cho bảng `nhacungcap`
 --
-ALTER TABLE `SANPHAM`
+ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `USER`
+-- Chỉ mục cho bảng `sanpham`
 --
-ALTER TABLE `USER`
+ALTER TABLE `sanpham`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 COMMIT;
 
