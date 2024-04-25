@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/bang/Workspace/School/Java/DoAnQuanLyCuaHang/src/gui/MainGUI.java</file>
-            <file>file:/home/bang/Workspace/School/Java/DoAnQuanLyCuaHang/src/gui/SanPhamGUI.java</file>
+            <file>file:/C:/Users/TrongPhuc/Documents/NetBeansProjects/Do-an-cua-hang-may-tinh/src/gui/NhaCungCapGUI.java</file>
+            <file>file:/C:/Users/TrongPhuc/Documents/NetBeansProjects/Do-an-cua-hang-may-tinh/src/dto/ChiTietSanPhamDTO.java</file>
+            <file>file:/C:/Users/TrongPhuc/Documents/NetBeansProjects/Do-an-cua-hang-may-tinh/src/dao/UserDAO.java</file>
+            <file>file:/C:/Users/TrongPhuc/Documents/NetBeansProjects/Do-an-cua-hang-may-tinh/src/dao/NhaCungCapDAO.java</file>
         </group>
     </open-files>
 </project-private>
