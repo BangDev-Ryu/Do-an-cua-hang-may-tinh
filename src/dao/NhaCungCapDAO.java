@@ -58,4 +58,4 @@ public class NhaCungCapDAO {
         String sql = "DELETE FROM NHACUNGCAP WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
-
+}
