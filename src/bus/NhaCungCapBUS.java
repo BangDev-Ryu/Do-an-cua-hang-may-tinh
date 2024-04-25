@@ -19,13 +19,13 @@ public class NhaCungCapBUS {
     public void setNccList(ArrayList<NhaCungCapDTO> nccList) {
         this.nccList = nccList;
     }
-    
+
     public void list() {
         NhaCungCapDAO nccDAO = new NhaCungCapDAO();
         nccList = new ArrayList<>();
         nccList = nccDAO.list();
     }
-    
+
     public void updateNhaCungCap(NhaCungCapDTO ncc) {
         for (int i = 0; i < nccList.size(); i++) {
             if (nccList.get(i).getIdNhaCungCap().equals(ncc.getIdNhaCungCap())) {
@@ -36,13 +36,13 @@ public class NhaCungCapBUS {
             }
         }
     }
-    
+
     public void addNhaCungCap(NhaCungCapDTO ncc) {
         nccList.add(ncc);
         NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
         nhaCungCapDAO.addDB(ncc);
     }
-    
+
     public void deleteNhaCungCap(String id) {
         for (NhaCungCapDTO ncc : nccList) {
             if (ncc.getIdNhaCungCap().equals(id)) {
@@ -53,7 +53,7 @@ public class NhaCungCapBUS {
             }
         }
     }
-    
+
     public boolean isExisted(String id) {
         for (NhaCungCapDTO ncc : nccList) {
             if (ncc.getIdNhaCungCap().equals(id)) {
@@ -62,11 +62,11 @@ public class NhaCungCapBUS {
         }
         return false;
     }
-    
+
     public String createNewId() {
         String id = "NCC";
         int new_id = nccList.size() + 1;
-        
+
         if (new_id <= 9) {
             id += "00" + new_id;
         }
@@ -76,7 +76,7 @@ public class NhaCungCapBUS {
         else {
             id += new_id;
         }
-        
+
         return id;
     }
 }

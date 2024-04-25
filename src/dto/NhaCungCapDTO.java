@@ -9,7 +9,7 @@ public class NhaCungCapDTO {
     private String Sdt;
 
     public NhaCungCapDTO() {
-        
+
     }
 
     public NhaCungCapDTO(String idNhaCungCap, String tenNhaCungCap, String Diachi, String Sdt) {
@@ -51,5 +51,6 @@ public class NhaCungCapDTO {
         this.Sdt = Sdt;
     }
 
-    
+
+
 }
