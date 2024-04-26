@@ -1,9 +1,5 @@
 package dao;
 
-<<<<<<< HEAD
-public class HoaDonDAO {
-
-=======
 import dto.HoaDonDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,5 +36,4 @@ public class HoaDonDAO {
         
         return hdList;
     } 
->>>>>>> 6185dca (add HoaDon)
 }
