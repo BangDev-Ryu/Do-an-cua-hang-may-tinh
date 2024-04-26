@@ -145,6 +145,10 @@ public class MainGUI extends JFrame implements MouseListener {
     public void changeMain(int i) {
         switch (i) {
             case 0: // ban hang
+                main.removeAll();
+                main.add(new BanHangGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
             case 1: // nhap hang
                 break;
