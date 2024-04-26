@@ -46,7 +46,7 @@ public class HoaDonGUI extends JPanel {
     
     public void init() {
         this.setSize(this.width, this.height);
-//        this.setBackground(this.colorBackground);
+        this.setBackground(this.colorBackground);
         
         this.pnInfor = this.createPnInfor();
         this.pnFilter = this.createPnFilter();
@@ -61,7 +61,6 @@ public class HoaDonGUI extends JPanel {
     public JPanel createPnInfor() {
         JPanel result = new JPanel(new FlowLayout(1, 0, 25));
         result.setPreferredSize(new Dimension(this.width, 300));
-        result.setBorder(BorderFactory.createLineBorder(Color.black));
         
         // phần thông tin hóa đơn
         JPanel pn_infor = new JPanel(new FlowLayout(1, 5, 10));
@@ -105,7 +104,7 @@ public class HoaDonGUI extends JPanel {
         
         pn_table.add(scroll);
         
-        Font font_table = new Font("Segoe UI", Font.BOLD, 15);
+        Font font_table = new Font("Segoe UI", Font.BOLD, 13);
         tableCT.getTableHeader().setBackground(color1);
         tableCT.getTableHeader().setFont(font_table);
         tableCT.getTableHeader().setForeground(this.colorBackground);
@@ -114,7 +113,7 @@ public class HoaDonGUI extends JPanel {
         
         // căn giữa các chữ trong ô
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < col.length; i++) {
             tableCT.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -145,7 +144,6 @@ public class HoaDonGUI extends JPanel {
     public JPanel createPnTable() {
         JPanel pn_table = new JPanel();
         pn_table.setPreferredSize(new Dimension(this.width, 300));
-        pn_table.setBorder(BorderFactory.createLineBorder(Color.black));
         
         String[] col = {
             "Mã hóa đơn", "Mã khách hàng", "Mã nhân viên", "Ngày xuất", "Tổng tiền"

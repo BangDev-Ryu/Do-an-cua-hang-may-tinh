@@ -406,7 +406,6 @@ public class SanPhamGUI extends JPanel {
     
     public JPanel createPnFilter() {
         JPanel pn_filter = new JPanel(new FlowLayout(1, 20, 20)); 
-//        pn_filter.setBorder(BorderFactory.createLineBorder(color1, 3));
         
         // Thanh tìm kiếm theo tên hoặc id sản phẩm
         JLabel lb_tim_kiem = new JLabel("Tìm kiếm", JLabel.CENTER);
@@ -493,7 +492,6 @@ public class SanPhamGUI extends JPanel {
         
         // giao diện filter
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
-        Color color_font = this.color1;
         
         lb_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setFont(font_filter);
