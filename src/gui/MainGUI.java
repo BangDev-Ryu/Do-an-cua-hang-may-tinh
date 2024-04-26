@@ -165,6 +165,10 @@ public class MainGUI extends JFrame implements MouseListener {
                 main.validate();
                 break;
             case 6: // hoa don
+                main.removeAll();
+                main.add(new HoaDonGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
             case 7: // phieu nhap
                 break;

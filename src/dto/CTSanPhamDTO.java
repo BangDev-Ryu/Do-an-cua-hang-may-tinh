@@ -1,14 +1,14 @@
 package dto;
 
-public class ChiTietSanPhamDTO {
+public class CTSanPhamDTO {
     private String idSanPham;
     private String serial;
     
-    public ChiTietSanPhamDTO() {
+    public CTSanPhamDTO() {
         
     }
 
-    public ChiTietSanPhamDTO(String idSanPham, String serial) {
+    public CTSanPhamDTO(String idSanPham, String serial) {
         this.idSanPham = idSanPham;
         this.serial = serial;
     }
