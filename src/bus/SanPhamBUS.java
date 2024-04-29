@@ -3,6 +3,7 @@ package bus;
 import dao.SanPhamDAO;
 import dto.SanPhamDTO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class SanPhamBUS {
     private ArrayList<SanPhamDTO> spList;
@@ -90,5 +91,15 @@ public class SanPhamBUS {
         }
         
         return res;
+    }
+    
+    public boolean checkSoLuong(String id, int so_luong) {
+        for (SanPhamDTO sp : spList) {
+            if (sp.getIdSanPham().equals(id) && sp.getSoLuong() < so_luong) {
+                JOptionPane.showMessageDialog(null, "Không đủ hàng!");
+                return false;
+            }
+        }
+        return true;
     }
 }
