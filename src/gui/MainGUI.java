@@ -161,6 +161,10 @@ public class MainGUI extends JFrame implements MouseListener {
             case 3: // nhan vien
                 break;
             case 4: // khach hang
+                main.removeAll();
+                main.add(new KhachHangGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
             case 5: // nha cung cap
                 main.removeAll();
