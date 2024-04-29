@@ -1,18 +1,24 @@
 package gui;
 
+import bus.CTHoaDonBUS;
+import bus.HoaDonBUS;
 import bus.SanPhamBUS;
+import dto.CTHoaDonDTO;
 import dto.SanPhamDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -26,20 +32,25 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class BanHangGUI extends JPanel {
+public class BanHangGUI extends JPanel implements ActionListener {
     private int width, height;
     private Color colorBackground = Color.decode("#FFFFFF");
     private Color color1 = Color.decode("#006270");
     private Color color2 = Color.decode("#009394");
     private Color color3 = Color.decode("#00E0C7");
     private SanPhamBUS sanPhamBUS = new SanPhamBUS();
+    private HoaDonBUS hoaDonBUS = new HoaDonBUS();
+    private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
 
     private JPanel pnInfor, pnFilter, pnTable;
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
     private ArrayList<JTextField> arrTfInfor;
     private JButton btnTaoHoaDon, btnXoaSanPham, btnThemSanPham;
-
+    private JLabel lbTongTien;
+    private ArrayList<CTHoaDonDTO> arrCTHD = new ArrayList<>();
+    
+    private JTextField tfSoLuong;
     private JTable table, tableCT;
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model, modelCT;
@@ -101,8 +112,11 @@ public class BanHangGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_infor.add(this.arrPnInfor.get(i));
         }
+        this.arrTfInfor.get(0).setEnabled(false);
+        this.arrTfInfor.get(2).setEnabled(false);
+        this.arrTfInfor.get(3).setEnabled(false);
         
-        // phần thông tin chi tiết hóa đơn
+        // phần bảng thông tin chi tiết hóa đơn
         JPanel pn_table = new JPanel(new FlowLayout(1));
         
         String[] col = {
@@ -111,6 +125,7 @@ public class BanHangGUI extends JPanel {
         modelCT = new DefaultTableModel(col, 0);
         tableCT = new JTable();
         tableCT.setModel(modelCT);
+        tableCT.setRowSorter(rowSorter);
         JScrollPane scroll = new JScrollPane(tableCT);
         scroll.setPreferredSize(new Dimension(500, 250));
         
@@ -159,6 +174,9 @@ public class BanHangGUI extends JPanel {
         this.btnXoaSanPham.setFont(font_btn);
         this.btnTaoHoaDon.setFont(font_btn);
         
+        this.btnXoaSanPham.addActionListener(this);
+        this.btnTaoHoaDon.addActionListener(this);
+        
         JPanel pn_tong_tien = new JPanel(new FlowLayout(1, 5, 10));
         pn_tong_tien.setPreferredSize(new Dimension(150, 170));
         pn_tong_tien.setBorder(BorderFactory.createLineBorder(this.color1, 2));
@@ -169,7 +187,12 @@ public class BanHangGUI extends JPanel {
         lb_tong_tien.setFont(font_tong_tien_1);
         lb_tong_tien.setForeground(this.color1);
         
+        Font font_tong_tien_2 = new Font("Segoe UI", Font.BOLD, 13);
+        this.lbTongTien = new JLabel("0");
+        this.lbTongTien.setForeground(this.color1);
+        
         pn_tong_tien.add(lb_tong_tien);
+        pn_tong_tien.add(lbTongTien);
 
         pn_btn.add(this.btnXoaSanPham);
         pn_btn.add(this.btnTaoHoaDon);
@@ -227,9 +250,10 @@ public class BanHangGUI extends JPanel {
         JSeparator sep = new JSeparator(JSeparator.VERTICAL);
         sep.setPreferredSize(new Dimension(10, 40));
         
+        // phần thêm số lượng sản phẩm vào chi tiết hóa đơn
         JLabel lb_so_luong = new JLabel("Số lượng", JLabel.CENTER);
-        JTextField tf_so_luong = new JTextField();
-        tf_so_luong.setPreferredSize(new Dimension(50, 30));
+        tfSoLuong = new JTextField();
+        tfSoLuong.setPreferredSize(new Dimension(50, 30));
         
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
         Color color_font = this.color1;
@@ -237,12 +261,12 @@ public class BanHangGUI extends JPanel {
         lb_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setFont(font_filter);
         lb_so_luong.setFont(font_filter);
-        tf_so_luong.setFont(font_filter);
+        tfSoLuong.setFont(font_filter);
         
         lb_tim_kiem.setForeground(color1);
         tf_tim_kiem.setForeground(color1);  
         lb_so_luong.setForeground(color1);
-        tf_so_luong.setForeground(color1);
+        tfSoLuong.setForeground(color1);
                 
         this.btnThemSanPham = new JButton("Thêm sản phẩm");
         Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
@@ -251,11 +275,13 @@ public class BanHangGUI extends JPanel {
         this.btnThemSanPham.setBackground(this.color2);
         this.btnThemSanPham.setForeground(this.colorBackground);
 
+        this.btnThemSanPham.addActionListener(this);
+        
         pn_filter.add(lb_tim_kiem);
         pn_filter.add(tf_tim_kiem);
         pn_filter.add(sep);
         pn_filter.add(lb_so_luong);
-        pn_filter.add(tf_so_luong);
+        pn_filter.add(tfSoLuong);
         pn_filter.add(this.btnThemSanPham);
         
         return pn_filter;
@@ -286,12 +312,6 @@ public class BanHangGUI extends JPanel {
         this.loadSP();
         
         pn_table.add(scroll);
-        
-        table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                
-            }
-        });
         
         // giao diện table
         Font font_table = new Font("Segoe UI", Font.BOLD, 13);
@@ -335,5 +355,87 @@ public class BanHangGUI extends JPanel {
                 sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang()
             });
         }
+    }
+    
+    public void reloadCTHD() {
+        modelCT.setRowCount(0);
+        for (CTHoaDonDTO cthd : arrCTHD) {
+            modelCT.addRow(new Object[]{
+                cthd.getIdSanPham(), cthd.getIdSanPham(), cthd.getSoLuong(), cthd.getDonGia()
+            });
+        } 
+        tableCT.setModel(modelCT);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(this.btnThemSanPham)) {
+            themSanPham();
+        }
+        else if (e.getSource().equals(this.btnXoaSanPham)) {
+            xoaSanPham();
+        }
+    }
+    
+    public void themSanPham() {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn sản phẩm cần thêm!");
+        } 
+        else {
+            int sl_them = 0;
+            try {
+                sl_them = Integer.parseInt(this.tfSoLuong.getText()); 
+            } catch(NumberFormatException E) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập không hợp lệ!");
+                return;
+            }
+            
+            // kiểm tra sản phẩm có trong giỏ chưa
+            String id_sp = table.getModel().getValueAt(row, 0).toString();
+            boolean sp_moi = true;
+            for (CTHoaDonDTO cthd : arrCTHD) {
+                if (cthd.getIdSanPham().equals(id_sp)) {
+                    int sl_gio_hang = cthd.getSoLuong();
+                    if (!sanPhamBUS.checkSoLuong(id_sp, sl_them + sl_gio_hang)) {
+                        return;
+                    }
+                    cthd.setSoLuong(sl_gio_hang + sl_them);
+                    sp_moi = false;
+                    break;
+                }
+            }
+
+            if (sp_moi) {
+                if (!sanPhamBUS.checkSoLuong(id_sp, sl_them)) {
+                    System.out.println("xxx");
+                    return;
+                }
+                int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
+                arrCTHD.add(new CTHoaDonDTO(id_sp, id_sp, "AAA", sl_them, gia));
+            }
+            reloadCTHD();
+            this.lbTongTien.setText(String.valueOf(tinhTongTien()));
+        }
+    }
+    
+    public void xoaSanPham() {
+        int row = tableCT.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn sản phẩm cần xóa!");
+        } 
+        else {
+            arrCTHD.remove(row);
+            modelCT.removeRow(row);
+            this.lbTongTien.setText(String.valueOf(tinhTongTien()));
+        }
+    }
+    
+    public int tinhTongTien() {
+        int sum = 0;
+        for (CTHoaDonDTO cthd : arrCTHD) {
+            sum += cthd.getDonGia() * cthd.getSoLuong();
+        }
+        return sum;
     }
 }
