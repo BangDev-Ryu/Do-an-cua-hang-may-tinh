@@ -1,4 +1,4 @@
-package Menu;
+package dto;
 
 public class NhanVienDTO{
 
