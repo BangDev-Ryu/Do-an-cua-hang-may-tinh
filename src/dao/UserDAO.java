@@ -14,7 +14,7 @@ public class UserDAO {
         ArrayList<UserDTO> userList = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM USER";
+            String sql = "SELECT * FROM user";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id = rs.getString("id");

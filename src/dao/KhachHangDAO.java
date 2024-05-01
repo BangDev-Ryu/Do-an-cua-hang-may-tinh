@@ -15,7 +15,7 @@ public class KhachHangDAO {
         ArrayList<KhachHangDTO> khList = new ArrayList<>();
 
         try {            
-            String sql = "SELECT * FROM KHACHHANG";
+            String sql = "SELECT * FROM khachhang";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id = rs.getString("id");
@@ -37,7 +37,7 @@ public class KhachHangDAO {
     }
 
     public void updateDB(KhachHangDTO kh) {
-        String sql = "UPDATE NHACUNGCAP SET ";
+        String sql = "UPDATE khachhang SET ";
         sql += "ten='" + kh.getTenKhachHang() + "', ";
         sql += "dia_chi='" + kh.getDiachi() + "', ";
         sql += "sdt='" + kh.getSdt() + "' "; 
@@ -46,7 +46,7 @@ public class KhachHangDAO {
     }
 
     public void addDB(KhachHangDTO kh) {
-        String sql = "INSERT INTO KHACHHANG VALUES (";
+        String sql = "INSERT INTO khachhang VALUES (";
         sql += "'" +  kh.getIdKhachHang() + "', ";
         sql += "N'" + kh.getTenKhachHang() + "', ";
         sql += "N'" + kh.getDiachi() + "', ";
@@ -55,7 +55,7 @@ public class KhachHangDAO {
     }
 
     public void deleteDB(String id) {
-        String sql = "DELETE FROM NHACUNGCAP WHERE id='" + id + "'";
+        String sql = "DELETE FROM khachhang WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }
