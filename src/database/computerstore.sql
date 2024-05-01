@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th4 25, 2024 lúc 10:40 AM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Host: localhost
+-- Generation Time: May 01, 2024 at 05:50 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,29 +18,79 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `computerstore`
+-- Database: `computerstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `KHACHHANG`
+-- Table structure for table `cthoadon`
 --
 
-CREATE TABLE `KHACHHANG` (
+CREATE TABLE `cthoadon` (
+  `id_hd` varchar(6) NOT NULL,
+  `id_sp` varchar(6) NOT NULL,
+  `serial_sp` varchar(10) NOT NULL,
+  `so_luong` int(5) NOT NULL,
+  `don_gia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `cthoadon`
+--
+
+INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `serial_sp`, `so_luong`, `don_gia`) VALUES
+('HD001', 'SP001', 'S001001', 2, 1000000),
+('HD001', 'SP001', 'S002001', 1, 1500000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hoadon`
+--
+
+CREATE TABLE `hoadon` (
+  `id_hd` varchar(6) NOT NULL,
+  `id_kh` varchar(6) DEFAULT NULL,
+  `id_user` varchar(6) NOT NULL,
+  `ngay_xuat` date NOT NULL,
+  `tong_tien` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `hoadon`
+--
+
+INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VALUES
+('HD001', 'KH001', 'US001', '2024-04-26', 1000000000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `khachhang`
+--
+
+CREATE TABLE `khachhang` (
   `id` varchar(6) NOT NULL,
   `ten` varchar(50) NOT NULL,
   `dia_chi` varchar(50) NOT NULL,
   `sdt` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `khachhang`
+--
+
+INSERT INTO `khachhang` (`id`, `ten`, `dia_chi`, `sdt`) VALUES
+('KH001', 'Võ Kim Bằng', 'abc, 123, xyz', '09221101923');
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `NHACUNGCAP`
+-- Table structure for table `nhacungcap`
 --
 
-CREATE TABLE `NHACUNGCAP` (
+CREATE TABLE `nhacungcap` (
   `id` varchar(6) NOT NULL,
   `ten` varchar(50) NOT NULL,
   `dia_chi` varchar(60) NOT NULL,
@@ -48,19 +98,41 @@ CREATE TABLE `NHACUNGCAP` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `NHACUNGCAP`
+-- Dumping data for table `nhacungcap`
 --
 
-INSERT INTO `NHACUNGCAP` (`id`, `ten`, `dia_chi`, `sdt`) VALUES
+INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`) VALUES
 ('NCC001', 'Công Ty TNHH Điều Khiển Tự Động An Phát', '86/21 Phan Tây Hồ, P. 7, Q. Phú Nhuận TP. Hồ Chí Minh', '02835109735');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `SANPHAM`
+-- Table structure for table `nhanvien`
 --
 
-CREATE TABLE `SANPHAM` (
+CREATE TABLE `nhanvien` (
+  `id` varchar(6) NOT NULL,
+  `ten` varchar(50) NOT NULL,
+  `dia_chi` varchar(60) NOT NULL,
+  `sdt` varchar(13) DEFAULT NULL,
+  `gioi_tinh` varchar(5) NOT NULL,
+  `img` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `nhanvien`
+--
+
+INSERT INTO `nhanvien` (`id`, `ten`, `dia_chi`, `sdt`, `gioi_tinh`, `img`) VALUES
+('NV001', 'abc', 'qweqwe', '011111', 'Nam', 'NV001.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sanpham`
+--
+
+CREATE TABLE `sanpham` (
   `id` varchar(5) NOT NULL,
   `ten` varchar(50) NOT NULL,
   `so_luong` int(11) DEFAULT NULL,
@@ -70,10 +142,10 @@ CREATE TABLE `SANPHAM` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `SANPHAM`
+-- Dumping data for table `sanpham`
 --
 
-INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
+INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 ('SP001', 'Acer Aspire 7', 20, 15000000, 'Acer', 'SP001.png'),
 ('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png'),
 ('SP003', 'Acer Nitro 5', 5, 20000000, 'Acer', 'SP003.png');
@@ -81,10 +153,10 @@ INSERT INTO `SANPHAM` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `USER`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `USER` (
+CREATE TABLE `user` (
   `id` varchar(6) NOT NULL,
   `password` varchar(50) NOT NULL,
   `ten` varchar(50) DEFAULT NULL,
@@ -96,32 +168,44 @@ CREATE TABLE `USER` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `USER`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `USER` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
-('us000', '123456', 'admin', '', '', 'admin', '', 1);
+INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
+('admin', 'admin', 'admin', '', '', 'admin', '', 1);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `NHACUNGCAP`
+-- Indexes for table `hoadon`
 --
-ALTER TABLE `NHACUNGCAP`
+ALTER TABLE `hoadon`
+  ADD PRIMARY KEY (`id_hd`);
+
+--
+-- Indexes for table `nhacungcap`
+--
+ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `SANPHAM`
+-- Indexes for table `nhanvien`
 --
-ALTER TABLE `SANPHAM`
+ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `USER`
+-- Indexes for table `sanpham`
 --
-ALTER TABLE `USER`
+ALTER TABLE `sanpham`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 COMMIT;
 

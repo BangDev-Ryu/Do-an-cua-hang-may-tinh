@@ -15,7 +15,7 @@ public class HoaDonDAO {
         ArrayList<HoaDonDTO> hdList = new ArrayList<>();
         
         try {            
-            String sql = "SELECT * FROM HOADON";
+            String sql = "SELECT * FROM hoadon";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id_hd = rs.getString("id_hd");

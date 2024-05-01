@@ -14,7 +14,7 @@ public class SanPhamDAO {
         ArrayList<SanPhamDTO> spList = new ArrayList<>();
         
         try {            
-            String sql = "SELECT * FROM SANPHAM";
+            String sql = "SELECT * FROM sanpham";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id = rs.getString("id");
@@ -37,7 +37,7 @@ public class SanPhamDAO {
     }
     
     public void updateDB(SanPhamDTO sp) {
-        String sql = "UPDATE SANPHAM SET ";
+        String sql = "UPDATE sanpham SET ";
         sql += "ten='" + sp.getTenSanPham() + "', ";
         sql += "so_luong='" + sp.getSoLuong() + "', ";
         sql += "gia_ban='" + sp.getGiaBan() + "', ";
@@ -48,7 +48,7 @@ public class SanPhamDAO {
     }
     
     public void addDB(SanPhamDTO sp) {
-        String sql = "INSERT INTO SANPHAM VALUES (";
+        String sql = "INSERT INTO sanpham VALUES (";
         sql += "'" + sp.getIdSanPham() + "', ";
         sql += "N'" + sp.getTenSanPham() + "', ";
         sql += "'" + sp.getSoLuong() + "', ";
@@ -59,7 +59,7 @@ public class SanPhamDAO {
     }
     
     public void deleteDB(String id) {
-        String sql = "DELETE FROM SANPHAM WHERE id='" + id + "'";
+        String sql = "DELETE FROM sanpham WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }

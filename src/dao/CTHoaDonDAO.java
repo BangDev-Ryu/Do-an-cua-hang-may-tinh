@@ -15,7 +15,7 @@ public class CTHoaDonDAO {
 
         try {
             
-            String sql = "SELECT * FROM CTHOADON";
+            String sql = "SELECT * FROM cthoadon";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id_hd = rs.getString("id_hd");

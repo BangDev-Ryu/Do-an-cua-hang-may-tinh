@@ -15,7 +15,7 @@ public class NhaCungCapDAO {
         ArrayList<NhaCungCapDTO> nccList = new ArrayList<>();
 
         try {            
-            String sql = "SELECT * FROM NHACUNGCAP";
+            String sql = "SELECT * FROM nhacungcap";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
                 String id = rs.getString("id");
@@ -37,7 +37,7 @@ public class NhaCungCapDAO {
     }
 
     public void updateDB(NhaCungCapDTO ncc) {
-        String sql = "UPDATE NHACUNGCAP SET ";
+        String sql = "UPDATE nhacungcap SET ";
         sql += "ten='" + ncc.getTenNhaCungCap() + "', ";
         sql += "dia_chi='" + ncc.getDiachi() + "', ";
         sql += "sdt='" + ncc.getSdt() + "' "; 
@@ -46,7 +46,7 @@ public class NhaCungCapDAO {
     }
 
     public void addDB(NhaCungCapDTO ncc) {
-        String sql = "INSERT INTO NHACUNGCAP VALUES (";
+        String sql = "INSERT INTO nhacungcap VALUES (";
         sql += "'" + ncc.getIdNhaCungCap() + "', ";
         sql += "N'" + ncc.getTenNhaCungCap() + "', ";
         sql += "N'" + ncc.getDiachi() + "', ";
@@ -55,7 +55,7 @@ public class NhaCungCapDAO {
     }
 
     public void deleteDB(String id) {
-        String sql = "DELETE FROM NHACUNGCAP WHERE id='" + id + "'";
+        String sql = "DELETE FROM nhacungcap WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }
