@@ -183,6 +183,10 @@ public class MainGUI extends JFrame implements MouseListener {
                 main.validate();
                 break;
             case 7: // phieu nhap
+                 main.removeAll();
+                main.add(new PhieuNhapGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
         }
     }
