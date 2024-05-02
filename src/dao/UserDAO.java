@@ -37,4 +37,32 @@ public class UserDAO {
         
         return userList;
     }
+    
+
+    public void updateDB(UserDTO us) {
+        String sql = "UPDATE user SET ";
+        sql += "password='" + us.getPassword() + "', ";
+        sql += "ten='" + us.getTenUser() + "', ";
+        sql += "gioi_tinh='" + us.getGioiTinh() + "', ";
+        sql += "sdt='" + us.getSdt() + "', ";
+        sql += "role='" + us.getRole() + "', ";
+        sql += "img='" + us.getImgUser() + "', ";
+        sql += "enable='" + us.isEnable() + "' ";
+        sql += "WHERE id='" + us.getIdUser() + "'";
+        db.executeUpdate(sql);
+    }
+    
+    public void addDB(UserDTO us) {
+        String sql = "INSERT INTO user VALUES (";
+        sql += "'" +  us.getIdUser() + "', ";
+        sql += "'" +  us.getPassword() + "', ";
+        sql += "N'" + us.getTenUser() + "', ";
+        sql += "'" +  us.getGioiTinh() + "', ";
+        sql += "'" +  us.getSdt() + "', ";
+        sql += "'" +  us.getRole() + "', ";
+        sql += "'" +  us.getImgUser() + "', ";
+        sql += "'" +  us.isEnable() + "')";
+
+        db.executeUpdate(sql);
+    }
 }
