@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 02, 2024 lúc 08:37 AM
+-- Thời gian đã tạo: Th5 02, 2024 lúc 10:13 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -50,8 +50,8 @@ INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `serial_sp`, `so_luong`, `don_gia`) VA
 --
 
 CREATE TABLE `ctphieunhap` (
-  `id_pn` varchar(6) NOT NULL,
-  `id_sp` varchar(6) NOT NULL,
+  `id_pn` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id_sp` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `so_luong` int(5) NOT NULL,
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -115,7 +115,11 @@ CREATE TABLE `nhacungcap` (
 --
 
 INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`) VALUES
-('NCC001', 'Công Ty TNHH Điều Khiển Tự Động An Phát', '86/21 Phan Tây Hồ, P. 7, Q. Phú Nhuận TP. Hồ Chí Minh', '02835109735');
+('CC001', 'Công Ty TNHH Điều Khiển Tự Động An Phát', '86/21 Phan Tây Hồ, P. 7, Q. Phú Nhuận TP. Hồ Chí Minh', '02835109735'),
+('CC002', 'Công Ty TNHH Thương Mại Dịch Vụ Hoàng Cố Đô', '622/16/5 Cộng Hòa, Phường 13, Quận Tân Bình, TP HCM', '02838115345'),
+('CC003', 'Công Ty Cổ Phần Bán Lẻ Kỹ Thuật Số FPT', '261 - 263 Khánh Hội, P2, Q4, TP. Hồ Chí Minh', '02873023456'),
+('CC004', 'Công ty Cổ phần đầu tư công nghệ HACOM', 'Số 129-131, phố Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà ', '1900 1903'),
+('CC005', 'Công Ty TNHH Thương Mại Hoàng Phát Hải Phòng', 'Số 4, Lô 2A Lê Hồng Phong, Ngô Quyền, Tp. Hải Phòng', '02253250888');
 
 -- --------------------------------------------------------
 
@@ -175,7 +179,14 @@ CREATE TABLE `sanpham` (
 INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`) VALUES
 ('SP001', 'Acer Aspire 7', 20, 15000000, 'Acer', 'SP001.png'),
 ('SP002', 'MSI modern 15', 10, 12000000, 'MSI', 'SP002.png'),
-('SP003', 'Acer Nitro 5', 5, 20000000, 'Acer', 'SP003.png');
+('SP003', 'Acer Nitro 5', 5, 20000000, 'Acer', 'SP003.png'),
+('SP004', 'ASUS Zenbook 14 OLED', 15, 20000000, 'Asus', 'SP004.png'),
+('SP005', 'ASUS ROG Zephyrus G14', 17, 50000000, 'Asus', 'SP005.png'),
+('SP006', 'Dell Inspiron 15', 12, 13000000, 'Dell', 'SP006.png'),
+('SP007', 'Dell Vostro 3530', 7, 14000000, 'Dell', 'SP007.png'),
+('SP008', 'LG Gram 2023', 4, 27000000, 'LG', 'SP008.png'),
+('SP009', 'MacBook Air M1', 25, 30999000, 'Mac', 'SP009.png'),
+('SP010', 'MacBook Pro M2', 20, 39999000, 'Mac', 'SP010.png');
 
 -- --------------------------------------------------------
 
