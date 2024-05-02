@@ -64,7 +64,7 @@ public class NhaCungCapBUS {
     }
 
     public String createNewId() {
-        String id = "NCC";
+        String id = "CC";
         int new_id = nccList.size() + 1;
 
         if (new_id <= 9) {
