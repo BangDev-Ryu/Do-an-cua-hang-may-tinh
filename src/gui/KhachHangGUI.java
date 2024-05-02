@@ -12,12 +12,16 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -54,10 +58,12 @@ public class KhachHangGUI extends JPanel {
         this.setBackground(this.colorBackground);
         
         this.pnInfor = this.createPnInfor();
+        this.pnFilter = this.createPnFilter();
         this.pnTable = this.createPnTable();
         
         this.setLayout(new BorderLayout());
         this.add(this.pnInfor, BorderLayout.NORTH);
+        this.add(this.pnFilter, BorderLayout.CENTER);
         this.add(this.pnTable, BorderLayout.SOUTH);
     }
     
@@ -325,12 +331,73 @@ public class KhachHangGUI extends JPanel {
         return result;
     }
 
-   
-    
+    public JPanel createPnFilter() {
+        JPanel pn_filter = new JPanel(new FlowLayout(1, 20, 10));
+        
+        Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
+        JLabel lb_tim_kiem = new JLabel("Tìm kiếm");
+        lb_tim_kiem.setFont(font_filter);
+        lb_tim_kiem.setForeground(color1);
+        
+        JPanel pn_tim_kiem = new JPanel(new FlowLayout(1, 0, 0));
+        pn_tim_kiem.setPreferredSize(new Dimension(500, 30));
+        JComboBox cb_tim_kiem = new JComboBox();
+        cb_tim_kiem.setPreferredSize(new Dimension(140, 30));
+        cb_tim_kiem.addItem("Mã khách hàng");
+        cb_tim_kiem.addItem("Tên khách");
+        cb_tim_kiem.addItem("Địa chỉ");
+        cb_tim_kiem.addItem("Số điện thoại");
+        cb_tim_kiem.setForeground(color1);
+        cb_tim_kiem.setBackground(colorBackground);
+        cb_tim_kiem.setFont(font_filter);
+        
+        JTextField tf_tim_kiem = new JTextField();
+        tf_tim_kiem.setPreferredSize(new Dimension(350, 30));
+        tf_tim_kiem.setFont(font_filter);
+        tf_tim_kiem.setForeground(color1);
+        
+        tf_tim_kiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = tf_tim_kiem.getText();
+                int choice = cb_tim_kiem.getSelectedIndex();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                }
+                else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = tf_tim_kiem.getText();
+                int choice = cb_tim_kiem.getSelectedIndex();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                }
+                else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+        
+        pn_tim_kiem.add(cb_tim_kiem);
+        pn_tim_kiem.add(tf_tim_kiem);
+        
+        pn_filter.add(lb_tim_kiem);
+        pn_filter.add(pn_tim_kiem);
+        
+        return pn_filter;
+    }
     
     public JPanel createPnTable() {
         JPanel pn_table = new JPanel(new FlowLayout(1, 0, 0));
-        pn_table.setPreferredSize(new Dimension(this.width, 370));
+        pn_table.setPreferredSize(new Dimension(this.width, 300));
         
         String[] col = {"Mã khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại"};
 
@@ -340,7 +407,7 @@ public class KhachHangGUI extends JPanel {
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setPreferredSize(new Dimension(900, 330));
+        scroll.setPreferredSize(new Dimension(900, 250));
         
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
         table.getColumnModel().getColumn(1).setPreferredWidth(150);
