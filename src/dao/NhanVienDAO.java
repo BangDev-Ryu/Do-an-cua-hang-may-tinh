@@ -50,16 +50,16 @@ public class NhanVienDAO {
 
 
     public void addDB(NhanVienDTO nv) {
-    String sql = "INSERT INTO nhanvien VALUES (";
-    sql += "'" +  nv.getIdNhanVien() + "', ";
-    sql += "N'" + nv.getTenNhanVien() + "', ";
-    sql += "N'" + nv.getDiaChi() + "', ";
-    sql += "'" +  nv.getSdt() + "', ";
-    sql += "'" +  nv.getGioiTinh() + "', ";
-    sql += "'" +  nv.getImg() + "')";
-    
-    db.executeUpdate(sql);
-}
+        String sql = "INSERT INTO nhanvien VALUES (";
+        sql += "'" +  nv.getIdNhanVien() + "', ";
+        sql += "N'" + nv.getTenNhanVien() + "', ";
+        sql += "N'" + nv.getDiaChi() + "', ";
+        sql += "'" +  nv.getSdt() + "', ";
+        sql += "'" +  nv.getGioiTinh() + "', ";
+        sql += "'" +  nv.getImg() + "')";
+
+        db.executeUpdate(sql);
+    }
 
 
     public void deleteDB(String id) {
