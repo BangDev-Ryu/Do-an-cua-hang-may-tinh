@@ -263,7 +263,7 @@ public class KhachHangGUI extends JPanel {
                         String diachi = arrTfInfor.get(2).getText();
                         String sdt =arrTfInfor.get(3).getText();
                         
-                        KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt);
+                        KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt, true);
                         khachHangBUS.updateKhachHang(kh);
                         reloadKH(khachHangBUS.getKhList());
                                 
@@ -284,7 +284,7 @@ public class KhachHangGUI extends JPanel {
                             return;
                         }
                         
-                        KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt);
+                        KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt, true);
                         khachHangBUS.addKhachHang(kh);
                         
                         reloadNCC(khachHangBUS.getKhList());

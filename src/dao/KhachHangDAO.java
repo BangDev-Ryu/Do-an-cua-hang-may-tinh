@@ -22,8 +22,9 @@ public class KhachHangDAO {
                 String ten = rs.getString("ten");
                 String dia_chi = rs.getString("dia_chi");
                 String sdt = rs.getString("sdt");
+                boolean enable = rs.getBoolean("enable");
 
-                KhachHangDTO khachHang = new KhachHangDTO(id, ten, dia_chi, sdt);
+                KhachHangDTO khachHang = new KhachHangDTO(id, ten, dia_chi, sdt, enable);
                 khList.add(khachHang);
             }
             rs.close();
@@ -50,12 +51,13 @@ public class KhachHangDAO {
         sql += "'" +  kh.getIdKhachHang() + "', ";
         sql += "N'" + kh.getTenKhachHang() + "', ";
         sql += "N'" + kh.getDiachi() + "', ";
-        sql += "'" +  kh.getSdt() + "')";
+        sql += "'" +  kh.getSdt() + "', ";
+        sql += "'1')";
         db.executeUpdate(sql);
     }
 
     public void deleteDB(String id) {
-        String sql = "DELETE FROM khachhang WHERE id='" + id + "'";
+        String sql = "UPDATE khachhang SET enable = 0 WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }

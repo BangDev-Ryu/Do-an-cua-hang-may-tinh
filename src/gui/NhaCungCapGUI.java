@@ -257,9 +257,9 @@ public class NhaCungCapGUI extends JPanel {
                         String idNCC = arrTfInfor.get(0).getText();
                         String tenNCC = arrTfInfor.get(1).getText();
                         String diachi = arrTfInfor.get(2).getText();
-                        String sdt =arrTfInfor.get(3).getText();
+                        String sdt = arrTfInfor.get(3).getText();
                         
-                        NhaCungCapDTO ncc = new NhaCungCapDTO(idNCC, tenNCC, diachi, sdt);
+                        NhaCungCapDTO ncc = new NhaCungCapDTO(idNCC, tenNCC, diachi, sdt, true);
                         nhaCungCapBUS.updateNhaCungCap(ncc);
                         reloadNCC(nhaCungCapBUS.getNccList());
                         
@@ -280,7 +280,7 @@ public class NhaCungCapGUI extends JPanel {
                             return;
                         }
                         
-                        NhaCungCapDTO ncc = new NhaCungCapDTO(idNCC, tenNCC, diachi, sdt);
+                        NhaCungCapDTO ncc = new NhaCungCapDTO(idNCC, tenNCC, diachi, sdt, true);
                         nhaCungCapBUS.addNhaCungCap(ncc);
                         
                         reloadNCC(nhaCungCapBUS.getNccList());

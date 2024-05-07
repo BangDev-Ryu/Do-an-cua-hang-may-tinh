@@ -252,7 +252,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         
         // phần thêm số lượng sản phẩm vào chi tiết hóa đơn
         JLabel lb_so_luong = new JLabel("Số lượng", JLabel.CENTER);
-        tfSoLuong = new JTextField();
+        tfSoLuong = new JTextField("1");
         tfSoLuong.setPreferredSize(new Dimension(50, 30));
         
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
@@ -351,9 +351,11 @@ public class BanHangGUI extends JPanel implements ActionListener {
     public void reloadSP(ArrayList<SanPhamDTO> spList) {
         model.setRowCount(0);
         for (SanPhamDTO sp : spList) {
-            model.addRow(new Object[]{
-                sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang()
-            });
+            if (sp.isEnable()) {
+                model.addRow(new Object[]{
+                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang()
+                });
+            }
         }
     }
     
@@ -387,6 +389,11 @@ public class BanHangGUI extends JPanel implements ActionListener {
             try {
                 sl_them = Integer.parseInt(this.tfSoLuong.getText()); 
             } catch(NumberFormatException E) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập không hợp lệ!");
+                return;
+            }
+            
+            if (sl_them <= 0) {
                 JOptionPane.showMessageDialog(null, "Số lượng nhập không hợp lệ!");
                 return;
             }

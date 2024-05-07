@@ -7,16 +7,18 @@ public class KhachHangDTO {
     private String tenKhachHang;
     private String Diachi;
     private String Sdt;
+    private boolean enable;
 
     public KhachHangDTO() {
 
     }
 
-    public KhachHangDTO(String idKhachHang, String tenKhachHang, String Diachi, String Sdt) {
+    public KhachHangDTO(String idKhachHang, String tenKhachHang, String Diachi, String Sdt, boolean enable) {
         this.idKhachHang = idKhachHang;
         this.tenKhachHang = tenKhachHang;
         this.Diachi = Diachi;
         this.Sdt = Sdt;
+        this.enable = enable;
     }
 
     public String getIdKhachHang() {
@@ -51,6 +53,11 @@ public class KhachHangDTO {
         this.Sdt = Sdt;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
 
-
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 }

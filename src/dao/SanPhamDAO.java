@@ -23,8 +23,9 @@ public class SanPhamDAO {
                 int gia_ban = rs.getInt("gia_ban");
                 String hang = rs.getString("hang");
                 String img = rs.getString("img");
+                boolean enable = rs.getBoolean("enable");
                 
-                SanPhamDTO sanPham = new SanPhamDTO(id, ten, so_luong, gia_ban, hang, img);
+                SanPhamDTO sanPham = new SanPhamDTO(id, ten, so_luong, gia_ban, hang, img, enable);
                 spList.add(sanPham);
             }
             rs.close();
@@ -54,12 +55,13 @@ public class SanPhamDAO {
         sql += "'" + sp.getSoLuong() + "', ";
         sql += "'" + sp.getGiaBan() + "', ";
         sql += "'" + sp.getHang() + "', ";
-        sql += "'" + sp.getImgSanPham() + "')";
+        sql += "'" + sp.getImgSanPham() + "', ";
+        sql += "'1')";
         db.executeUpdate(sql);
     }
     
     public void deleteDB(String id) {
-        String sql = "DELETE FROM sanpham WHERE id='" + id + "'";
+        String sql = "UPDATE sanpham SET enable = 0 WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }

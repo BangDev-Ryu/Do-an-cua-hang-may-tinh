@@ -46,7 +46,7 @@ public class KhachHangBUS {
     public void deleteKhachHang(String id) {
         for (KhachHangDTO kh : khList) {
             if (kh.getIdKhachHang().equals(id)) {
-                khList.remove(kh);
+                kh.setEnable(false);
                 KhachHangDAO khachHangDAO = new KhachHangDAO();
                 khachHangDAO.deleteDB(id);
                 return;
