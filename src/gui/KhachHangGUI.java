@@ -261,12 +261,11 @@ public class KhachHangGUI extends JPanel {
                         String idKH = arrTfInfor.get(0).getText();
                         String tenKH = arrTfInfor.get(1).getText();
                         String diachi = arrTfInfor.get(2).getText();
-                        String sdt =arrTfInfor.get(3).getText();
+                        String sdt = arrTfInfor.get(3).getText();
                         
                         KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt, true);
                         khachHangBUS.updateKhachHang(kh);
                         reloadKH(khachHangBUS.getKhList());
-                                
                         
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -287,17 +286,11 @@ public class KhachHangGUI extends JPanel {
                         KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt, true);
                         khachHangBUS.addKhachHang(kh);
                         
-                        reloadNCC(khachHangBUS.getKhList());
+                        reloadKH(khachHangBUS.getKhList());
                         blankInfor();
                     }
                 }
             }
-
-            private void reloadKH(ArrayList<KhachHangDTO> khList) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-
-
         });
         
         // khi ấn nút trở về
@@ -470,10 +463,10 @@ public class KhachHangGUI extends JPanel {
         }
         ArrayList<KhachHangDTO> khList = khachHangBUS.getKhList();
         model.setRowCount(0);
-        reloadNCC(khList);
+        reloadKH(khList);
     }
     
-    public void reloadNCC(ArrayList<KhachHangDTO> khList) {
+    public void reloadKH(ArrayList<KhachHangDTO> khList) {
         model.setRowCount(0);
         for (KhachHangDTO kh : khList) {
             model.addRow(new Object[]{

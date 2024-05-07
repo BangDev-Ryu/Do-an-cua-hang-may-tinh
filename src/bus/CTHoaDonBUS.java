@@ -32,4 +32,11 @@ public class CTHoaDonBUS {
         
         return arr;
     }
+    
+    public void addCTHD(CTHoaDonDTO cthd) {
+        cthdList = new ArrayList<>();
+        cthdList.add(cthd);
+        CTHoaDonDAO ctHoaDonDAO = new CTHoaDonDAO();
+        ctHoaDonDAO.addDB(cthd);
+    }
 }

@@ -94,7 +94,6 @@ public class MainGUI extends JFrame implements MouseListener {
         pn_nav.setLayout(new FlowLayout(1, 0, 0));
         pn_nav.setPreferredSize(new Dimension(200, this.height - 30));
         pn_nav.setBackground(Color.decode("#006270"));
-//        pn_nav.setBorder(BorderFactory.createLineBorder(Color.decode("#00E0C7")));
         
         // add avatar
         JLabel lb_ava = new JLabel();
@@ -151,6 +150,10 @@ public class MainGUI extends JFrame implements MouseListener {
                 main.validate();
                 break;
             case 1: // nhap hang
+                main.removeAll();
+                main.add(new NhapHangGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
             case 2: // san pham 
                 main.removeAll();

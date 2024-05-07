@@ -4,6 +4,7 @@ import bus.CTHoaDonBUS;
 import bus.HoaDonBUS;
 import bus.SanPhamBUS;
 import dto.CTHoaDonDTO;
+import dto.HoaDonDTO;
 import dto.SanPhamDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,8 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -46,7 +46,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
     private ArrayList<JTextField> arrTfInfor;
-    private JButton btnTaoHoaDon, btnXoaSanPham, btnThemSanPham;
+    private JButton btnTaoHoaDon, btnXoaSanPham, btnThemSanPham, btnChonKhachHang;
     private JLabel lbTongTien;
     private ArrayList<CTHoaDonDTO> arrCTHD = new ArrayList<>();
     
@@ -83,6 +83,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         pn_infor.setPreferredSize(new Dimension(250, 250));
         pn_infor.setBorder(BorderFactory.createLineBorder(color1, 2));
         
+        loadHD();
         String[] thuoc_tinh = {"Mã hóa đơn", "Mã khách hàng", "Mã nhân viên", "Ngày"};
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<>();
@@ -112,9 +113,22 @@ public class BanHangGUI extends JPanel implements ActionListener {
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_infor.add(this.arrPnInfor.get(i));
         }
-        this.arrTfInfor.get(0).setEnabled(false);
-        this.arrTfInfor.get(2).setEnabled(false);
-        this.arrTfInfor.get(3).setEnabled(false);
+        this.arrTfInfor.get(0).setEditable(false);
+        this.arrTfInfor.get(1).setEditable(false);
+        this.arrTfInfor.get(2).setEditable(false);
+        this.arrTfInfor.get(3).setEditable(false);
+
+        this.arrTfInfor.get(0).setText(hoaDonBUS.createNewId());
+        this.arrTfInfor.get(3).setText(LocalDate.now()+"");
+        
+        this.arrTfInfor.get(1).setPreferredSize(new Dimension(100, 30));
+        this.btnChonKhachHang = new JButton("...");
+        this.btnChonKhachHang.setPreferredSize(new Dimension(25, 25));
+        this.btnChonKhachHang.setBackground(color3);
+        this.btnChonKhachHang.setFont(font_infor);
+        this.btnChonKhachHang.setForeground(color1);
+        this.btnChonKhachHang.addActionListener(this);
+        this.arrPnInfor.get(1).add(this.btnChonKhachHang);
         
         // phần bảng thông tin chi tiết hóa đơn
         JPanel pn_table = new JPanel(new FlowLayout(1));
@@ -187,7 +201,6 @@ public class BanHangGUI extends JPanel implements ActionListener {
         lb_tong_tien.setFont(font_tong_tien_1);
         lb_tong_tien.setForeground(this.color1);
         
-        Font font_tong_tien_2 = new Font("Segoe UI", Font.BOLD, 13);
         this.lbTongTien = new JLabel("0");
         this.lbTongTien.setForeground(this.color1);
         
@@ -243,7 +256,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-               
+                
             }
         });
         
@@ -256,7 +269,6 @@ public class BanHangGUI extends JPanel implements ActionListener {
         tfSoLuong.setPreferredSize(new Dimension(50, 30));
         
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
-        Color color_font = this.color1;
         
         lb_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setFont(font_filter);
@@ -339,6 +351,12 @@ public class BanHangGUI extends JPanel implements ActionListener {
         return pn_table;
     }
     
+    public void loadHD() {
+        if (hoaDonBUS.getHdList() == null) {
+            hoaDonBUS.list();
+        }
+    }
+    
     public void loadSP() {
         if (sanPhamBUS.getSpList() == null) {
             sanPhamBUS.list();
@@ -363,10 +381,9 @@ public class BanHangGUI extends JPanel implements ActionListener {
         modelCT.setRowCount(0);
         for (CTHoaDonDTO cthd : arrCTHD) {
             modelCT.addRow(new Object[]{
-                cthd.getIdSanPham(), cthd.getIdSanPham(), cthd.getSoLuong(), cthd.getDonGia()
+                cthd.getIdSanPham(), cthd.getTenSanPham(), cthd.getSoLuong(), cthd.getDonGia()
             });
         } 
-        tableCT.setModel(modelCT);
     }
 
     @Override
@@ -376,6 +393,28 @@ public class BanHangGUI extends JPanel implements ActionListener {
         }
         else if (e.getSource().equals(this.btnXoaSanPham)) {
             xoaSanPham();
+        }
+        else if (e.getSource().equals(this.btnChonKhachHang)) {
+            ChonKhachHangGUI result = new ChonKhachHangGUI();
+            arrTfInfor.get(1).setText(result.getIdKhach());
+        }
+        else if (e.getSource().equals(this.btnTaoHoaDon)) {
+            if (this.arrCTHD.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
+                return;
+            }
+            String id_hd = this.arrTfInfor.get(0).getText();
+            String id_kh = this.arrTfInfor.get(1).getText();
+            String id_nv = this.arrTfInfor.get(2).getText();
+            LocalDate ngay = LocalDate.now();
+            int tt = Integer.parseInt(this.lbTongTien.getText());
+            
+            HoaDonDTO hd = new HoaDonDTO(id_hd, id_kh, id_nv, ngay, tt);
+            hoaDonBUS.addHoaDon(hd);
+            
+            for (CTHoaDonDTO cthd : arrCTHD) {
+                ctHoaDonBUS.addCTHD(cthd);
+            }
         }
     }
     
@@ -399,7 +438,9 @@ public class BanHangGUI extends JPanel implements ActionListener {
             }
             
             // kiểm tra sản phẩm có trong giỏ chưa
+            String id_hd = this.arrTfInfor.get(0).getText();
             String id_sp = table.getModel().getValueAt(row, 0).toString();
+            String ten_sp = table.getModel().getValueAt(row, 1).toString();
             boolean sp_moi = true;
             for (CTHoaDonDTO cthd : arrCTHD) {
                 if (cthd.getIdSanPham().equals(id_sp)) {
@@ -415,11 +456,10 @@ public class BanHangGUI extends JPanel implements ActionListener {
 
             if (sp_moi) {
                 if (!sanPhamBUS.checkSoLuong(id_sp, sl_them)) {
-                    System.out.println("xxx");
                     return;
                 }
                 int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
-                arrCTHD.add(new CTHoaDonDTO(id_sp, id_sp, "AAA", sl_them, gia));
+                arrCTHD.add(new CTHoaDonDTO(id_hd, id_sp, ten_sp, "AAA", sl_them, gia));
             }
             reloadCTHD();
             this.lbTongTien.setText(String.valueOf(tinhTongTien()));

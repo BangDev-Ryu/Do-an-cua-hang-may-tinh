@@ -644,6 +644,7 @@ public class SanPhamGUI extends JPanel {
     // khóa khả năng thao tác với thông tin
     public void lockInfor(boolean lock) {
         arrTfInfor.get(1).setEditable(!lock);
+//        arrTfInfor.get(2).setEditable(!lock);
         arrTfInfor.get(3).setEditable(!lock);    
         cbBrand.setEnabled(!lock);
     }

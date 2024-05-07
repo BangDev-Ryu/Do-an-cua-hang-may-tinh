@@ -36,4 +36,14 @@ public class HoaDonDAO {
         
         return hdList;
     } 
+    
+    public void addDB(HoaDonDTO hd) {
+        String sql = "INSERT INTO hoadon VALUES (";
+        sql += "'" + hd.getIdHoaDon() + "', ";
+        sql += "'" + hd.getIdKhachHang() + "', ";
+        sql += "'" + hd.getIdUser() + "', ";
+        sql += "'" + hd.getNgayXuat() + "', ";
+        sql += "'" + hd.getTongTien() + "')";
+        db.executeUpdate(sql);
+    }
 }

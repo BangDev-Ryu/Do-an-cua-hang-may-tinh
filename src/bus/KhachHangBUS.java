@@ -22,11 +22,11 @@ public class KhachHangBUS {
 
     public void list() {
         KhachHangDAO khDAO = new KhachHangDAO();
-        khList = new ArrayList<>();
+        khList = new ArrayList<KhachHangDTO>();
         khList = khDAO.list();
     }
 
-    public void updateNhaCungCap(KhachHangDTO kh) {
+    public void updateKhachHang(KhachHangDTO kh) {
         for (int i = 0; i < khList.size(); i++) {
             if (khList.get(i).getIdKhachHang().equals(kh.getIdKhachHang())) {
                 khList.set(i, kh);
@@ -78,9 +78,5 @@ public class KhachHangBUS {
         }
 
         return id;
-    }
-
-    public void updateKhachHang(KhachHangDTO kh) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
