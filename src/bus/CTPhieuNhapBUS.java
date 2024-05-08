@@ -32,4 +32,11 @@ public class CTPhieuNhapBUS {
         
         return arr;
     }
+    
+    public void addCTPN(CTPhieuNhapDTO ctpn) {
+        ctpnList = new ArrayList<>();
+        ctpnList.add(ctpn);
+        CTPhieuNhapDAO ctPhieuNhapDAO = new CTPhieuNhapDAO();
+        ctPhieuNhapDAO.addDB(ctpn);
+    }
 }

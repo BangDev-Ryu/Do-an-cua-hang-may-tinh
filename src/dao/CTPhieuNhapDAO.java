@@ -35,4 +35,14 @@ public class CTPhieuNhapDAO {
         }
         return ctpnList;
     }
+    
+    public void addDB(CTPhieuNhapDTO ctpn) {
+        String sql = "INSERT INTO ctphieunhap VALUES (";
+        sql += "'" + ctpn.getIdPhieuNhap() + "', ";
+        sql += "'" + ctpn.getIdSanPham() + "', ";
+        sql += "N'" + ctpn.getTenSanPham() + "', ";
+        sql += "'" + ctpn.getSoLuong() + "', ";
+        sql += "'" + ctpn.getDonGia() + "')";
+        db.executeUpdate(sql);
+    }
 }

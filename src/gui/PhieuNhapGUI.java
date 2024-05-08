@@ -224,7 +224,7 @@ public class PhieuNhapGUI extends JPanel {
         model.setRowCount(0);
         for (PhieuNhapDTO pn : pnList) {
             model.addRow(new Object[]{
-                pn.getIdPhieuNHap(), pn.getIdNHaCungCap(), pn.getIdUser(), pn.getNgayNhap(), pn.getTongTien()
+                pn.getIdPhieuNHap(), pn.getIdNhaCungCap(), pn.getIdUser(), pn.getNgayNhap(), pn.getTongTien()
             });
         }
     } 
