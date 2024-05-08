@@ -18,14 +18,14 @@ public class PhieuNhapDAO {
             String sql = "SELECT * FROM phieunhap";
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
-                String id_hd = rs.getString("id_hd");
-                String id_kh = rs.getString("id_kh");
+                String id_pn = rs.getString("id_pn");
+                String id_ncc = rs.getString("id_ncc");
                 String id_user = rs.getString("id_user");
-                java.sql.Date sqlDate = rs.getDate("ngay_xuat");
-                LocalDate ngay_xuat = sqlDate.toLocalDate();
+                java.sql.Date sqlDate = rs.getDate("ngay_nhap");
+                LocalDate ngay_nhap = sqlDate.toLocalDate();
                 int tong_tien = rs.getInt("tong_tien");
                 
-                PhieuNhapDTO hoaDon = new PhieuNhapDTO(id_hd, id_kh, id_user, ngay_xuat, tong_tien);
+                PhieuNhapDTO hoaDon = new PhieuNhapDTO(id_pn, id_ncc, id_user, ngay_nhap, tong_tien);
                 hdList.add(hoaDon);
             }
             rs.close();
@@ -36,4 +36,14 @@ public class PhieuNhapDAO {
         
         return hdList;
     } 
+    
+    public void addDB(PhieuNhapDTO pn) {
+        String sql = "INSERT INTO phieunhap VALUES (";
+        sql += "'" + pn.getIdPhieuNHap() + "', ";
+        sql += "'" + pn.getIdNhaCungCap() + "', ";
+        sql += "'" + pn.getIdUser() + "', ";
+        sql += "'" + pn.getNgayNhap() + "', ";
+        sql += "'" + pn.getTongTien() + "')";
+        db.executeUpdate(sql);
+    }
 }

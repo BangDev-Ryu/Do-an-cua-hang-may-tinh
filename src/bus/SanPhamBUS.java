@@ -102,4 +102,28 @@ public class SanPhamBUS {
         }
         return true;
     }
+    
+    public void themSoLuong(String id, int so_luong) {
+        for (SanPhamDTO sp : spList) {
+            if (sp.getIdSanPham().equals(id)) {
+                int sl_hien_tai = sp.getSoLuong();
+                sp.setSoLuong(sl_hien_tai + so_luong);
+                SanPhamDAO sanPhamDAO = new SanPhamDAO();
+                sanPhamDAO.updateDB(sp);
+                return;
+            }
+        }
+    }
+    
+    public void giamSoLuong(String id, int so_luong) {
+        for (SanPhamDTO sp : spList) {
+            if (sp.getIdSanPham().equals(id)) {
+                int sl_hien_tai = sp.getSoLuong();
+                sp.setSoLuong(sl_hien_tai - so_luong);
+                SanPhamDAO sanPhamDAO = new SanPhamDAO();
+                sanPhamDAO.updateDB(sp);
+                return;
+            }
+        }
+    }
 }

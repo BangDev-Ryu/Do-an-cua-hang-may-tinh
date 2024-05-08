@@ -1,9 +1,14 @@
 package gui;
 
 import bus.CTHoaDonBUS;
+import bus.CTPhieuNhapBUS;
 import bus.HoaDonBUS;
+import bus.PhieuNhapBUS;
 import bus.SanPhamBUS;
 import dto.CTHoaDonDTO;
+import dto.CTPhieuNhapDTO;
+import dto.HoaDonDTO;
+import dto.PhieuNhapDTO;
 import dto.SanPhamDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +17,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -37,16 +43,16 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private Color color2 = Color.decode("#009394");
     private Color color3 = Color.decode("#00E0C7");
     private SanPhamBUS sanPhamBUS = new SanPhamBUS();
-    private HoaDonBUS hoaDonBUS = new HoaDonBUS();
-    private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
+    private PhieuNhapBUS phieuNhapBUS = new PhieuNhapBUS();
+    private CTPhieuNhapBUS ctPhieuNhapBUS = new CTPhieuNhapBUS();
 
     private JPanel pnInfor, pnFilter, pnTable;
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
     private ArrayList<JTextField> arrTfInfor;
-    private JButton btnTaoHoaDon, btnXoaSanPham, btnThemSanPham;
+    private JButton btnTaoPhieuNhap, btnXoaSanPham, btnThemSanPham, btnChonNhaCungCap;
     private JLabel lbTongTien;
-    private ArrayList<CTHoaDonDTO> arrCTHD = new ArrayList<>();
+    private ArrayList<CTPhieuNhapDTO> arrCTPN = new ArrayList<>();
     
     private JTextField tfSoLuong;
     private JTable table, tableCT;
@@ -76,11 +82,12 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         JPanel result = new JPanel(new FlowLayout(1, 0, 10));
         result.setPreferredSize(new Dimension(this.width, 300));
         
-        // phần thông tin hóa đơn
+        // phần thông tin phiếu nhập
         JPanel pn_infor = new JPanel(new FlowLayout(1, 5, 15));
         pn_infor.setPreferredSize(new Dimension(250, 250));
         pn_infor.setBorder(BorderFactory.createLineBorder(color1, 2));
         
+        loadPN();
         String[] thuoc_tinh = {"Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên", "Ngày"};
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<>();
@@ -110,9 +117,22 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_infor.add(this.arrPnInfor.get(i));
         }
-        this.arrTfInfor.get(0).setEnabled(false);
-        this.arrTfInfor.get(2).setEnabled(false);
-        this.arrTfInfor.get(3).setEnabled(false);
+        this.arrTfInfor.get(0).setEditable(false);
+        this.arrTfInfor.get(1).setEditable(false);
+        this.arrTfInfor.get(2).setEditable(false);
+        this.arrTfInfor.get(3).setEditable(false);
+
+        this.arrTfInfor.get(0).setText(phieuNhapBUS.createNewId());
+        this.arrTfInfor.get(3).setText(LocalDate.now()+"");
+        
+        this.arrTfInfor.get(1).setPreferredSize(new Dimension(100, 30));
+        this.btnChonNhaCungCap = new JButton("...");
+        this.btnChonNhaCungCap.setPreferredSize(new Dimension(25, 25));
+        this.btnChonNhaCungCap.setBackground(color3);
+        this.btnChonNhaCungCap.setFont(font_infor);
+        this.btnChonNhaCungCap.setForeground(color1);
+        this.btnChonNhaCungCap.addActionListener(this);
+        this.arrPnInfor.get(1).add(this.btnChonNhaCungCap);
         
         // phần bảng thông tin chi tiết hóa đơn
         JPanel pn_table = new JPanel(new FlowLayout(1));
@@ -161,19 +181,19 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         pn_btn.setPreferredSize(new Dimension(150, 250));
         
         this.btnXoaSanPham = new JButton("Xóa sản phẩm");
-        this.btnTaoHoaDon = new JButton("Tạo phiếu nhập");
+        this.btnTaoPhieuNhap = new JButton("Tạo phiếu nhập");
         this.btnXoaSanPham.setPreferredSize(new Dimension(140, 30));
-        this.btnTaoHoaDon.setPreferredSize(new Dimension(140, 30));
+        this.btnTaoPhieuNhap.setPreferredSize(new Dimension(140, 30));
         this.btnXoaSanPham.setBackground(this.color2);
-        this.btnTaoHoaDon.setBackground(this.color2);
+        this.btnTaoPhieuNhap.setBackground(this.color2);
         this.btnXoaSanPham.setForeground(this.colorBackground);
-        this.btnTaoHoaDon.setForeground(this.colorBackground);
+        this.btnTaoPhieuNhap.setForeground(this.colorBackground);
         Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
         this.btnXoaSanPham.setFont(font_btn);
-        this.btnTaoHoaDon.setFont(font_btn);
+        this.btnTaoPhieuNhap.setFont(font_btn);
         
         this.btnXoaSanPham.addActionListener(this);
-        this.btnTaoHoaDon.addActionListener(this);
+        this.btnTaoPhieuNhap.addActionListener(this);
         
         JPanel pn_tong_tien = new JPanel(new FlowLayout(1, 5, 10));
         pn_tong_tien.setPreferredSize(new Dimension(150, 170));
@@ -185,7 +205,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         lb_tong_tien.setFont(font_tong_tien_1);
         lb_tong_tien.setForeground(this.color1);
         
-        Font font_tong_tien_2 = new Font("Segoe UI", Font.BOLD, 13);
         this.lbTongTien = new JLabel("0");
         this.lbTongTien.setForeground(this.color1);
         
@@ -193,7 +212,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         pn_tong_tien.add(lbTongTien);
 
         pn_btn.add(this.btnXoaSanPham);
-        pn_btn.add(this.btnTaoHoaDon);
+        pn_btn.add(this.btnTaoPhieuNhap);
         pn_btn.add(pn_tong_tien);
         
         result.add(pn_infor);
@@ -241,7 +260,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-               
+                
             }
         });
         
@@ -254,7 +273,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         tfSoLuong.setPreferredSize(new Dimension(50, 30));
         
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
-        Color color_font = this.color1;
         
         lb_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setFont(font_filter);
@@ -337,6 +355,12 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         return pn_table;
     }
     
+    public void loadPN() {
+        if (phieuNhapBUS.getPnList() == null) {
+            phieuNhapBUS.list();
+        }
+    }
+    
     public void loadSP() {
         if (sanPhamBUS.getSpList() == null) {
             sanPhamBUS.list();
@@ -357,14 +381,13 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         }
     }
     
-    public void reloadCTHD() {
+    public void reloadCTPN() {
         modelCT.setRowCount(0);
-        for (CTHoaDonDTO cthd : arrCTHD) {
+        for (CTPhieuNhapDTO ctpn : arrCTPN) {
             modelCT.addRow(new Object[]{
-                cthd.getIdSanPham(), cthd.getTenSanPham(), cthd.getSoLuong(), cthd.getDonGia()
+                ctpn.getIdSanPham(), ctpn.getTenSanPham(), ctpn.getSoLuong(), ctpn.getDonGia()
             });
         } 
-        tableCT.setModel(modelCT);
     }
 
     @Override
@@ -374,6 +397,13 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         }
         else if (e.getSource().equals(this.btnXoaSanPham)) {
             xoaSanPham();
+        }
+        else if (e.getSource().equals(this.btnChonNhaCungCap)) {
+            ChonNhaCungCapGUI result = new ChonNhaCungCapGUI();
+            arrTfInfor.get(1).setText(result.getIdNCC());
+        }
+        else if (e.getSource().equals(this.btnTaoPhieuNhap)) {
+            taoPhieuNhap();
         }
     }
     
@@ -397,30 +427,25 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             }
             
             // kiểm tra sản phẩm có trong giỏ chưa
+            String id_pn = this.arrTfInfor.get(0).getText();
             String id_sp = table.getModel().getValueAt(row, 0).toString();
             String ten_sp = table.getModel().getValueAt(row, 1).toString();
             boolean sp_moi = true;
-            for (CTHoaDonDTO cthd : arrCTHD) {
-                if (cthd.getIdSanPham().equals(id_sp)) {
-                    int sl_gio_hang = cthd.getSoLuong();
-                    if (!sanPhamBUS.checkSoLuong(id_sp, sl_them + sl_gio_hang)) {
-                        return;
-                    }
-                    cthd.setSoLuong(sl_gio_hang + sl_them);
+            for (CTPhieuNhapDTO ctpn : arrCTPN) {
+                if (ctpn.getIdSanPham().equals(id_sp)) {
+                    int sl_gio_hang = ctpn.getSoLuong();
+                    ctpn.setSoLuong(sl_gio_hang + sl_them);
                     sp_moi = false;
                     break;
                 }
             }
 
             if (sp_moi) {
-                if (!sanPhamBUS.checkSoLuong(id_sp, sl_them)) {
-                    System.out.println("xxx");
-                    return;
-                }
+                
                 int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
-                arrCTHD.add(new CTHoaDonDTO(id_sp, id_sp, ten_sp, "AAA", sl_them, gia));
+                arrCTPN.add(new CTPhieuNhapDTO(id_pn, id_sp, ten_sp, sl_them, gia));
             }
-            reloadCTHD();
+            reloadCTPN();
             this.lbTongTien.setText(String.valueOf(tinhTongTien()));
         }
     }
@@ -431,7 +456,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Chọn sản phẩm cần xóa!");
         } 
         else {
-            arrCTHD.remove(row);
+            arrCTPN.remove(row);
             modelCT.removeRow(row);
             this.lbTongTien.setText(String.valueOf(tinhTongTien()));
         }
@@ -439,9 +464,41 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     
     public int tinhTongTien() {
         int sum = 0;
-        for (CTHoaDonDTO cthd : arrCTHD) {
-            sum += cthd.getDonGia() * cthd.getSoLuong();
+        for (CTPhieuNhapDTO ctpn : arrCTPN) {
+            sum += ctpn.getDonGia() * ctpn.getSoLuong();
         }
         return sum;
+    }
+    
+    public void taoPhieuNhap() {
+        if (this.arrCTPN.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
+            return;
+        }
+        String id_hd = this.arrTfInfor.get(0).getText();
+        String id_ncc = this.arrTfInfor.get(1).getText();
+        String id_nv = this.arrTfInfor.get(2).getText();
+        LocalDate ngay = LocalDate.now();
+        int tt = Integer.parseInt(this.lbTongTien.getText());
+
+        PhieuNhapDTO pn = new PhieuNhapDTO(id_hd, id_ncc, id_nv, ngay, tt);
+        phieuNhapBUS.addPhieuNhap(pn);
+
+        for (CTPhieuNhapDTO ctpn : arrCTPN) {
+            ctPhieuNhapBUS.addCTPN(ctpn);
+            sanPhamBUS.themSoLuong(ctpn.getIdSanPham(), ctpn.getSoLuong());
+        }
+        
+        
+        cleanPage();
+    }
+    
+    public void cleanPage() {
+        this.arrTfInfor.get(0).setText(phieuNhapBUS.createNewId());
+        this.arrTfInfor.get(1).setText("");
+        this.arrCTPN.removeAll(arrCTPN);
+        this.lbTongTien.setText("0");
+        this.loadSP();
+        this.reloadCTPN();
     }
 }

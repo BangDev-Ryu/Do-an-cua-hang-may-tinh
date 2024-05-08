@@ -399,22 +399,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
             arrTfInfor.get(1).setText(result.getIdKhach());
         }
         else if (e.getSource().equals(this.btnTaoHoaDon)) {
-            if (this.arrCTHD.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
-                return;
-            }
-            String id_hd = this.arrTfInfor.get(0).getText();
-            String id_kh = this.arrTfInfor.get(1).getText();
-            String id_nv = this.arrTfInfor.get(2).getText();
-            LocalDate ngay = LocalDate.now();
-            int tt = Integer.parseInt(this.lbTongTien.getText());
-            
-            HoaDonDTO hd = new HoaDonDTO(id_hd, id_kh, id_nv, ngay, tt);
-            hoaDonBUS.addHoaDon(hd);
-            
-            for (CTHoaDonDTO cthd : arrCTHD) {
-                ctHoaDonBUS.addCTHD(cthd);
-            }
+            taoHoaDon();
         }
     }
     
@@ -484,5 +469,37 @@ public class BanHangGUI extends JPanel implements ActionListener {
             sum += cthd.getDonGia() * cthd.getSoLuong();
         }
         return sum;
+    }
+    
+    public void taoHoaDon() {
+        if (this.arrCTHD.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
+            return;
+        }
+        String id_hd = this.arrTfInfor.get(0).getText();
+        String id_kh = this.arrTfInfor.get(1).getText();
+        String id_nv = this.arrTfInfor.get(2).getText();
+        LocalDate ngay = LocalDate.now();
+        int tt = Integer.parseInt(this.lbTongTien.getText());
+
+        HoaDonDTO hd = new HoaDonDTO(id_hd, id_kh, id_nv, ngay, tt);
+        hoaDonBUS.addHoaDon(hd);
+
+        for (CTHoaDonDTO cthd : arrCTHD) {
+            ctHoaDonBUS.addCTHD(cthd);
+            sanPhamBUS.giamSoLuong(cthd.getIdSanPham(), cthd.getSoLuong());
+        }
+        
+        
+        cleanPage();
+    }
+    
+    public void cleanPage() {
+        this.arrTfInfor.get(0).setText(hoaDonBUS.createNewId());
+        this.arrTfInfor.get(1).setText("");
+        this.arrCTHD.removeAll(arrCTHD);
+        this.lbTongTien.setText("0");
+        this.loadSP();
+        this.reloadCTHD();
     }
 }
