@@ -2,6 +2,7 @@ package bus;
 
 import dao.PhieuNhapDAO;
 import dto.PhieuNhapDTO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PhieuNhapBUS {
@@ -43,5 +44,17 @@ public class PhieuNhapBUS {
         }
         
         return id;
+    }
+    
+    public ArrayList<PhieuNhapDTO> filter(LocalDate dateFrom, LocalDate dateTo) {
+        ArrayList<PhieuNhapDTO> res = new ArrayList<>();
+        
+        for (PhieuNhapDTO pn : pnList) {
+            if ((pn.getNgayNhap().isAfter(dateFrom) || pn.getNgayNhap().isEqual(dateFrom)) && (pn.getNgayNhap().isBefore(dateTo) || pn.getNgayNhap().isEqual(dateTo))) {
+                res.add(pn);
+            }
+        }
+        
+        return res;
     }
 }

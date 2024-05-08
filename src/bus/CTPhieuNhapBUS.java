@@ -3,6 +3,7 @@ package bus;
 import dao.CTPhieuNhapDAO;
 import dto.CTPhieuNhapDTO;
 import java.util.ArrayList;
+
 public class CTPhieuNhapBUS {
 
     private ArrayList<CTPhieuNhapDTO> ctpnList;

@@ -2,6 +2,7 @@ package gui;
 
 import bus.CTPhieuNhapBUS;
 import bus.PhieuNhapBUS;
+import com.toedter.calendar.JDateChooser;
 import dto.CTPhieuNhapDTO;
 import dto.PhieuNhapDTO;
 import java.awt.BorderLayout;
@@ -11,12 +12,22 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -134,10 +145,104 @@ public class PhieuNhapGUI extends JPanel {
     }
     
     public JPanel createPnFilter() {
-        JPanel pn_filter = new JPanel();
-        pn_filter.setBorder(BorderFactory.createLineBorder(Color.black));
+        JPanel pn_filter = new JPanel(new FlowLayout(1, 10, 20));
         
+        Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
+        JLabel lb_tim_kiem = new JLabel("Tìm kiếm");
+        lb_tim_kiem.setFont(font_filter);
+        lb_tim_kiem.setForeground(color1);
         
+        JPanel pn_tim_kiem = new JPanel(new FlowLayout(1, 0, 0));
+        pn_tim_kiem.setPreferredSize(new Dimension(250, 30));
+        JComboBox cb_tim_kiem = new JComboBox();
+        cb_tim_kiem.setPreferredSize(new Dimension(140, 30));
+        cb_tim_kiem.addItem("Mã phiếu nhập");
+        cb_tim_kiem.addItem("Mã nhà cung cấp");
+        cb_tim_kiem.addItem("Mã nhân viên");
+        cb_tim_kiem.setForeground(color1);
+        cb_tim_kiem.setBackground(colorBackground);
+        cb_tim_kiem.setFont(font_filter);
+        
+        JTextField tf_tim_kiem = new JTextField();
+        tf_tim_kiem.setPreferredSize(new Dimension(100, 30));
+        tf_tim_kiem.setFont(font_filter);
+        tf_tim_kiem.setForeground(color1);
+        
+        tf_tim_kiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = tf_tim_kiem.getText();
+                int choice = cb_tim_kiem.getSelectedIndex();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                }
+                else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = tf_tim_kiem.getText();
+                int choice = cb_tim_kiem.getSelectedIndex();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                }
+                else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+        
+        pn_tim_kiem.add(cb_tim_kiem);
+        pn_tim_kiem.add(tf_tim_kiem);
+        
+        // lọc theo ngày
+        JLabel lb_ngay = new JLabel("Ngày", JLabel.CENTER);
+        lb_ngay.setFont(font_filter);
+        lb_ngay.setForeground(color1);
+        
+        JDateChooser date_from = new JDateChooser();
+        JDateChooser date_to = new JDateChooser();
+        
+        date_from.setPreferredSize(new Dimension(150, 30));
+        date_to.setPreferredSize(new Dimension(150, 30));
+        
+        JSeparator sep1 = new JSeparator(JSeparator.VERTICAL);
+        sep1.setPreferredSize(new Dimension(10, 40));
+        JSeparator sep2 = new JSeparator(JSeparator.HORIZONTAL);
+        sep2.setPreferredSize(new Dimension(20, 10));
+        
+        JButton btn_loc = new JButton("Lọc");
+        btn_loc.setPreferredSize(new Dimension(100, 30));
+        btn_loc.setBackground(color2);
+        btn_loc.setFont(font_filter);
+        btn_loc.setForeground(this.colorBackground);
+        
+         btn_loc.addMouseListener(new MouseAdapter() { 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Date input1 = date_from.getDate();
+                Date input2 = date_to.getDate();
+                LocalDate date1 = input1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate date2 = input2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                
+                reloadPN(phieuNhapBUS.filter(date1, date2));
+            }
+        });
+        
+        pn_filter.add(lb_tim_kiem);
+        pn_filter.add(pn_tim_kiem);
+        pn_filter.add(sep1);
+        pn_filter.add(lb_ngay);
+        pn_filter.add(date_from);
+        pn_filter.add(sep2);
+        pn_filter.add(date_to);
+        pn_filter.add(btn_loc);
         
         return pn_filter;
     }
