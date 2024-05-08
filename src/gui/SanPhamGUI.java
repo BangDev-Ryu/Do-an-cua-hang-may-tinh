@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -104,9 +107,9 @@ public class SanPhamGUI extends JPanel {
 
         String[] thuoc_tinh = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
         int len = thuoc_tinh.length;
-        this.arrPnInfor = new ArrayList<>();
-        this.arrLbInfor = new ArrayList<>();
-        this.arrTfInfor = new ArrayList<>();
+        this.arrPnInfor = new ArrayList<JPanel>();
+        this.arrLbInfor = new ArrayList<JLabel>();
+        this.arrTfInfor = new ArrayList<JTextField>();
         
         Dimension d_pn = new Dimension(400, 30);
         Dimension d_lb = new Dimension(130, 30);
@@ -132,7 +135,8 @@ public class SanPhamGUI extends JPanel {
             pn_desc.add(this.arrPnInfor.get(i));
         }
         this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
-        
+        this.arrTfInfor.get(2).setEditable(false);
+
         JPanel pn_brand = new JPanel(new FlowLayout(0, 0, 0));
         pn_brand.setPreferredSize(d_pn);
         pn_brand.setForeground(color_font);
@@ -236,6 +240,7 @@ public class SanPhamGUI extends JPanel {
                 lockInfor(false);
                 
                 arrTfInfor.get(0).setText(sanPhamBUS.createNewId());
+                arrTfInfor.get(2).setText("0");
                 
                 btn_them.setVisible(false);
                 btn_sua.setVisible(false);
@@ -312,7 +317,7 @@ public class SanPhamGUI extends JPanel {
                         String hang = (String) cbBrand.getItemAt(cbBrand.getSelectedIndex());
                         String newImg = imgSanPham;
                         
-                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg);
+                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
                         sanPhamBUS.updateSanPham(sp);
                         reloadSP(sanPhamBUS.getSpList());
                         
@@ -336,7 +341,7 @@ public class SanPhamGUI extends JPanel {
                             return;
                         }
                         
-                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg);
+                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
                         sanPhamBUS.addSanPham(sp);
                         
                         reloadSP(sanPhamBUS.getSpList());
@@ -383,10 +388,9 @@ public class SanPhamGUI extends JPanel {
                         bufferImg = ImageIO.read(file);
                         // set tên ảnh là tên mã sản phẩm
                         imgSanPham = arrTfInfor.get(0).getText().concat(".png");      
-
-                        IconModel new_img = new IconModel(200, 250, "SanPham/" + imgSanPham);
+                        
                         lbImgSanPham.setText("");
-                        lbImgSanPham.setIcon(new_img.createIcon());
+                        lbImgSanPham.setIcon(new ImageIcon(bufferImg.getScaledInstance(200, 250, Image.SCALE_SMOOTH)));
                     } catch (IOException ex) {
                         Logger.getLogger(SanPhamGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -616,9 +620,11 @@ public class SanPhamGUI extends JPanel {
     public void reloadSP(ArrayList<SanPhamDTO> spList) {
         model.setRowCount(0);
         for (SanPhamDTO sp : spList) {
-            model.addRow(new Object[]{
-                sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham()
-            });
+            if (sp.isEnable()) {
+                model.addRow(new Object[]{
+                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham()
+                });
+            }
         }
     }
     
@@ -638,7 +644,7 @@ public class SanPhamGUI extends JPanel {
     // khóa khả năng thao tác với thông tin
     public void lockInfor(boolean lock) {
         arrTfInfor.get(1).setEditable(!lock);
-        arrTfInfor.get(2).setEditable(!lock);
+//        arrTfInfor.get(2).setEditable(!lock);
         arrTfInfor.get(3).setEditable(!lock);    
         cbBrand.setEnabled(!lock);
     }

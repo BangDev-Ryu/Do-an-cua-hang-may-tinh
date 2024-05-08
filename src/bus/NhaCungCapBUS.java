@@ -46,7 +46,7 @@ public class NhaCungCapBUS {
     public void deleteNhaCungCap(String id) {
         for (NhaCungCapDTO ncc : nccList) {
             if (ncc.getIdNhaCungCap().equals(id)) {
-                nccList.remove(ncc);
+                ncc.setEnable(false);
                 NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
                 nhaCungCapDAO.deleteDB(id);
                 return;

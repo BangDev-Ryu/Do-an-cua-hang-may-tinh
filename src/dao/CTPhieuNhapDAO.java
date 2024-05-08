@@ -21,10 +21,11 @@ public class CTPhieuNhapDAO {
             while (rs.next()) {
                 String id_pn = rs.getString("id_pn");
                 String id_sp = rs.getString("id_sp");
+                String ten_sp = rs.getString("ten_sp");
                 int so_luong = rs.getInt("so_luong");
                 int don_gia = rs.getInt("don_gia");
                 
-                CTPhieuNhapDTO ctPhieuNhap = new CTPhieuNhapDTO(id_pn, id_sp, so_luong, don_gia);
+                CTPhieuNhapDTO ctPhieuNhap = new CTPhieuNhapDTO(id_pn, id_sp, ten_sp, so_luong, don_gia);
                 ctpnList.add(ctPhieuNhap);
             }
             rs.close();

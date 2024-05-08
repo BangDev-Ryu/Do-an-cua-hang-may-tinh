@@ -241,7 +241,7 @@ public class HoaDonGUI extends JPanel {
         modelCT.setRowCount(0);
         for (CTHoaDonDTO cthd : cthdList) {
             modelCT.addRow(new Object[]{
-                cthd.getIdSanPham(), cthd.getIdSanPham(), cthd.getSoLuong(), cthd.getDonGia()
+                cthd.getIdSanPham(), cthd.getTenSanPham(), cthd.getSoLuong(), cthd.getDonGia()
             });
         }
     }

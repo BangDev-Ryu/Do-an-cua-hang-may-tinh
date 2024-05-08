@@ -3,6 +3,7 @@ package dto;
 public class CTHoaDonDTO {
     private String idHoaDon;
     private String idSanPham;
+    private String tenSanPham;
     private String serialSP;
     private int soLuong;
     private int donGia;
@@ -11,9 +12,10 @@ public class CTHoaDonDTO {
         
     }
 
-    public CTHoaDonDTO(String idHoaDon, String idSanPham, String serialSP, int soLuong, int donGia) {
+    public CTHoaDonDTO(String idHoaDon, String idSanPham, String tenSanPham, String serialSP, int soLuong, int donGia) {
         this.idHoaDon = idHoaDon;
         this.idSanPham = idSanPham;
+        this.tenSanPham = tenSanPham;
         this.serialSP = serialSP;
         this.soLuong = soLuong;
         this.donGia = donGia;
@@ -29,6 +31,14 @@ public class CTHoaDonDTO {
 
     public String getIdSanPham() {
         return idSanPham;
+    }
+
+    public String getTenSanPham() {
+        return tenSanPham;
+    }
+
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
     }
 
     public void setIdSanPham(String idSanPham) {

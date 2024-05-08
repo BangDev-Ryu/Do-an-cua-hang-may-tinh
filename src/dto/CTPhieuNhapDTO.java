@@ -1,17 +1,19 @@
 package dto;
 
 public class CTPhieuNhapDTO {
-     private String idPhieuNhap;
+    private String idPhieuNhap;
     private String idSanPham;
+    private String tenSanPham;
     private int soLuong;
     private int donGia;
 
     public CTPhieuNhapDTO() {
     }
 
-    public CTPhieuNhapDTO(String idPhieuNhap, String idSanPham, int soLuong, int donGia) {
+    public CTPhieuNhapDTO(String idPhieuNhap, String idSanPham, String tenSanPham, int soLuong, int donGia) {
         this.idPhieuNhap = idPhieuNhap;
         this.idSanPham = idSanPham;
+        this.tenSanPham = tenSanPham;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
@@ -22,6 +24,14 @@ public class CTPhieuNhapDTO {
 
     public String getIdSanPham() {
         return idSanPham;
+    }
+
+    public String getTenSanPham() {
+        return tenSanPham;
+    }
+
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
     }
 
     public int getSoLuong() {
@@ -47,5 +57,4 @@ public class CTPhieuNhapDTO {
     public void setDonGia(int donGia) {
         this.donGia = donGia;
     }
-    
 }

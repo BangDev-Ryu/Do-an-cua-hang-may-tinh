@@ -1,22 +1,22 @@
 package dto;
 
 public class NhaCungCapDTO {
-
-
     private String idNhaCungCap;
     private String tenNhaCungCap;
     private String Diachi;
     private String Sdt;
+    private boolean enable;
 
     public NhaCungCapDTO() {
 
     }
 
-    public NhaCungCapDTO(String idNhaCungCap, String tenNhaCungCap, String Diachi, String Sdt) {
+    public NhaCungCapDTO(String idNhaCungCap, String tenNhaCungCap, String Diachi, String Sdt, boolean enable) {
         this.idNhaCungCap = idNhaCungCap;
         this.tenNhaCungCap = tenNhaCungCap;
         this.Diachi = Diachi;
         this.Sdt = Sdt;
+        this.enable = enable;
     }
 
     public String getIdNhaCungCap() {
@@ -51,6 +51,11 @@ public class NhaCungCapDTO {
         this.Sdt = Sdt;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
 
-
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 }

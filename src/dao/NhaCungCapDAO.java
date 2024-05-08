@@ -22,8 +22,9 @@ public class NhaCungCapDAO {
                 String ten = rs.getString("ten");
                 String dia_chi = rs.getString("dia_chi");
                 String sdt = rs.getString("sdt");
+                boolean enable = rs.getBoolean("enable");
 
-                NhaCungCapDTO nhaCungCap  = new NhaCungCapDTO(id, ten, dia_chi, sdt);
+                NhaCungCapDTO nhaCungCap  = new NhaCungCapDTO(id, ten, dia_chi, sdt, enable);
                 nccList.add(nhaCungCap);
             }
             rs.close();
@@ -50,12 +51,13 @@ public class NhaCungCapDAO {
         sql += "'" + ncc.getIdNhaCungCap() + "', ";
         sql += "N'" + ncc.getTenNhaCungCap() + "', ";
         sql += "N'" + ncc.getDiachi() + "', ";
-        sql += "'" + ncc.getSdt() + "')";
+        sql += "'" + ncc.getSdt() + "', ";
+        sql += "'1')";
         db.executeUpdate(sql);
     }
 
     public void deleteDB(String id) {
-        String sql = "DELETE FROM nhacungcap WHERE id='" + id + "'";
+        String sql = "UPDATE nhacungcap SET enable = 0 WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }

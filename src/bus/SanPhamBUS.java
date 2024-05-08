@@ -46,7 +46,7 @@ public class SanPhamBUS {
     public void deleteSanPham(String id) {
         for (SanPhamDTO sp : spList) {
             if (sp.getIdSanPham().equals(id)) {
-                spList.remove(sp);
+                sp.setEnable(false);
                 SanPhamDAO sanPhamDAO = new SanPhamDAO();
                 sanPhamDAO.deleteDB(id);
                 return;
