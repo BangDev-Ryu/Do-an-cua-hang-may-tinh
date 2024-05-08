@@ -2,6 +2,7 @@ package bus;
 
 import dao.HoaDonDAO;
 import dto.HoaDonDTO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class HoaDonBUS {
@@ -46,5 +47,17 @@ public class HoaDonBUS {
         }
         
         return id;
+    }
+    
+    public ArrayList<HoaDonDTO> filter(LocalDate dateFrom, LocalDate dateTo) {
+        ArrayList<HoaDonDTO> res = new ArrayList<>();
+        
+        for (HoaDonDTO hd : hdList) {
+            if ((hd.getNgayXuat().isAfter(dateFrom) || hd.getNgayXuat().isEqual(dateFrom)) && (hd.getNgayXuat().isBefore(dateTo) || hd.getNgayXuat().isEqual(dateTo))) {
+                res.add(hd);
+            }
+        }
+        
+        return res;
     }
 }

@@ -126,4 +126,13 @@ public class SanPhamBUS {
             }
         }
     }
+    
+    public int getGiaOf(String id) {
+        for (SanPhamDTO sp : spList) {
+            if (sp.getIdSanPham().equals(id)) {
+                return sp.getGiaBan();
+            }
+        }
+        return 0;
+    }
 }
