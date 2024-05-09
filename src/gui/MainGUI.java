@@ -100,6 +100,8 @@ public class MainGUI extends JFrame implements MouseListener {
         lb_ava.setPreferredSize(new Dimension(200, 100));
         lb_ava.setOpaque(true);
         lb_ava.setBackground(Color.decode("#009394"));
+        IconModel icon = new IconModel(200, 100, "computer_label.jpg");
+        lb_ava.setIcon(icon.createIcon());
         
         pn_nav.add(lb_ava);
         
@@ -111,7 +113,9 @@ public class MainGUI extends JFrame implements MouseListener {
         this.navName.add("Khách hàng:people-white.png:people-1.png");
         this.navName.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
         this.navName.add("Hóa đơn:task-white.png:task-1.png");
-        this.navName.add("Phiếu nhập:task-white.png:task-1.png");        
+        this.navName.add("Phiếu nhập:task-white.png:task-1.png");   
+        this.navName.add("Bảo hành:shield-white.png:shield-1.png");   
+        this.navName.add("Quyền:quyen-white.png:quyen-1.png");
         
         // tao nav item menu
         for (int i = 0; i < navName.size(); i++) {
