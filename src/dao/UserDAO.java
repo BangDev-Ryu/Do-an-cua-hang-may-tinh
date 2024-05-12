@@ -22,11 +22,11 @@ public class UserDAO {
                 String ten = rs.getString("ten");
                 String gioi_tinh = rs.getString("gioi_tinh");
                 String sdt = rs.getString("sdt");
-                String role = rs.getString("role");
+                String quyen = rs.getString("quyen");
                 String img = rs.getString("img");
                 boolean enable = rs.getBoolean("enable");
                 
-                UserDTO user = new UserDTO(id, password, ten, gioi_tinh, sdt, role, img, enable);
+                UserDTO user = new UserDTO(id, password, ten, gioi_tinh, sdt, quyen, img, enable);
                 userList.add(user);
             }
             rs.close();
@@ -45,7 +45,7 @@ public class UserDAO {
         sql += "ten='" + us.getTenUser() + "', ";
         sql += "gioi_tinh='" + us.getGioiTinh() + "', ";
         sql += "sdt='" + us.getSdt() + "', ";
-        sql += "role='" + us.getRole() + "', ";
+        sql += "quyen='" + us.getQuyen() + "', ";
         sql += "img='" + us.getImgUser() + "', ";
         sql += "enable='" + us.isEnable() + "' ";
         sql += "WHERE id='" + us.getIdUser() + "'";
@@ -59,10 +59,15 @@ public class UserDAO {
         sql += "N'" + us.getTenUser() + "', ";
         sql += "'" +  us.getGioiTinh() + "', ";
         sql += "'" +  us.getSdt() + "', ";
-        sql += "'" +  us.getRole() + "', ";
+        sql += "'" +  us.getQuyen() + "', ";
         sql += "'" +  us.getImgUser() + "', ";
         sql += "'" +  us.isEnable() + "')";
 
+        db.executeUpdate(sql);
+    }
+    
+    public void deleteDB(String id) {
+        String sql = "UPDATE user SET enable = 0 WHERE id='" + id + "'";
         db.executeUpdate(sql);
     }
 }
