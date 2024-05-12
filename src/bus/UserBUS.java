@@ -35,4 +35,49 @@ public class UserBUS {
         }
         return null;
     }
+    
+    public void updateUser(UserDTO user) {
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getIdUser().equals(user.getIdUser())) {
+                userList.set(i, user);
+                UserDAO userDAO = new UserDAO();
+                userDAO.updateDB(user);
+                return;
+            }
+        }
+    }
+    
+    public void addUser(UserDTO user) {
+        userList.add(user);
+        UserDAO userDAO = new UserDAO();
+        userDAO.addDB(user);
+    }
+    
+    public void deleteUser(String id) {
+        for (UserDTO user : userList) {
+            if (user.getIdUser().equals(id)) {
+                user.setEnable(false);
+                UserDAO userDAO = new UserDAO();
+                userDAO.deleteDB(id);
+                return;
+            }
+        }
+    }
+    
+    public String createNewId() {
+        String id = "US";
+        int new_id = userList.size() + 1;
+        
+        if (new_id <= 9) {
+            id += "00" + new_id;
+        }
+        else if (new_id <= 99) {
+            id += "0" + new_id;
+        }
+        else {
+            id += new_id;
+        }
+        
+        return id;
+    }
 }

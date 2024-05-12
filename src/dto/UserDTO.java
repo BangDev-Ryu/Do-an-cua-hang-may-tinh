@@ -6,7 +6,7 @@ public class UserDTO {
     private String tenUser;
     private String gioiTinh;
     private String sdt;
-    private String role;
+    private String quyen;
     private String imgUser;
     private boolean enable;
 
@@ -14,13 +14,13 @@ public class UserDTO {
         
     }
 
-    public UserDTO(String idUser, String password, String tenUser, String gioiTinh, String sdt, String role, String imgUser, boolean enable) {
+    public UserDTO(String idUser, String password, String tenUser, String gioiTinh, String sdt, String quyen, String imgUser, boolean enable) {
         this.idUser = idUser;
         this.password = password;
         this.tenUser = tenUser;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
-        this.role = role;
+        this.quyen = quyen;
         this.imgUser = imgUser;
         this.enable = enable;
     }
@@ -65,12 +65,12 @@ public class UserDTO {
         this.sdt = sdt;
     }
 
-    public String getRole() {
-        return role;
+    public String getQuyen() {
+        return quyen;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setQuyen(String quyen) {
+        this.quyen = quyen;
     }
 
     public String getImgUser() {

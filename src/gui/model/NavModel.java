@@ -25,6 +25,14 @@ public class NavModel extends JPanel implements MouseListener {
         this.colorHover = hover;
         this.init();
     }
+
+    public String getNavName() {
+        return navName;
+    }
+
+    public void setNavName(String navName) {
+        this.navName = navName;
+    }
     
     public void init() {
         this.addMouseListener(this);
@@ -84,10 +92,7 @@ public class NavModel extends JPanel implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         if (!this.isActive) {
             this.setBackground(this.colorHover);
-//            IconModel i = new IconModel(20, 20, this.navIconHover);
-//            this.icon.setIcon(i.createIcon());
         }
-        
     }
 
     @Override
