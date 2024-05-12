@@ -1,7 +1,9 @@
 package gui;
 
+import bus.QuyenBUS;
 import bus.UserBUS;
 import dto.NhanVienDTO;
+import dto.QuyenDTO;
 import dto.UserDTO;
 import gui.model.IconModel;
 import java.util.logging.Level;
@@ -11,14 +13,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -57,6 +62,7 @@ public class NhanVienGUI extends JPanel {
     private DefaultTableModel model;
     private String imgNhanVien = "null";
     private UserBUS userBUS = new UserBUS();
+    private QuyenBUS quyenBUS = new QuyenBUS();
     
     private boolean isEditing = false;
     
@@ -162,7 +168,13 @@ public class NhanVienGUI extends JPanel {
         lb_quyen.setForeground(color_font);
         lb_quyen.setFont(font_infor);
         
-        this.cbQuyen = new JComboBox();
+        loadQuyen();
+        
+        Vector<QuyenDTO> quyen = new Vector<>();
+        for (QuyenDTO q : quyenBUS.getQuyenList()) {
+            quyen.add(q);
+        }
+        this.cbQuyen = new JComboBox(quyen);
         this.cbQuyen.setPreferredSize(d_tf);
         this.cbQuyen.setForeground(color_font);
         this.cbQuyen.setFont(font_infor);
@@ -330,11 +342,12 @@ public class NhanVienGUI extends JPanel {
                         String ten = arrTfInfor.get(2).getText();
                         String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
                         String sdt = arrTfInfor.get(3).getText();
-                        String quyen = (String) cbQuyen.getItemAt(cbQuyen.getSelectedIndex());
+                        QuyenDTO quyenDTO = (QuyenDTO )cbQuyen.getSelectedItem();
+                        String quyen = quyenDTO.getIdQuyen();
                         String newImg = imgNhanVien;
                         
                         UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
-                        userBUS.updateuUser(user);
+                        userBUS.updateUser(user);
                         reloadUser(userBUS.getUserList());
                         
                         saveImg();
@@ -350,11 +363,12 @@ public class NhanVienGUI extends JPanel {
                         String ten = arrTfInfor.get(2).getText();
                         String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
                         String sdt = arrTfInfor.get(3).getText();
-                        String quyen = (String) cbQuyen.getItemAt(cbQuyen.getSelectedIndex());
+                        QuyenDTO quyenDTO = (QuyenDTO )cbQuyen.getSelectedItem();
+                        String quyen = quyenDTO.getIdQuyen();
                         String newImg = imgNhanVien;
                         
                         UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
-                        userBUS.updateuUser(user);
+                        userBUS.addUser(user);
                         reloadUser(userBUS.getUserList());
                         
                         blankInfor();
@@ -401,9 +415,8 @@ public class NhanVienGUI extends JPanel {
                         // set tên ảnh là tên mã nhân viên
                         imgNhanVien = arrTfInfor.get(0).getText().concat(".png");      
 
-                        IconModel new_img = new IconModel(200, 250, "NhanVien/" + imgNhanVien);
                         lbImgNhanVien.setText("");
-                        lbImgNhanVien.setIcon(new_img.createIcon());
+                        lbImgNhanVien.setIcon(new ImageIcon(bufferImg.getScaledInstance(200, 250, Image.SCALE_SMOOTH)));
                     } catch (IOException ex) {
                         Logger.getLogger(NhanVienGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -522,7 +535,7 @@ public class NhanVienGUI extends JPanel {
         pn_table.setPreferredSize(new Dimension(this.width, 290));
         
         String[] col = {
-            "Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Giới tính", "SĐT", "Quyền"
+            "Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Giới tính", "SĐT", "Quyền", "IMG"
         };
         this.model = new DefaultTableModel(col, 0);
         this.table = new JTable();
@@ -532,13 +545,13 @@ public class NhanVienGUI extends JPanel {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setPreferredSize(new Dimension(900, 250));
         
-        
         table.getColumnModel().getColumn(0).setPreferredWidth(30);
         table.getColumnModel().getColumn(1).setPreferredWidth(40);
         table.getColumnModel().getColumn(2).setPreferredWidth(70);
         table.getColumnModel().getColumn(3).setPreferredWidth(20);
         table.getColumnModel().getColumn(4).setPreferredWidth(80);
         table.getColumnModel().getColumn(5).setPreferredWidth(50);
+        table.getColumnModel().getColumn(6).setPreferredWidth(50);
         
         this.loadUser();
         
@@ -550,7 +563,7 @@ public class NhanVienGUI extends JPanel {
                 if (table.getRowSorter() != null) {
                     row = table.getRowSorter().convertRowIndexToModel(row);
                 }
-                imgNhanVien = table.getModel().getValueAt(row, 5).toString();
+                imgNhanVien = table.getModel().getValueAt(row, 6).toString();
                 IconModel icon_nv = new IconModel(175, 200, "NhanVien/" + imgNhanVien);
                 
                 // set thông tin cho sản phẩm
@@ -562,6 +575,8 @@ public class NhanVienGUI extends JPanel {
                 cbQuyen.setSelectedItem(table.getModel().getValueAt(row, 5).toString());
                 lbImgNhanVien.setText("");
                 lbImgNhanVien.setIcon(icon_nv.createIcon());
+
+               
                 
                 if (isEditing) {
                     lockInfor(false);
@@ -608,9 +623,17 @@ public class NhanVienGUI extends JPanel {
     public void reloadUser(ArrayList<UserDTO> userList) {
         model.setRowCount(0);
         for (UserDTO us : userList) {
-            model.addRow(new Object[]{
-                us.getIdUser(), us.getPassword(), us.getTenUser(), us.getGioiTinh(), us.getSdt(), us.getQuyen()
-            });
+            if (us.isEnable()) {
+                model.addRow(new Object[]{
+                    us.getIdUser(), us.getPassword(), us.getTenUser(), us.getGioiTinh(), us.getSdt(), us.getQuyen(), us.getImgUser()
+                });
+            }
+        }
+    }
+    
+    public void loadQuyen() {
+        if (quyenBUS.getQuyenList() == null) {
+            quyenBUS.list();
         }
     }
     

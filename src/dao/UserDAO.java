@@ -61,7 +61,7 @@ public class UserDAO {
         sql += "'" +  us.getSdt() + "', ";
         sql += "'" +  us.getQuyen() + "', ";
         sql += "'" +  us.getImgUser() + "', ";
-        sql += "'" +  us.isEnable() + "')";
+        sql += "'1')";
 
         db.executeUpdate(sql);
     }

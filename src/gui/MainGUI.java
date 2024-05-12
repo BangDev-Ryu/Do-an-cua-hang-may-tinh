@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ public class MainGUI extends JFrame implements MouseListener {
     private JPanel header, nav, main;
     private ArrayList<String> navName = new ArrayList<>();
     private ArrayList<NavModel> navModel = new ArrayList<>(); 
+    private Map<String, Integer> mapChucNang = new HashMap<>();
     
     public MainGUI() {
         this.init();
@@ -137,7 +140,8 @@ public class MainGUI extends JFrame implements MouseListener {
             NavModel item = navModel.get(i);
             if (e.getSource() == item) {
                 item.actived();
-                changeMain(i);
+//                System.out.println();
+                changeMain(item);
             }
             else {
                 item.noActived();
@@ -145,64 +149,67 @@ public class MainGUI extends JFrame implements MouseListener {
         }
     }
     
-    public void changeMain(int i) {
-        switch (i) {
-            case 0: // ban hang
+    public void changeMain(NavModel nav) {
+        switch (nav.getNavName()) {
+            case "Bán hàng": // ban hang
                 main.removeAll();
                 main.add(new BanHangGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 1: // nhap hang
+            case "Nhập hàng": // nhap hang
                 main.removeAll();
                 main.add(new NhapHangGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 2: // san pham 
+            case "Sản phẩm": // san pham 
                 main.removeAll();
                 main.add(new SanPhamGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 3: // nhan vien
+            case "Nhân viên": // nhan vien
                 main.removeAll();
                 main.add(new NhanVienGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 4: // khach hang
+            case "Khách hàng": // khach hang
                 main.removeAll();
                 main.add(new KhachHangGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 5: // nha cung cap
+            case "Nhà cung cấp": // nha cung cap
                 main.removeAll();
                 main.add(new NhaCungCapGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 6: // hoa don
+            case "Hóa đơn": // hoa don
                 main.removeAll();
                 main.add(new HoaDonGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 7: // phieu nhap
-                 main.removeAll();
+            case "Phiếu nhập": // phieu nhap
+                main.removeAll();
                 main.add(new PhieuNhapGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 8: // baohanh 
+            case "Bảo hành": // baohanh 
                 main.removeAll();
                 main.add(new BaoHanhGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;
-            case 9: // quyen
-
+            case "Quyền": // quyen
+                main.removeAll();
+                main.add(new QuyenGUI(1000, 670));
+                main.repaint();
+                main.validate();
                 break;
         }
     }

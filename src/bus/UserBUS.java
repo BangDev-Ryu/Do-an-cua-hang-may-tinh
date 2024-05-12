@@ -36,7 +36,7 @@ public class UserBUS {
         return null;
     }
     
-    public void updateuUser(UserDTO user) {
+    public void updateUser(UserDTO user) {
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getIdUser().equals(user.getIdUser())) {
                 userList.set(i, user);
