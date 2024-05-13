@@ -48,6 +48,7 @@ public class QuyenGUI extends JPanel {
     private ArrayList<JCheckBox> arrCbThem;
     private ArrayList<JCheckBox> arrCbSua;
     private ArrayList<JCheckBox> arrCbXoa;
+    private JButton btnThem, btnSua, btnXoa;
         
     private JTable table;
     private TableRowSorter<TableModel> rowSorter;
@@ -55,6 +56,7 @@ public class QuyenGUI extends JPanel {
     private boolean isEditing = false;
     private QuyenBUS quyenBUS = new QuyenBUS();
     private CTQuyenChucNangBUS ctBUS = new CTQuyenChucNangBUS();
+
     
     private boolean quyenThem, quyenSua, quyenXoa;
     
@@ -229,9 +231,11 @@ public class QuyenGUI extends JPanel {
         pn_btn.setPreferredSize(new Dimension(200, 250));
         
         // các nút chức năng mặc định
-        JButton btn_them = new JButton("Thêm");
-        JButton btn_sua = new JButton("Sửa");
-        JButton btn_xoa = new JButton("Xóa");
+        btnThem = new JButton("Thêm");
+        btnSua = new JButton("Sửa");
+        btnXoa = new JButton("Xóa");
+        
+        showCN();
          
         // các nút chức năng phụ
         JButton btn_hoan_thanh = new JButton("Hoàn thành");
@@ -239,9 +243,9 @@ public class QuyenGUI extends JPanel {
         
         // Thiết kế giao diện nút
         Dimension d_btn = new Dimension(150, 30);
-        btn_them.setPreferredSize(d_btn);
-        btn_sua.setPreferredSize(d_btn);
-        btn_xoa.setPreferredSize(d_btn);
+        btnThem.setPreferredSize(d_btn);
+        btnSua.setPreferredSize(d_btn);
+        btnXoa.setPreferredSize(d_btn);
         
         btn_hoan_thanh.setPreferredSize(d_btn);
         btn_tro_ve.setPreferredSize(d_btn);
@@ -249,38 +253,38 @@ public class QuyenGUI extends JPanel {
         btn_tro_ve.setVisible(false);
         
         Color color_button = this.color2;
-        btn_them.setBackground(color_button);
-        btn_sua.setBackground(color_button);
-        btn_xoa.setBackground(color_button);
+        btnThem.setBackground(color_button);
+        btnSua.setBackground(color_button);
+        btnXoa.setBackground(color_button);
 
         btn_hoan_thanh.setBackground(color_button);
         btn_tro_ve.setBackground(color_button);
         
         Color color_font_btn = this.colorBackground;
-        btn_them.setForeground(color_font_btn);
-        btn_sua.setForeground(color_font_btn);
-        btn_xoa.setForeground(color_font_btn);
+        btnThem.setForeground(color_font_btn);
+        btnSua.setForeground(color_font_btn);
+        btnXoa.setForeground(color_font_btn);
         
         btn_hoan_thanh.setForeground(color_font_btn);
         btn_tro_ve.setForeground(color_font_btn);
         
         Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
-        btn_them.setFont(font_btn);
-        btn_sua.setFont(font_btn);
-        btn_xoa.setFont(font_btn);
+        btnThem.setFont(font_btn);
+        btnSua.setFont(font_btn);
+        btnXoa.setFont(font_btn);
         
         btn_hoan_thanh.setFont(font_btn);
         btn_tro_ve.setFont(font_btn);
         
         // thêm các nút
-        pn_btn.add(btn_them);
-        pn_btn.add(btn_sua);
-        pn_btn.add(btn_xoa);
+        pn_btn.add(btnThem);
+        pn_btn.add(btnSua);
+        pn_btn.add(btnXoa);
         pn_btn.add(btn_hoan_thanh);
         pn_btn.add(btn_tro_ve);
         
         // khi ấn nút thêm
-        btn_them.addMouseListener(new MouseAdapter() {
+        btnThem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 arrTfInfor.get(0).setText(quyenBUS.createNewId());
@@ -289,9 +293,9 @@ public class QuyenGUI extends JPanel {
                 lockInfor(false);
                 blankInfor();
                                 
-                btn_them.setVisible(false);
-                btn_sua.setVisible(false);
-                btn_xoa.setVisible(false);
+                btnThem.setVisible(false);
+                btnSua.setVisible(false);
+                btnXoa.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
@@ -302,7 +306,7 @@ public class QuyenGUI extends JPanel {
         });
         
         // khi ấn nút sửa
-        btn_sua.addMouseListener(new MouseAdapter() {
+        btnSua.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
@@ -313,9 +317,9 @@ public class QuyenGUI extends JPanel {
                 
                 lockInfor(false);
                 
-                btn_them.setVisible(false);
-                btn_sua.setVisible(false);
-                btn_xoa.setVisible(false);
+                btnThem.setVisible(false);
+                btnSua.setVisible(false);
+                btnXoa.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
@@ -325,7 +329,7 @@ public class QuyenGUI extends JPanel {
         });
         
         // khi ấn nút xóa
-        btn_xoa.addMouseListener(new MouseAdapter() {
+        btnXoa.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
@@ -392,9 +396,11 @@ public class QuyenGUI extends JPanel {
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
                 
-                btn_them.setVisible(true);
-                btn_sua.setVisible(true);
-                btn_xoa.setVisible(true);
+                btnThem.setVisible(true);
+                btnSua.setVisible(true);
+                btnXoa.setVisible(true);
+                
+                showCN();
                 
                 btn_hoan_thanh.setVisible(false);
                 btn_tro_ve.setVisible(false);
@@ -655,7 +661,13 @@ public class QuyenGUI extends JPanel {
     
     public void updateCTQCN(ArrayList<String> arr_cn) {
         String id_quyen = this.arrTfInfor.get(0).getText();
-        for (String cn : arr_cn) {
+        ArrayList<String> all_cn = new ArrayList<>();
+        for (int i = 0; i <= 3; i++) {
+            for (int j = 0; j <= 9; j++) {
+                all_cn.add(i+""+j);
+            }
+        }
+        for (String cn : all_cn) {
             ctBUS.deleteCTQCN(id_quyen, cn);
         }
         for (String cn : arr_cn) {
@@ -691,5 +703,11 @@ public class QuyenGUI extends JPanel {
             this.arrCbSua.get(i).setSelected(false);
             this.arrCbXoa.get(i).setSelected(false);
         }
+    }
+    
+    public void showCN() {
+        this.btnThem.setVisible(quyenThem);
+        this.btnSua.setVisible(quyenSua);
+        this.btnXoa.setVisible(quyenXoa);
     }
 }

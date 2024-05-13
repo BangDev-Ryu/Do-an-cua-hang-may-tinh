@@ -39,6 +39,8 @@ public class NhaCungCapGUI extends JPanel {
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
     private ArrayList<JTextField> arrTfInfor;
+    private JButton btnThem, btnSua, btnXoa, btnNhapExcel, btnXuatExcel;
+
 
     private JTable table;
     private TableRowSorter<TableModel> rowSorter;
@@ -121,11 +123,13 @@ public class NhaCungCapGUI extends JPanel {
         pn_btn.setPreferredSize(new Dimension(250, 250));
         
         // các nút chức năng mặc định
-        JButton btn_them = new JButton("Thêm");
-        JButton btn_sua = new JButton("Sửa");
-        JButton btn_xoa = new JButton("Xóa");
-        JButton btn_nhap_excel = new JButton("Nhập Excel");
-        JButton btn_xuat_excel = new JButton("Xuất Excel");
+        btnThem = new JButton("Thêm");
+        btnSua = new JButton("Sửa");
+        btnXoa = new JButton("Xóa");
+        btnNhapExcel = new JButton("Nhập Excel");
+        btnXuatExcel = new JButton("Xuất Excel");
+        
+        showCN();
         
         // các nút chức năng phụ
         JButton btn_hoan_thanh = new JButton("Hoàn thành");
@@ -133,11 +137,11 @@ public class NhaCungCapGUI extends JPanel {
         
         // Thiết kế giao diện nút
         Dimension d_btn = new Dimension(150, 30);
-        btn_them.setPreferredSize(d_btn);
-        btn_sua.setPreferredSize(d_btn);
-        btn_xoa.setPreferredSize(d_btn);
-        btn_nhap_excel.setPreferredSize(d_btn);
-        btn_xuat_excel.setPreferredSize(d_btn);
+        btnThem.setPreferredSize(d_btn);
+        btnSua.setPreferredSize(d_btn);
+        btnXoa.setPreferredSize(d_btn);
+        btnNhapExcel.setPreferredSize(d_btn);
+        btnXuatExcel.setPreferredSize(d_btn);
         
         btn_hoan_thanh.setPreferredSize(d_btn);
         btn_tro_ve.setPreferredSize(d_btn);
@@ -145,46 +149,46 @@ public class NhaCungCapGUI extends JPanel {
         btn_tro_ve.setVisible(false);
         
         Color color_button = this.color2;
-        btn_them.setBackground(color_button);
-        btn_sua.setBackground(color_button);
-        btn_xoa.setBackground(color_button);
-        btn_nhap_excel.setBackground(color_button);
-        btn_xuat_excel.setBackground(color_button);
+        btnThem.setBackground(color_button);
+        btnSua.setBackground(color_button);
+        btnXoa.setBackground(color_button);
+        btnNhapExcel.setBackground(color_button);
+        btnXuatExcel.setBackground(color_button);
 
         btn_hoan_thanh.setBackground(color_button);
         btn_tro_ve.setBackground(color_button);
         
         Color color_font_btn = this.colorBackground;
-        btn_them.setForeground(color_font_btn);
-        btn_sua.setForeground(color_font_btn);
-        btn_xoa.setForeground(color_font_btn);
-        btn_nhap_excel.setForeground(color_font_btn);
-        btn_xuat_excel.setForeground(color_font_btn);
+        btnThem.setForeground(color_font_btn);
+        btnSua.setForeground(color_font_btn);
+        btnXoa.setForeground(color_font_btn);
+        btnNhapExcel.setForeground(color_font_btn);
+        btnXuatExcel.setForeground(color_font_btn);
 
         btn_hoan_thanh.setForeground(color_font_btn);
         btn_tro_ve.setForeground(color_font_btn);
         
         Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
-        btn_them.setFont(font_btn);
-        btn_sua.setFont(font_btn);
-        btn_xoa.setFont(font_btn);
-        btn_nhap_excel.setFont(font_btn);
-        btn_xuat_excel.setFont(font_btn);
+        btnThem.setFont(font_btn);
+        btnSua.setFont(font_btn);
+        btnXoa.setFont(font_btn);
+        btnNhapExcel.setFont(font_btn);
+        btnXuatExcel.setFont(font_btn);
 
         btn_hoan_thanh.setFont(font_btn);
         btn_tro_ve.setFont(font_btn);
         
         // thêm các nút
-        pn_btn.add(btn_them);
-        pn_btn.add(btn_sua);
-        pn_btn.add(btn_xoa);
-        pn_btn.add(btn_nhap_excel);
-        pn_btn.add(btn_xuat_excel);
+        pn_btn.add(btnThem);
+        pn_btn.add(btnSua);
+        pn_btn.add(btnXoa);
+        pn_btn.add(btnNhapExcel);
+        pn_btn.add(btnXuatExcel);
         pn_btn.add(btn_hoan_thanh);
         pn_btn.add(btn_tro_ve);
         
         // khi ấn nút thêm
-       btn_them.addMouseListener(new MouseAdapter() {
+       btnThem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
@@ -193,11 +197,11 @@ public class NhaCungCapGUI extends JPanel {
                 
                 arrTfInfor.get(0).setText(nhaCungCapBUS.createNewId());
                 
-                btn_them.setVisible(false);
-                btn_sua.setVisible(false);
-                btn_xoa.setVisible(false);
-                btn_nhap_excel.setVisible(false);
-                btn_xuat_excel.setVisible(false);
+                btnThem.setVisible(false);
+                btnSua.setVisible(false);
+                btnXoa.setVisible(false);
+                btnNhapExcel.setVisible(false);
+                btnXuatExcel.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
@@ -208,7 +212,7 @@ public class NhaCungCapGUI extends JPanel {
         });
         
         // khi ấn nút sửa
-        btn_sua.addMouseListener(new MouseAdapter() {
+        btnSua.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
@@ -219,11 +223,11 @@ public class NhaCungCapGUI extends JPanel {
                 
                 lockInfor(false);
                 
-                btn_them.setVisible(false);
-                btn_sua.setVisible(false);
-                btn_xoa.setVisible(false);
-                btn_nhap_excel.setVisible(false);
-                btn_xuat_excel.setVisible(false);
+                btnThem.setVisible(false);
+                btnSua.setVisible(false);
+                btnXoa.setVisible(false);
+                btnNhapExcel.setVisible(false);
+                btnXuatExcel.setVisible(false);
                 
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
@@ -233,7 +237,7 @@ public class NhaCungCapGUI extends JPanel {
         });
         
         // khi ấn nút xóa
-        btn_xoa.addMouseListener(new MouseAdapter() {
+        btnXoa.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
@@ -304,11 +308,13 @@ public class NhaCungCapGUI extends JPanel {
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
                 
-                btn_them.setVisible(true);
-                btn_sua.setVisible(true);
-                btn_xoa.setVisible(true);
-                btn_nhap_excel.setVisible(true);
-                btn_xuat_excel.setVisible(true);
+                btnThem.setVisible(true);
+                btnSua.setVisible(true);
+                btnXoa.setVisible(true);
+                btnNhapExcel.setVisible(true);
+                btnXuatExcel.setVisible(true);
+                
+                showCN();
                 
                 btn_hoan_thanh.setVisible(false);
                 btn_tro_ve.setVisible(false);
@@ -491,5 +497,13 @@ public class NhaCungCapGUI extends JPanel {
         arrTfInfor.get(1).setText("");
         arrTfInfor.get(2).setText("");
         arrTfInfor.get(3).setText("");
+    }
+    
+    public void showCN() {
+        this.btnThem.setVisible(quyenThem);
+        this.btnSua.setVisible(quyenSua);
+        this.btnXoa.setVisible(quyenXoa);
+        this.btnNhapExcel.setVisible(quyenSua);
+        this.btnXuatExcel.setVisible(quyenSua);
     }
 }

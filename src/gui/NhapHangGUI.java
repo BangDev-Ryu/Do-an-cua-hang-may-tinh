@@ -225,6 +225,8 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         this.btnXoaSanPham.addActionListener(this);
         this.btnTaoPhieuNhap.addActionListener(this);
         
+        this.btnTaoPhieuNhap.setVisible(quyenThem);
+        
         JPanel pn_tong_tien = new JPanel(new FlowLayout(1, 5, 10));
         pn_tong_tien.setPreferredSize(new Dimension(150, 170));
         pn_tong_tien.setBorder(BorderFactory.createLineBorder(this.color1, 2));

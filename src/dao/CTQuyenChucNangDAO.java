@@ -32,17 +32,6 @@ public class CTQuyenChucNangDAO {
         return ctList;
     }
     
-//    public void updateDB(CTQuyenChucNangDTO ct) {
-//        String sql = "UPDATE ctquyenchucnang SET ";
-//        sql += "ten='" + sp.getTenSanPham() + "', ";
-//        sql += "so_luong='" + sp.getSoLuong() + "', ";
-//        sql += "gia_ban='" + sp.getGiaBan() + "', ";
-//        sql += "hang='" + sp.getHang() + "', ";
-//        sql += "img='" + sp.getImgSanPham() + "' ";
-//        sql += "WHERE id='" + sp.getIdSanPham() + "'";
-//        db.executeUpdate(sql);
-//    }
-    
     public void addDB(CTQuyenChucNangDTO ct) {
         String sql = "INSERT INTO ctquyenchucnang VALUES (";
         sql += "'" + ct.getIdQuyen() + "', ";
