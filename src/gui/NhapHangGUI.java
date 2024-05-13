@@ -6,6 +6,7 @@ import bus.SanPhamBUS;
 import dto.CTPhieuNhapDTO;
 import dto.PhieuNhapDTO;
 import dto.SanPhamDTO;
+import dto.UserDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -60,11 +61,13 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model, modelCT;
     
+    private UserDTO user = new UserDTO();
     private boolean quyenThem, quyenSua, quyenXoa;
     
-    public NhapHangGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
+    public NhapHangGUI(int width, int height, UserDTO user, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.user = user;
         this.quyenThem = quyenThem;
         this.quyenSua = quyenSua;
         this.quyenXoa = quyenXoa;
@@ -94,6 +97,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         pn_infor.setBorder(BorderFactory.createLineBorder(color1, 2));
         
         loadPN();
+        
         String[] thuoc_tinh = {"Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên", "Ngày", "Giá lời"};
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<>();
@@ -126,6 +130,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         }
 
         this.arrTfInfor.get(0).setText(phieuNhapBUS.createNewId());
+        this.arrTfInfor.get(2).setText(this.user.getIdUser());
         this.arrTfInfor.get(3).setText(LocalDate.now()+"");
         this.arrTfInfor.get(4).setText("0%");
         
@@ -435,7 +440,10 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             arrTfInfor.get(1).setText(result.getIdNCC());
         }
         else if (e.getSource().equals(this.btnTaoPhieuNhap)) {
-            taoPhieuNhap();
+            int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận tạo phiếu nhập", "", JOptionPane.YES_NO_OPTION);
+            if (confirmed == 0) {
+                taoPhieuNhap();
+            }
         }
     }
     

@@ -1,7 +1,7 @@
 package gui;
-import bus.CTHoaDonBUS;
-import bus.HoaDonBUS;
+import bus.BaoHanhBUS;
 import com.toedter.calendar.JDateChooser;
+import dto.BaoHanhDTO;
 import dto.CTHoaDonDTO;
 import dto.HoaDonDTO;
 import java.awt.BorderLayout;
@@ -32,13 +32,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 public class BaoHanhGUI  extends JPanel {
-     private int width, height;
+    private int width, height;
     private Color colorBackground = Color.decode("#FFFFFF");
     private Color color1 = Color.decode("#006270");
     private Color color2 = Color.decode("#009394");
     private Color color3 = Color.decode("#00E0C7");
-    private HoaDonBUS hoaDonBUS = new HoaDonBUS();
-    private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
+    private BaoHanhBUS baoHanhBUS = new BaoHanhBUS();
     
     private JPanel pnInfor, pnFilter, pnTable;
     private ArrayList<JLabel> arrLbInfor;
@@ -153,7 +152,7 @@ public class BaoHanhGUI  extends JPanel {
                 LocalDate date1 = input1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate date2 = input2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
-                reloadHD(hoaDonBUS.filter(date1, date2));
+                reloadBH(baoHanhBUS.filter(date1, date2));
             }
         });
         
@@ -174,7 +173,7 @@ public class BaoHanhGUI  extends JPanel {
         pn_table.setPreferredSize(new Dimension(this.width, 300));
         
         String[] col = {
-            "Mã khách hàng ", "Tên sản phẩm", "Serial", "Ngày mua", "Ngày hết hạn"};
+            "Mã khách hàng", "Tên sản phẩm", "Serial", "Ngày mua", "Ngày hết hạn"};
         this.model = new DefaultTableModel(col, 0);
         this.table = new JTable();
         rowSorter = new TableRowSorter<TableModel>(model);
@@ -190,27 +189,27 @@ public class BaoHanhGUI  extends JPanel {
         table.getColumnModel().getColumn(3).setPreferredWidth(250);
         table.getColumnModel().getColumn(4).setPreferredWidth(200);
         
-        this.loadHD();
+        this.loadBH();
         
         pn_table.add(scroll);
         
-        table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                int row = table.getSelectedRow();
-                if (table.getRowSorter() != null) {
-                    row = table.getRowSorter().convertRowIndexToModel(row);
-                }
-                
-                // set thông tin cho sản phẩm
-                arrLbInfor.get(0).setText("Mã khách hàng " + table.getModel().getValueAt(row, 0).toString());
-                arrLbInfor.get(1).setText("Tên sản phẩm" + table.getModel().getValueAt(row, 1).toString());
-                arrLbInfor.get(2).setText("Serial" + table.getModel().getValueAt(row, 2).toString());
-                arrLbInfor.get(3).setText("Ngày mua" + table.getModel().getValueAt(row, 3).toString());
-                arrLbInfor.get(4).setText("Ngày hết hạn" + table.getModel().getValueAt(row, 4).toString());
-
-                loadCTHD(table.getModel().getValueAt(row, 0).toString());
-            }
-        });
+//        table.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent e) {
+//                int row = table.getSelectedRow();
+//                if (table.getRowSorter() != null) {
+//                    row = table.getRowSorter().convertRowIndexToModel(row);
+//                }
+//                
+//                // set thông tin cho sản phẩm
+//                arrLbInfor.get(0).setText("Mã khách hàng " + table.getModel().getValueAt(row, 0).toString());
+//                arrLbInfor.get(1).setText("Tên sản phẩm" + table.getModel().getValueAt(row, 1).toString());
+//                arrLbInfor.get(2).setText("Serial" + table.getModel().getValueAt(row, 2).toString());
+//                arrLbInfor.get(3).setText("Ngày mua" + table.getModel().getValueAt(row, 3).toString());
+//                arrLbInfor.get(4).setText("Ngày hết hạn" + table.getModel().getValueAt(row, 4).toString());
+//
+//                loadCTHD(table.getModel().getValueAt(row, 0).toString());
+//            }
+//        });
         
         // giao diện table
         Font font_table = new Font("Segoe UI", Font.BOLD, 13);
@@ -237,39 +236,21 @@ public class BaoHanhGUI  extends JPanel {
         return pn_table;
     }
     
-    public void loadHD() {
-        if (hoaDonBUS.getHdList() == null) {
-            hoaDonBUS.list();
+    public void loadBH() {
+        if (baoHanhBUS.getBhList() == null) {
+            baoHanhBUS.list();
         }
-        ArrayList<HoaDonDTO> hdList = hoaDonBUS.getHdList();
+        ArrayList<BaoHanhDTO> bhList = baoHanhBUS.getBhList();
         model.setRowCount(0);
-        reloadHD(hdList);
+        reloadBH(bhList);
     }
     
-    public void reloadHD(ArrayList<HoaDonDTO> hdList) {
+    public void reloadBH(ArrayList<BaoHanhDTO> bhList) {
         model.setRowCount(0);
-        for (HoaDonDTO hd : hdList) {
+        for (BaoHanhDTO bh : bhList) {
             model.addRow(new Object[]{
-                hd.getIdHoaDon(), hd.getIdKhachHang(), hd.getIdUser(), hd.getNgayXuat(), hd.getTongTien()
+                bh.getIdKhachHang(), bh.getTenSanPham(), bh.getSerial(), bh.getNgayMua(), bh.getNgayHetHan()
             });
         }
     } 
-    
-    public void loadCTHD(String id) {
-        if (ctHoaDonBUS.getCthdList() == null) {
-            ctHoaDonBUS.list();
-        }
-        ArrayList<CTHoaDonDTO> cthdList = ctHoaDonBUS.listId(id);
-        modelCT.setRowCount(0);
-        reloadCTHD(cthdList);
-    }
-    
-    public void reloadCTHD(ArrayList<CTHoaDonDTO> cthdList) {
-        modelCT.setRowCount(0);
-        for (CTHoaDonDTO cthd : cthdList) {
-            modelCT.addRow(new Object[]{
-                cthd.getIdSanPham(), cthd.getTenSanPham(), cthd.getSoLuong(), cthd.getDonGia()
-            });
-        }
-    }
 }

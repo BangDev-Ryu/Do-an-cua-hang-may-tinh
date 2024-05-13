@@ -1,11 +1,16 @@
 package gui;
 
+import bus.BaoHanhBUS;
 import bus.CTHoaDonBUS;
+import bus.CTSanPhamBUS;
 import bus.HoaDonBUS;
 import bus.SanPhamBUS;
+import dto.BaoHanhDTO;
 import dto.CTHoaDonDTO;
+import dto.CTSanPhamDTO;
 import dto.HoaDonDTO;
 import dto.SanPhamDTO;
+import dto.UserDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -41,6 +46,8 @@ public class BanHangGUI extends JPanel implements ActionListener {
     private SanPhamBUS sanPhamBUS = new SanPhamBUS();
     private HoaDonBUS hoaDonBUS = new HoaDonBUS();
     private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
+    private BaoHanhBUS baoHanhBUS = new BaoHanhBUS();
+    private CTSanPhamBUS ctspBUS = new CTSanPhamBUS();
 
     private JPanel pnInfor, pnFilter, pnTable;
     private ArrayList<JPanel> arrPnInfor;
@@ -55,11 +62,13 @@ public class BanHangGUI extends JPanel implements ActionListener {
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model, modelCT;
     
+    private UserDTO user  = new UserDTO();
     private boolean quyenThem, quyenSua, quyenXoa;
     
-    public BanHangGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
+    public BanHangGUI(int width, int height, UserDTO user, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.user = user;
         this.quyenThem = quyenThem;
         this.quyenSua = quyenSua;
         this.quyenXoa = quyenXoa;
@@ -124,6 +133,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         this.arrTfInfor.get(3).setEditable(false);
 
         this.arrTfInfor.get(0).setText(hoaDonBUS.createNewId());
+        this.arrTfInfor.get(2).setText(this.user.getIdUser());
         this.arrTfInfor.get(3).setText(LocalDate.now()+"");
         
         this.arrTfInfor.get(1).setPreferredSize(new Dimension(100, 30));
@@ -406,7 +416,10 @@ public class BanHangGUI extends JPanel implements ActionListener {
             arrTfInfor.get(1).setText(result.getIdKhach());
         }
         else if (e.getSource().equals(this.btnTaoHoaDon)) {
-            taoHoaDon();
+            int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận tạo hóa đơn", "", JOptionPane.YES_NO_OPTION);
+            if (confirmed == 0) {
+                taoHoaDon();
+            }
         }
     }
     
@@ -451,7 +464,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
                     return;
                 }
                 int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
-                arrCTHD.add(new CTHoaDonDTO(id_hd, id_sp, ten_sp, "AAA", sl_them, gia));
+                arrCTHD.add(new CTHoaDonDTO(id_hd, id_sp, ten_sp, sl_them, gia));
             }
             reloadCTHD();
             this.lbTongTien.setText(String.valueOf(tinhTongTien()));
@@ -486,17 +499,31 @@ public class BanHangGUI extends JPanel implements ActionListener {
         String id_hd = this.arrTfInfor.get(0).getText();
         String id_kh = this.arrTfInfor.get(1).getText();
         String id_nv = this.arrTfInfor.get(2).getText();
-        LocalDate ngay = LocalDate.now();
+        LocalDate ngay_mua = LocalDate.now();
         int tt = Integer.parseInt(this.lbTongTien.getText());
 
-        HoaDonDTO hd = new HoaDonDTO(id_hd, id_kh, id_nv, ngay, tt);
+        HoaDonDTO hd = new HoaDonDTO(id_hd, id_kh, id_nv, ngay_mua, tt);
         hoaDonBUS.addHoaDon(hd);
+        
+        if (baoHanhBUS.getBhList() == null) {
+            baoHanhBUS.list();
+        }
+        if (ctspBUS.getCtspList() == null) {
+            ctspBUS.list();
+        }
 
         for (CTHoaDonDTO cthd : arrCTHD) {
+            for (int i = 0; i < cthd.getSoLuong(); i++) {
+                String serial = ctspBUS.createNewId(cthd.getIdSanPham());
+                CTSanPhamDTO ctsp = new CTSanPhamDTO(cthd.getIdSanPham(), serial);
+                LocalDate ngay_het_han = ngay_mua.plusYears(1);
+                BaoHanhDTO bh = new BaoHanhDTO(id_kh, cthd.getTenSanPham(), serial, ngay_mua, ngay_het_han);
+                ctspBUS.addCTSP(ctsp);
+                baoHanhBUS.addBH(bh);
+            }
             ctHoaDonBUS.addCTHD(cthd);
             sanPhamBUS.giamSoLuong(cthd.getIdSanPham(), cthd.getSoLuong());
         }
-        
         
         cleanPage();
     }

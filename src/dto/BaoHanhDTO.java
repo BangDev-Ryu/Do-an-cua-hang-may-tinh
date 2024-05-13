@@ -3,21 +3,22 @@ package dto;
 import java.time.LocalDate;
 
 public class BaoHanhDTO {
-
     private String idKhachHang;
     private String tenSanPham;
     private String serial;
     private LocalDate ngayMua;
     private LocalDate ngayHetHan;
 
-    public BaoHanhDTO(String idKhachHang, String serial, LocalDate ngayMua, LocalDate ngayHetHan) {
+    public BaoHanhDTO(String idKhachHang, String tenSanPham, String serial, LocalDate ngayMua, LocalDate ngayHetHan) {
         this.idKhachHang = idKhachHang;
+        this.tenSanPham = tenSanPham;
         this.serial = serial;
         this.ngayMua = ngayMua;
         this.ngayHetHan = ngayHetHan;
     }
 
     public BaoHanhDTO() {
+        
     }
 
     public String getIdKhachHang() {
@@ -59,6 +60,4 @@ public class BaoHanhDTO {
     public void setNgayHetHan(LocalDate ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
     }
-    
-    
 }

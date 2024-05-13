@@ -227,13 +227,13 @@ public class MainGUI extends JFrame implements MouseListener {
                 break;
             case "Bán hàng": // ban hang
                 main.removeAll();
-                main.add(new BanHangGUI(1000, 670, mapCN.get("15"), mapCN.get("25"), mapCN.get("35")));
+                main.add(new BanHangGUI(1000, 670, user, mapCN.get("15"), mapCN.get("25"), mapCN.get("35")));
                 main.repaint();
                 main.validate();
                 break;
             case "Nhập hàng": // nhap hang
                 main.removeAll();
-                main.add(new NhapHangGUI(1000, 670, mapCN.get("16"), mapCN.get("26"), mapCN.get("36")));
+                main.add(new NhapHangGUI(1000, 670, user, mapCN.get("16"), mapCN.get("26"), mapCN.get("36")));
                 main.repaint();
                 main.validate();
                 break;
