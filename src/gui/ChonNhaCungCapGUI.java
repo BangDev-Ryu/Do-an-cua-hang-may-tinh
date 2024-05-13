@@ -1,8 +1,6 @@
 package gui;
 
-import bus.KhachHangBUS;
 import bus.NhaCungCapBUS;
-import dto.KhachHangDTO;
 import dto.NhaCungCapDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
