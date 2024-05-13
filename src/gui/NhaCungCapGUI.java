@@ -45,11 +45,16 @@ public class NhaCungCapGUI extends JPanel {
     private DefaultTableModel model;
     private NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
     
+    private boolean quyenThem, quyenSua, quyenXoa;
+    
     private boolean isEditing = false; // true = đang trong chế độ sửa, false = đang trong chế độ thêm hoặc khác    
     
-    public NhaCungCapGUI(int width, int height) {
+    public NhaCungCapGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.quyenThem = quyenThem;
+        this.quyenSua = quyenSua;
+        this.quyenXoa = quyenXoa;
         this.init();
     }
     

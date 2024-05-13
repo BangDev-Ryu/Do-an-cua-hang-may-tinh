@@ -60,11 +60,16 @@ public class SanPhamGUI extends JPanel {
     private SanPhamBUS sanPhamBUS = new SanPhamBUS();
     private String imgSanPham = "null";
     
+    private boolean quyenThem, quyenSua, quyenXoa;
+    
     private boolean isEditing = false; // true = đang trong chế độ sửa, false = đang trong chế độ thêm hoặc khác
     
-    public SanPhamGUI(int width, int height) {
+    public SanPhamGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.quyenThem = quyenThem;
+        this.quyenSua = quyenSua;
+        this.quyenXoa = quyenXoa;
         this.init();
     }
     
