@@ -218,15 +218,14 @@ public class LoginGUI extends JFrame implements MouseListener {
                 if (userBUS.getUserList() == null) {
                     userBUS.list();
                 }
-                String username = tf_user.getText();
+                String userid = tf_user.getText();
                 char[] password = tf_password.getPassword();
-                UserDTO user = userBUS.checkUser(username, password);
+                UserDTO user = userBUS.checkUser(userid, password);
                 if (user == null) {
                     lb_error_noti.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
-//                    JOptionPane.showMessageDialog(null, "Sai tên tài khoản hoặc mật khẩu");
                     return;
                 }
-                mainGUI = new MainGUI();
+                mainGUI = new MainGUI(user);
                 dispose();
             }
         

@@ -2,7 +2,6 @@ package gui;
 
 import bus.QuyenBUS;
 import bus.UserBUS;
-import dto.NhanVienDTO;
 import dto.QuyenDTO;
 import dto.UserDTO;
 import gui.model.IconModel;
@@ -64,11 +63,16 @@ public class NhanVienGUI extends JPanel {
     private UserBUS userBUS = new UserBUS();
     private QuyenBUS quyenBUS = new QuyenBUS();
     
+    private boolean quyenThem, quyenSua, quyenXoa;
+    
     private boolean isEditing = false;
     
-    public NhanVienGUI(int width, int height) {
+    public NhanVienGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.quyenThem = quyenThem;
+        this.quyenSua = quyenSua;
+        this.quyenXoa = quyenXoa;
         this.init();
     }
     

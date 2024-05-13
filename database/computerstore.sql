@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 09, 2024 at 08:05 AM
+-- Generation Time: May 13, 2024 at 05:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `computerstore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chucnang`
+--
+
+CREATE TABLE `chucnang` (
+  `id` varchar(10) NOT NULL,
+  `ten` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `chucnang`
+--
+
+INSERT INTO `chucnang` (`id`, `ten`) VALUES
+('NV0', 'Xem nhân viên'),
+('NV1', 'Thêm nhân viên'),
+('NV2', 'Sửa nhân viên'),
+('NV3', 'Xóa nhân viên');
 
 -- --------------------------------------------------------
 
@@ -52,7 +73,8 @@ INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `serial_sp`, `so_luong`, `do
 ('HD006', 'SP001', 'Acer Aspire 7', 'AAA', 5, 15000000),
 ('HD007', 'SP008', 'LG Gram 2023', 'AAA', 4, 27000000),
 ('HD007', 'SP009', 'MacBook Air M1', 'AAA', 1, 30999000),
-('HD008', 'SP002', 'MSI modern 15', 'AAA', 2, 12000000);
+('HD008', 'SP002', 'MSI modern 15', 'AAA', 2, 12000000),
+('HD009', 'SP001', 'Acer Aspire 7', 'AAA', 1, 15000);
 
 -- --------------------------------------------------------
 
@@ -76,7 +98,78 @@ INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VA
 ('PN001', 'SP007', 'Dell Vostro 3530', 3, 14000000),
 ('PN002', 'SP001', 'Acer Aspire 7', 1, 9000000),
 ('PN002', 'SP002', 'MSI modern 15', 1, 7200000),
-('PN003', 'SP008', 'LG Gram 2023', 10, 0);
+('PN003', 'SP008', 'LG Gram 2023', 10, 0),
+('PN004', 'SP003', 'Acer Nitro 5', 10, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ctquyenchucnang`
+--
+
+CREATE TABLE `ctquyenchucnang` (
+  `id_quyen` varchar(10) NOT NULL,
+  `id_chuc_nang` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ctquyenchucnang`
+--
+
+INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
+('QU001', '00'),
+('QU001', '01'),
+('QU001', '02'),
+('QU001', '03'),
+('QU001', '04'),
+('QU001', '05'),
+('QU001', '06'),
+('QU001', '07'),
+('QU001', '08'),
+('QU001', '09'),
+('QU001', '10'),
+('QU001', '11'),
+('QU001', '12'),
+('QU001', '13'),
+('QU001', '14'),
+('QU001', '15'),
+('QU001', '16'),
+('QU001', '20'),
+('QU001', '21'),
+('QU001', '22'),
+('QU001', '23'),
+('QU001', '24'),
+('QU001', '30'),
+('QU001', '31'),
+('QU001', '32'),
+('QU001', '33'),
+('QU001', '34'),
+('QU002', '01'),
+('QU002', '03'),
+('QU002', '05'),
+('QU002', '07'),
+('QU002', '11'),
+('QU002', '13'),
+('QU002', '15'),
+('QU002', '21'),
+('QU002', '23'),
+('QU002', '31'),
+('QU002', '33'),
+('QU003', '00'),
+('QU003', '02'),
+('QU003', '03'),
+('QU003', '06'),
+('QU003', '08'),
+('QU003', '10'),
+('QU003', '12'),
+('QU003', '13'),
+('QU003', '16'),
+('QU003', '20'),
+('QU003', '22'),
+('QU003', '23'),
+('QU003', '30'),
+('QU003', '32'),
+('QU003', '33');
 
 -- --------------------------------------------------------
 
@@ -104,7 +197,8 @@ INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VAL
 ('HD005', '', '', '2024-05-05', 20000000),
 ('HD006', 'KH003', '', '2024-05-05', 75000000),
 ('HD007', '', '', '2024-05-08', 138999000),
-('HD008', '', '', '2024-05-08', 24000000);
+('HD008', '', '', '2024-05-08', 24000000),
+('HD009', '', '', '2024-05-09', 15000);
 
 -- --------------------------------------------------------
 
@@ -197,7 +291,29 @@ CREATE TABLE `phieunhap` (
 INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`) VALUES
 ('PN001', 'CC005', '', '2024-05-08', 42000000),
 ('PN002', '', '', '2024-05-09', 16200000),
-('PN003', '', '', '2024-05-09', 0);
+('PN003', '', '', '2024-05-09', 0),
+('PN004', '', '', '2024-05-09', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quyen`
+--
+
+CREATE TABLE `quyen` (
+  `id` varchar(10) NOT NULL,
+  `ten` varchar(50) DEFAULT NULL,
+  `enable` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `quyen`
+--
+
+INSERT INTO `quyen` (`id`, `ten`, `enable`) VALUES
+('QU001', 'Admin', 1),
+('QU002', 'Nhân viên bán hàng', 1),
+('QU003', 'Nhân viên nhập hàng', 1);
 
 -- --------------------------------------------------------
 
@@ -220,9 +336,9 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`, `enable`) VALUES
-('SP001', 'Acer Aspire 7', 21, 15000, 'Acer', 'SP001.png', 1),
+('SP001', 'Acer Aspire 7', 20, 15000, 'Acer', 'SP001.png', 1),
 ('SP002', 'MSI modern 15', 11, 12000, 'MSI', 'SP002.png', 1),
-('SP003', 'Acer Nitro 5', 5, 20000, 'Acer', 'SP003.png', 1),
+('SP003', 'Acer Nitro 5', 15, 20000, 'Acer', 'SP003.png', 1),
 ('SP004', 'ASUS Zenbook 14 OLED', 15, 20000, 'Asus', 'SP004.png', 1),
 ('SP005', 'ASUS ROG Zephyrus G14', 17, 50000, 'Asus', 'SP005.png', 1),
 ('SP006', 'Dell Inspiron 15', 12, 13000, 'Dell', 'SP006.png', 1),
@@ -243,7 +359,7 @@ CREATE TABLE `user` (
   `ten` varchar(50) DEFAULT NULL,
   `gioi_tinh` varchar(5) DEFAULT NULL,
   `sdt` varchar(15) DEFAULT NULL,
-  `role` varchar(50) NOT NULL,
+  `quyen` varchar(50) NOT NULL,
   `img` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -252,12 +368,19 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `role`, `img`, `enable`) VALUES
-('admin', 'admin', 'admin', '', '', 'admin', '', 1);
+INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
+('US001', 'admin', 'Admin', 'Nam', '911', 'QU001', 'null', 1),
+('US002', 'nv1', 'nhan vien 1', 'Nam', '666', 'QU002', 'null', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `chucnang`
+--
+ALTER TABLE `chucnang`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cthoadon`
@@ -272,6 +395,12 @@ ALTER TABLE `cthoadon`
 ALTER TABLE `ctphieunhap`
   ADD PRIMARY KEY (`id_pn`,`id_sp`),
   ADD KEY `id_pn` (`id_pn`,`id_sp`);
+
+--
+-- Indexes for table `ctquyenchucnang`
+--
+ALTER TABLE `ctquyenchucnang`
+  ADD PRIMARY KEY (`id_quyen`,`id_chuc_nang`);
 
 --
 -- Indexes for table `hoadon`
@@ -302,6 +431,12 @@ ALTER TABLE `nhanvien`
 --
 ALTER TABLE `phieunhap`
   ADD PRIMARY KEY (`id_pn`);
+
+--
+-- Indexes for table `quyen`
+--
+ALTER TABLE `quyen`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sanpham`

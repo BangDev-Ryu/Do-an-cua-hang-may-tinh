@@ -1,14 +1,9 @@
 package gui;
 
 import bus.CTQuyenChucNangBUS;
-import bus.NhanVienBUS;
 import bus.QuyenBUS;
 import dto.CTQuyenChucNangDTO;
-import dto.NhanVienDTO;
 import dto.QuyenDTO;
-import gui.model.IconModel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,17 +11,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -67,9 +56,14 @@ public class QuyenGUI extends JPanel {
     private QuyenBUS quyenBUS = new QuyenBUS();
     private CTQuyenChucNangBUS ctBUS = new CTQuyenChucNangBUS();
     
-    public QuyenGUI(int width, int height) {
+    private boolean quyenThem, quyenSua, quyenXoa;
+    
+    public QuyenGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.quyenThem = quyenThem;
+        this.quyenSua = quyenSua;
+        this.quyenXoa = quyenXoa;
         this.init();
     }
     

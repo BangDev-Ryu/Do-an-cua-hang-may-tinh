@@ -55,9 +55,14 @@ public class BanHangGUI extends JPanel implements ActionListener {
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model, modelCT;
     
-    public BanHangGUI(int width, int height) {
+    private boolean quyenThem, quyenSua, quyenXoa;
+    
+    public BanHangGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
+        this.quyenThem = quyenThem;
+        this.quyenSua = quyenSua;
+        this.quyenXoa = quyenXoa;
         this.init();
     }
     

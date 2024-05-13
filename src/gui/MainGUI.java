@@ -1,5 +1,7 @@
 package gui;
 
+import bus.CTQuyenChucNangBUS;
+import dto.UserDTO;
 import gui.model.IconModel;
 import gui.model.NavModel;
 import java.awt.BorderLayout;
@@ -20,9 +22,12 @@ public class MainGUI extends JFrame implements MouseListener {
     private JPanel header, nav, main;
     private ArrayList<String> navName = new ArrayList<>();
     private ArrayList<NavModel> navModel = new ArrayList<>(); 
-    private Map<String, Integer> mapChucNang = new HashMap<>();
+    private Map<String, Boolean> mapCN = new HashMap<>();
+    private CTQuyenChucNangBUS qcnBUS = new CTQuyenChucNangBUS();
+    private UserDTO user = new UserDTO();
     
-    public MainGUI() {
+    public MainGUI(UserDTO user) {
+        this.user = user;
         this.init();
     }
     
@@ -108,17 +113,56 @@ public class MainGUI extends JFrame implements MouseListener {
         
         pn_nav.add(lb_ava);
         
+        if (qcnBUS.getCtList() == null) {
+            qcnBUS.list();
+        }
+        ArrayList<String> arr_cn = qcnBUS.listId(this.user.getQuyen());
+        for (int i = 0; i <= 3; i++) {
+            for (int j = 0; j <= 9; j++) {
+                mapCN.put(i+""+j, false);
+            }
+        }
+        for (String cn : arr_cn) {
+            mapCN.put(cn, true);
+        }
         // add navigation menu
-        this.navName.add("Bán hàng:cart-white.png:cart-1.png");
-        this.navName.add("Nhập hàng:cart-white.png:cart-1.png");
-        this.navName.add("Sản phẩm:laptop-white.png:laptop-1.png");
-        this.navName.add("Nhân viên:employee-white.png:employee-1.png");
-        this.navName.add("Khách hàng:people-white.png:people-1.png");
-        this.navName.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
-        this.navName.add("Hóa đơn:task-white.png:task-1.png");
-        this.navName.add("Phiếu nhập:task-white.png:task-1.png");   
-        this.navName.add("Bảo hành:shield-white.png:shield-1.png");   
-        this.navName.add("Quyền:quyen-white.png:quyen-1.png");
+        for (String cn : arr_cn) {
+            if (cn.charAt(0) == '0') {
+                switch (cn.charAt(1)) {
+                    case '0':
+                        this.navName.add("Nhân viên:employee-white.png:employee-1.png");
+                        break;
+                    case '1':
+                        this.navName.add("Khách hàng:people-white.png:people-1.png");
+                        break;
+                    case '2':
+                        this.navName.add("Nhà cung cấp:delivery-white.png:delivery-1.png");
+                        break;
+                    case '3':
+                        this.navName.add("Sản phẩm:laptop-white.png:laptop-1.png");
+                        break;
+                    case '4':
+                        this.navName.add("Quyền:quyen-white.png:quyen-1.png");
+                        break;
+                    case '5':
+                        this.navName.add("Bán hàng:cart-white.png:cart-1.png");
+                        break;
+                    case '6':
+                        this.navName.add("Nhập hàng:cart-white.png:cart-1.png");
+                        break;
+                    case '7':
+                        this.navName.add("Hóa đơn:task-white.png:task-1.png");
+                        break;
+                    case '8':
+                        this.navName.add("Phiếu nhập:task-white.png:task-1.png");   
+                        break;
+                    case '9':
+                        this.navName.add("Bảo hành:shield-white.png:shield-1.png");   
+                        break;
+                }
+            }
+        }
+        
         
         // tao nav item menu
         for (int i = 0; i < navName.size(); i++) {
@@ -151,39 +195,45 @@ public class MainGUI extends JFrame implements MouseListener {
     
     public void changeMain(NavModel nav) {
         switch (nav.getNavName()) {
-            case "Bán hàng": // ban hang
-                main.removeAll();
-                main.add(new BanHangGUI(1000, 670));
-                main.repaint();
-                main.validate();
-                break;
-            case "Nhập hàng": // nhap hang
-                main.removeAll();
-                main.add(new NhapHangGUI(1000, 670));
-                main.repaint();
-                main.validate();
-                break;
-            case "Sản phẩm": // san pham 
-                main.removeAll();
-                main.add(new SanPhamGUI(1000, 670));
-                main.repaint();
-                main.validate();
-                break;
             case "Nhân viên": // nhan vien
                 main.removeAll();
-                main.add(new NhanVienGUI(1000, 670));
+                main.add(new NhanVienGUI(1000, 670, mapCN.get("10"), mapCN.get("20"), mapCN.get("30")));
                 main.repaint();
                 main.validate();
                 break;
             case "Khách hàng": // khach hang
                 main.removeAll();
-                main.add(new KhachHangGUI(1000, 670));
+                main.add(new KhachHangGUI(1000, 670, mapCN.get("11"), mapCN.get("21"), mapCN.get("31")));
                 main.repaint();
                 main.validate();
                 break;
             case "Nhà cung cấp": // nha cung cap
                 main.removeAll();
-                main.add(new NhaCungCapGUI(1000, 670));
+                main.add(new NhaCungCapGUI(1000, 670, mapCN.get("12"), mapCN.get("22"), mapCN.get("32")));
+                main.repaint();
+                main.validate();
+                break;
+            case "Sản phẩm": // san pham 
+                main.removeAll();
+                main.add(new SanPhamGUI(1000, 670, mapCN.get("13"), mapCN.get("23"), mapCN.get("33")));
+                main.repaint();
+                main.validate();
+                break;
+            case "Quyền": // quyen
+                main.removeAll();
+                main.add(new QuyenGUI(1000, 670, mapCN.get("14"), mapCN.get("24"), mapCN.get("34")));
+                main.repaint();
+                main.validate();
+                break;
+            case "Bán hàng": // ban hang
+                main.removeAll();
+                main.add(new BanHangGUI(1000, 670, mapCN.get("15"), mapCN.get("25"), mapCN.get("35")));
+                main.repaint();
+                main.validate();
+                break;
+            case "Nhập hàng": // nhap hang
+                main.removeAll();
+                main.add(new NhapHangGUI(1000, 670, mapCN.get("16"), mapCN.get("26"), mapCN.get("36")));
                 main.repaint();
                 main.validate();
                 break;
@@ -202,12 +252,6 @@ public class MainGUI extends JFrame implements MouseListener {
             case "Bảo hành": // baohanh 
                 main.removeAll();
                 main.add(new BaoHanhGUI(1000, 670));
-                main.repaint();
-                main.validate();
-                break;
-            case "Quyền": // quyen
-                main.removeAll();
-                main.add(new QuyenGUI(1000, 670));
                 main.repaint();
                 main.validate();
                 break;

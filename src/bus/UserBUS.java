@@ -26,10 +26,10 @@ public class UserBUS {
         userList = userDAO.list();
     }
     
-    public UserDTO checkUser(String userName, char[] password) {
+    public UserDTO checkUser(String userId, char[] password) {
         for (UserDTO user : userList) {
             char[] correctPass = user.getPassword().toCharArray();
-            if (user.getTenUser().equals(userName) && Arrays.equals(password, correctPass) && user.isEnable()) {
+            if (user.getIdUser().equals(userId) && Arrays.equals(password, correctPass) && user.isEnable()) {
                 return user;
             }
         }
