@@ -4,7 +4,6 @@ public class CTHoaDonDTO {
     private String idHoaDon;
     private String idSanPham;
     private String tenSanPham;
-    private String serialSP;
     private int soLuong;
     private int donGia;
     
@@ -12,11 +11,10 @@ public class CTHoaDonDTO {
         
     }
 
-    public CTHoaDonDTO(String idHoaDon, String idSanPham, String tenSanPham, String serialSP, int soLuong, int donGia) {
+    public CTHoaDonDTO(String idHoaDon, String idSanPham, String tenSanPham, int soLuong, int donGia) {
         this.idHoaDon = idHoaDon;
         this.idSanPham = idSanPham;
         this.tenSanPham = tenSanPham;
-        this.serialSP = serialSP;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
@@ -43,14 +41,6 @@ public class CTHoaDonDTO {
 
     public void setIdSanPham(String idSanPham) {
         this.idSanPham = idSanPham;
-    }
-
-    public String getSerialSP() {
-        return serialSP;
-    }
-
-    public void setSerialSP(String serialSP) {
-        this.serialSP = serialSP;
     }
 
     public int getSoLuong() {

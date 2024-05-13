@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 13, 2024 at 05:38 AM
+-- Generation Time: May 13, 2024 at 08:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `computerstore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `baohanh`
+--
+
+CREATE TABLE `baohanh` (
+  `id_kh` varchar(6) DEFAULT NULL,
+  `ten_sp` varchar(50) NOT NULL,
+  `serial` varchar(10) NOT NULL,
+  `ngay_mua` date NOT NULL,
+  `ngay_het_han` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `baohanh`
+--
+
+INSERT INTO `baohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`) VALUES
+('KH001', 'Acer Aspire 7', 'SP001001', '2024-05-14', '2025-05-14'),
+('KH001', 'Acer Aspire 7', 'SP001002', '2024-05-14', '2025-05-14'),
+('KH001', 'MSI modern 15', 'SP002001', '2024-05-14', '2025-05-14');
 
 -- --------------------------------------------------------
 
@@ -52,7 +75,6 @@ CREATE TABLE `cthoadon` (
   `id_hd` varchar(6) NOT NULL,
   `id_sp` varchar(6) NOT NULL,
   `ten_sp` varchar(50) NOT NULL,
-  `serial_sp` varchar(13) NOT NULL,
   `so_luong` int(11) NOT NULL,
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -61,20 +83,9 @@ CREATE TABLE `cthoadon` (
 -- Dumping data for table `cthoadon`
 --
 
-INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `serial_sp`, `so_luong`, `don_gia`) VALUES
-('HD001', 'SP001', 'Acer Aspire 7', 'AAA', 1, 15000000),
-('HD002', 'SP010', 'MacBook Pro M2', 'AAA', 1, 39999000),
-('HD003', 'SP001', 'Acer Aspire 7', 'AAA', 1, 15000000),
-('HD003', 'SP002', 'MSI modern 15', 'AAA', 1, 12000000),
-('HD003', 'SP003', 'Acer Nitro 5', 'AAA', 1, 20000000),
-('HD004', 'SP006', 'Dell Inspiron 15', 'AAA', 1, 13000000),
-('HD004', 'SP008', 'LG Gram 2023', 'AAA', 2, 27000000),
-('HD005', 'SP004', 'ASUS Zenbook 14 OLED', 'AAA', 1, 20000000),
-('HD006', 'SP001', 'Acer Aspire 7', 'AAA', 5, 15000000),
-('HD007', 'SP008', 'LG Gram 2023', 'AAA', 4, 27000000),
-('HD007', 'SP009', 'MacBook Air M1', 'AAA', 1, 30999000),
-('HD008', 'SP002', 'MSI modern 15', 'AAA', 2, 12000000),
-('HD009', 'SP001', 'Acer Aspire 7', 'AAA', 1, 15000);
+INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
+('HD001', 'SP001', 'Acer Aspire 7', 2, 15000),
+('HD001', 'SP002', 'MSI modern 15', 1, 12000);
 
 -- --------------------------------------------------------
 
@@ -95,11 +106,9 @@ CREATE TABLE `ctphieunhap` (
 --
 
 INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
-('PN001', 'SP007', 'Dell Vostro 3530', 3, 14000000),
-('PN002', 'SP001', 'Acer Aspire 7', 1, 9000000),
-('PN002', 'SP002', 'MSI modern 15', 1, 7200000),
-('PN003', 'SP008', 'LG Gram 2023', 10, 0),
-('PN004', 'SP003', 'Acer Nitro 5', 10, 0);
+('PN001', 'SP001', 'Acer Aspire 7', 5, 7500),
+('PN001', 'SP007', 'Dell Vostro 3530', 5, 7000),
+('PN001', 'SP008', 'LG Gram 2023', 5, 13500);
 
 -- --------------------------------------------------------
 
@@ -147,13 +156,8 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU002', '01'),
 ('QU002', '03'),
 ('QU002', '05'),
-('QU002', '07'),
-('QU002', '11'),
-('QU002', '13'),
-('QU002', '15'),
+('QU002', '06'),
 ('QU002', '21'),
-('QU002', '23'),
-('QU002', '31'),
 ('QU002', '33'),
 ('QU003', '00'),
 ('QU003', '02'),
@@ -174,6 +178,26 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ctsanpham`
+--
+
+CREATE TABLE `ctsanpham` (
+  `id_sp` varchar(6) NOT NULL,
+  `serial` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ctsanpham`
+--
+
+INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
+('SP001', 'SP001001'),
+('SP001', 'SP001002'),
+('SP002', 'SP002001');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hoadon`
 --
 
@@ -190,15 +214,7 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VALUES
-('HD001', 'KH003', '', '2024-05-01', 15000000),
-('HD002', 'KH002', '', '2024-05-02', 39999000),
-('HD003', 'KH001', '', '2024-05-03', 47000000),
-('HD004', 'KH003', '', '2024-05-03', 67000000),
-('HD005', '', '', '2024-05-05', 20000000),
-('HD006', 'KH003', '', '2024-05-05', 75000000),
-('HD007', '', '', '2024-05-08', 138999000),
-('HD008', '', '', '2024-05-08', 24000000),
-('HD009', '', '', '2024-05-09', 15000);
+('HD001', 'KH001', 'US001', '2024-05-14', 42000);
 
 -- --------------------------------------------------------
 
@@ -251,28 +267,6 @@ INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhanvien`
---
-
-CREATE TABLE `nhanvien` (
-  `id` varchar(6) NOT NULL,
-  `ten` varchar(50) NOT NULL,
-  `dia_chi` varchar(60) NOT NULL,
-  `sdt` varchar(13) DEFAULT NULL,
-  `gioi_tinh` varchar(5) NOT NULL,
-  `img` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `nhanvien`
---
-
-INSERT INTO `nhanvien` (`id`, `ten`, `dia_chi`, `sdt`, `gioi_tinh`, `img`) VALUES
-('NV001', 'abc', 'qweqwe', '011111', 'Nam', 'NV001.png');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `phieunhap`
 --
 
@@ -289,10 +283,7 @@ CREATE TABLE `phieunhap` (
 --
 
 INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`) VALUES
-('PN001', 'CC005', '', '2024-05-08', 42000000),
-('PN002', '', '', '2024-05-09', 16200000),
-('PN003', '', '', '2024-05-09', 0),
-('PN004', '', '', '2024-05-09', 0);
+('PN001', '', 'US001', '2024-05-14', 140000);
 
 -- --------------------------------------------------------
 
@@ -336,16 +327,16 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`, `enable`) VALUES
-('SP001', 'Acer Aspire 7', 20, 15000, 'Acer', 'SP001.png', 1),
-('SP002', 'MSI modern 15', 11, 12000, 'MSI', 'SP002.png', 1),
-('SP003', 'Acer Nitro 5', 15, 20000, 'Acer', 'SP003.png', 1),
+('SP001', 'Acer Aspire 7', 18, 15000, 'Acer', 'SP001.png', 1),
+('SP002', 'MSI modern 15', 10, 12000, 'MSI', 'SP002.png', 1),
+('SP003', 'Acer Nitro 5', 12, 20000, 'Acer', 'SP003.png', 1),
 ('SP004', 'ASUS Zenbook 14 OLED', 15, 20000, 'Asus', 'SP004.png', 1),
 ('SP005', 'ASUS ROG Zephyrus G14', 17, 50000, 'Asus', 'SP005.png', 1),
 ('SP006', 'Dell Inspiron 15', 12, 13000, 'Dell', 'SP006.png', 1),
-('SP007', 'Dell Vostro 3530', 10, 14000, 'Dell', 'SP007.png', 1),
-('SP008', 'LG Gram 2023', 10, 27000, 'LG', 'SP008.png', 1),
+('SP007', 'Dell Vostro 3530', 15, 14000, 'Dell', 'SP007.png', 1),
+('SP008', 'LG Gram 2023', 15, 27000, 'LG', 'SP008.png', 1),
 ('SP009', 'MacBook Air M1', 24, 30990, 'Mac', 'SP009.png', 1),
-('SP010', 'MacBook Pro M2', 20, 39999, 'Mac', 'SP010.png', 1);
+('SP010', 'MacBook Pro M2', 15, 39999, 'Mac', 'SP010.png', 1);
 
 -- --------------------------------------------------------
 
@@ -377,6 +368,12 @@ INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`,
 --
 
 --
+-- Indexes for table `baohanh`
+--
+ALTER TABLE `baohanh`
+  ADD PRIMARY KEY (`serial`);
+
+--
 -- Indexes for table `chucnang`
 --
 ALTER TABLE `chucnang`
@@ -403,6 +400,12 @@ ALTER TABLE `ctquyenchucnang`
   ADD PRIMARY KEY (`id_quyen`,`id_chuc_nang`);
 
 --
+-- Indexes for table `ctsanpham`
+--
+ALTER TABLE `ctsanpham`
+  ADD PRIMARY KEY (`id_sp`,`serial`);
+
+--
 -- Indexes for table `hoadon`
 --
 ALTER TABLE `hoadon`
@@ -418,12 +421,6 @@ ALTER TABLE `khachhang`
 -- Indexes for table `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `nhanvien`
---
-ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`id`);
 
 --

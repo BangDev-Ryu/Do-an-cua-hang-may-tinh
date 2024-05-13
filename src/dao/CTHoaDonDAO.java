@@ -21,11 +21,10 @@ public class CTHoaDonDAO {
                 String id_hd = rs.getString("id_hd");
                 String id_sp = rs.getString("id_sp");
                 String ten_sp = rs.getString("ten_sp");
-                String serial_sp = rs.getString("serial_sp");
                 int so_luong = rs.getInt("so_luong");
                 int don_gia = rs.getInt("don_gia");
                 
-                CTHoaDonDTO ctHoaDon = new CTHoaDonDTO(id_hd, id_sp, ten_sp, serial_sp, so_luong, don_gia);
+                CTHoaDonDTO ctHoaDon = new CTHoaDonDTO(id_hd, id_sp, ten_sp, so_luong, don_gia);
                 cthdList.add(ctHoaDon);
             }
             rs.close();
@@ -41,7 +40,6 @@ public class CTHoaDonDAO {
         sql += "'" + cthd.getIdHoaDon() + "', ";
         sql += "'" + cthd.getIdSanPham() + "', ";
         sql += "N'" + cthd.getTenSanPham() + "', ";
-        sql += "'" + cthd.getSerialSP() + "', ";
         sql += "'" + cthd.getSoLuong() + "', ";
         sql += "'" + cthd.getDonGia() + "')";
         db.executeUpdate(sql);
