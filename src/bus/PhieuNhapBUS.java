@@ -46,15 +46,27 @@ public class PhieuNhapBUS {
         return id;
     }
     
-    public ArrayList<PhieuNhapDTO> filter(LocalDate dateFrom, LocalDate dateTo) {
+    public ArrayList<PhieuNhapDTO> filter(LocalDate dateBegin, LocalDate dateEnd) {
         ArrayList<PhieuNhapDTO> res = new ArrayList<>();
         
         for (PhieuNhapDTO pn : pnList) {
-            if ((pn.getNgayNhap().isAfter(dateFrom) || pn.getNgayNhap().isEqual(dateFrom)) && (pn.getNgayNhap().isBefore(dateTo) || pn.getNgayNhap().isEqual(dateTo))) {
+            if ((pn.getNgayNhap().isAfter(dateBegin) || pn.getNgayNhap().isEqual(dateBegin)) && (pn.getNgayNhap().isBefore(dateEnd) || pn.getNgayNhap().isEqual(dateEnd))) {
                 res.add(pn);
             }
         }
         
         return res;
+    }
+    
+    public int tinhTienNhap(LocalDate dateBegin, LocalDate dateEnd) {
+        int sum = 0;
+        
+        for (PhieuNhapDTO pn : pnList) {
+            if ((pn.getNgayNhap().isAfter(dateBegin) || pn.getNgayNhap().isEqual(dateBegin)) && (pn.getNgayNhap().isBefore(dateEnd) || pn.getNgayNhap().isEqual(dateEnd))) {
+                sum += pn.getTongTien();
+            }
+        }
+        
+        return sum;
     }
 }

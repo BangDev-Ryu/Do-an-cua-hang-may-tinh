@@ -60,4 +60,28 @@ public class HoaDonBUS {
         
         return res;
     }
+    
+    public int tinhTienBan(LocalDate dateBegin, LocalDate dateEnd) {
+        int sum = 0;
+        
+        for (HoaDonDTO hd : hdList) {
+            if ((hd.getNgayXuat().isAfter(dateBegin) || hd.getNgayXuat().isEqual(dateBegin)) && (hd.getNgayXuat().isBefore(dateEnd) || hd.getNgayXuat().isEqual(dateEnd))) {
+                sum += hd.getTongTien();
+            }
+        }
+        
+        return sum;
+    }
+    
+    public ArrayList<String> getArrHD(LocalDate dateBegin, LocalDate dateEnd) {
+        ArrayList<String> arr = new ArrayList<>();
+        
+        for (HoaDonDTO hd : hdList) {
+            if ((hd.getNgayXuat().isAfter(dateBegin) || hd.getNgayXuat().isEqual(dateBegin)) && (hd.getNgayXuat().isBefore(dateEnd) || hd.getNgayXuat().isEqual(dateEnd))) {
+                arr.add(hd.getIdHoaDon());
+            }
+        }
+        
+        return arr;
+    }
 }

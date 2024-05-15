@@ -6,8 +6,10 @@ import gui.model.IconModel;
 import gui.model.NavModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -19,12 +21,17 @@ import javax.swing.JPanel;
 
 public class MainGUI extends JFrame implements MouseListener {
     private int width = 1200, height = 700;
+    private int widthCenter = 1000, heightCenter = 670;
     private JPanel header, nav, main;
     private ArrayList<String> navName = new ArrayList<>();
     private ArrayList<NavModel> navModel = new ArrayList<>(); 
     private Map<String, Boolean> mapCN = new HashMap<>();
     private CTQuyenChucNangBUS qcnBUS = new CTQuyenChucNangBUS();
     private UserDTO user = new UserDTO();
+    
+    public MainGUI() {
+        this.init();
+    }
     
     public MainGUI(UserDTO user) {
         this.user = user;
@@ -39,8 +46,7 @@ public class MainGUI extends JFrame implements MouseListener {
         
         this.header = createHeader();
         this.nav = createNav();
-        this.main = new JPanel(new BorderLayout());
-        this.main.setBackground(Color.decode("#FFFFFF"));
+        this.main = new ThongKeGUI(this.width, this.height);
         
         this.setLayout(new BorderLayout());
         this.add(this.header, BorderLayout.NORTH);
@@ -110,6 +116,18 @@ public class MainGUI extends JFrame implements MouseListener {
         lb_ava.setBackground(Color.decode("#009394"));
         IconModel icon = new IconModel(200, 100, "computer_label.jpg");
         lb_ava.setIcon(icon.createIcon());
+        lb_ava.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        lb_ava.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                main.removeAll();
+                main.add(new ThongKeGUI(widthCenter, heightCenter));
+                main.repaint();
+                main.validate();
+            }
+        });
+        
         
         pn_nav.add(lb_ava);
         
@@ -184,7 +202,6 @@ public class MainGUI extends JFrame implements MouseListener {
             NavModel item = navModel.get(i);
             if (e.getSource() == item) {
                 item.actived();
-//                System.out.println();
                 changeMain(item);
             }
             else {
@@ -197,61 +214,61 @@ public class MainGUI extends JFrame implements MouseListener {
         switch (nav.getNavName()) {
             case "Nhân viên": // nhan vien
                 main.removeAll();
-                main.add(new NhanVienGUI(1000, 670, mapCN.get("10"), mapCN.get("20"), mapCN.get("30")));
+                main.add(new NhanVienGUI(widthCenter, heightCenter, mapCN.get("10"), mapCN.get("20"), mapCN.get("30")));
                 main.repaint();
                 main.validate();
                 break;
             case "Khách hàng": // khach hang
                 main.removeAll();
-                main.add(new KhachHangGUI(1000, 670, mapCN.get("11"), mapCN.get("21"), mapCN.get("31")));
+                main.add(new KhachHangGUI(widthCenter, heightCenter, mapCN.get("11"), mapCN.get("21"), mapCN.get("31")));
                 main.repaint();
                 main.validate();
                 break;
             case "Nhà cung cấp": // nha cung cap
                 main.removeAll();
-                main.add(new NhaCungCapGUI(1000, 670, mapCN.get("12"), mapCN.get("22"), mapCN.get("32")));
+                main.add(new NhaCungCapGUI(widthCenter, heightCenter, mapCN.get("12"), mapCN.get("22"), mapCN.get("32")));
                 main.repaint();
                 main.validate();
                 break;
             case "Sản phẩm": // san pham 
                 main.removeAll();
-                main.add(new SanPhamGUI(1000, 670, mapCN.get("13"), mapCN.get("23"), mapCN.get("33")));
+                main.add(new SanPhamGUI(widthCenter, heightCenter, mapCN.get("13"), mapCN.get("23"), mapCN.get("33")));
                 main.repaint();
                 main.validate();
                 break;
             case "Quyền": // quyen
                 main.removeAll();
-                main.add(new QuyenGUI(1000, 670, mapCN.get("14"), mapCN.get("24"), mapCN.get("34")));
+                main.add(new QuyenGUI(widthCenter, heightCenter, mapCN.get("14"), mapCN.get("24"), mapCN.get("34")));
                 main.repaint();
                 main.validate();
                 break;
             case "Bán hàng": // ban hang
                 main.removeAll();
-                main.add(new BanHangGUI(1000, 670, user, mapCN.get("15"), mapCN.get("25"), mapCN.get("35")));
+                main.add(new BanHangGUI(widthCenter, heightCenter, user, mapCN.get("15"), mapCN.get("25"), mapCN.get("35")));
                 main.repaint();
                 main.validate();
                 break;
             case "Nhập hàng": // nhap hang
                 main.removeAll();
-                main.add(new NhapHangGUI(1000, 670, user, mapCN.get("16"), mapCN.get("26"), mapCN.get("36")));
+                main.add(new NhapHangGUI(widthCenter, heightCenter, user, mapCN.get("16"), mapCN.get("26"), mapCN.get("36")));
                 main.repaint();
                 main.validate();
                 break;
             case "Hóa đơn": // hoa don
                 main.removeAll();
-                main.add(new HoaDonGUI(1000, 670));
+                main.add(new HoaDonGUI(widthCenter, heightCenter));
                 main.repaint();
                 main.validate();
                 break;
             case "Phiếu nhập": // phieu nhap
                 main.removeAll();
-                main.add(new PhieuNhapGUI(1000, 670));
+                main.add(new PhieuNhapGUI(widthCenter, heightCenter));
                 main.repaint();
                 main.validate();
                 break;
             case "Bảo hành": // baohanh 
                 main.removeAll();
-                main.add(new BaoHanhGUI(1000, 670));
+                main.add(new BaoHanhGUI(widthCenter, heightCenter));
                 main.repaint();
                 main.validate();
                 break;

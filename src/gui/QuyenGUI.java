@@ -340,9 +340,9 @@ public class QuyenGUI extends JPanel {
                 int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (confirmed == 0) { // xác nhận xóa
                     quyenBUS.deleteQuyen(arrTfInfor.get(0).getText());
-                    blankInfor();
                     table.clearSelection();
                     reloadQuyen(quyenBUS.getQuyenList());
+                    blankInfor();
                 }
             }
         });
@@ -379,6 +379,7 @@ public class QuyenGUI extends JPanel {
                         
                         ArrayList<String> arr_cn = getArrIdCN();
                         updateCTQCN(arr_cn);
+                        reloadCTChucNang(arr_cn);
                   
                         reloadQuyen(quyenBUS.getQuyenList());
                         blankInfor();

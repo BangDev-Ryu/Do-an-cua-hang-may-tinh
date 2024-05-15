@@ -51,6 +51,7 @@ public class QuyenDAO {
     }
     
     public void deleteDB(String id) {
-        String sql = "UPDATE quyen SET enable = 0 WHERE id= " + id + "'";
+        String sql = "UPDATE quyen SET enable = 0 WHERE id='" + id + "'";
+        db.executeUpdate(sql);
     }
 }
