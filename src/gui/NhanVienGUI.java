@@ -178,7 +178,9 @@ public class NhanVienGUI extends JPanel {
         
         Vector<QuyenDTO> quyen = new Vector<>();
         for (QuyenDTO q : quyenBUS.getQuyenList()) {
-            quyen.add(q);
+            if (q.isEnable()) {
+                quyen.add(q);
+            }
         }
         this.cbQuyen = new JComboBox(quyen);
         this.cbQuyen.setPreferredSize(d_tf);

@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -207,7 +208,7 @@ public class HoaDonGUI extends JPanel {
         
         JDateChooser date_from = new JDateChooser();
         JDateChooser date_to = new JDateChooser();
-        
+                        
         date_from.setPreferredSize(new Dimension(150, 30));
         date_to.setPreferredSize(new Dimension(150, 30));
         
@@ -227,6 +228,10 @@ public class HoaDonGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 Date input1 = date_from.getDate();
                 Date input2 = date_to.getDate();
+                if (input1 == null || input2 == null || input1.after(input2)) {
+                    JOptionPane.showMessageDialog(null, "Khoảng thời gian không hợp lệ");
+                    return;
+                }
                 LocalDate date1 = input1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate date2 = input2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
