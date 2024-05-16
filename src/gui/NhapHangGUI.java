@@ -3,6 +3,17 @@ package gui;
 import bus.CTPhieuNhapBUS;
 import bus.PhieuNhapBUS;
 import bus.SanPhamBUS;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import dto.CTPhieuNhapDTO;
 import dto.PhieuNhapDTO;
 import dto.SanPhamDTO;
@@ -14,8 +25,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -442,7 +458,11 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         else if (e.getSource().equals(this.btnTaoPhieuNhap)) {
             int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận tạo phiếu nhập", "", JOptionPane.YES_NO_OPTION);
             if (confirmed == 0) {
-                taoPhieuNhap();
+                try {
+                    taoPhieuNhap();
+                } catch (IOException ex) {
+                    Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -509,8 +529,8 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         }
         return sum;
     }
-    
-    public void taoPhieuNhap() {
+    int tong;
+    public void taoPhieuNhap() throws IOException {
         if (this.arrCTPN.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
             return;
@@ -528,7 +548,8 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             ctPhieuNhapBUS.addCTPN(ctpn);
             sanPhamBUS.themSoLuong(ctpn.getIdSanPham(), ctpn.getSoLuong());
         }
-        
+        tong=pn.getTongTien();
+        writepdf();
         cleanPage();
     }
     
@@ -548,5 +569,78 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             int tien_nhap = tien_goc - tien_giam;
             ctpn.setDonGia(tien_nhap);
         }
+    }
+    
+     public void writepdf() throws IOException {
+        String id_hd = this.arrTfInfor.get(0).getText();
+        String id_kh = this.arrTfInfor.get(1).getText();
+        String id_nv = this.arrTfInfor.get(2).getText();
+        LocalDate ngay_mua = LocalDate.now();
+             
+       Document document = new Document();
+        try {
+            
+            com.itextpdf.text.Font fontData = new com.itextpdf.text.Font(BaseFont.createFont("lib/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11, com.itextpdf.text.Font.NORMAL);
+            com.itextpdf.text.Font fontTitle = new com.itextpdf.text.Font(BaseFont.createFont("lib/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 25, com.itextpdf.text.Font.NORMAL);
+            com.itextpdf.text.Font fontHeader = new com.itextpdf.text.Font(BaseFont.createFont("lib/Roboto/Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11, com.itextpdf.text.Font.NORMAL);
+            
+            PdfWriter.getInstance(document, new FileOutputStream("src/report/"+id_hd+".pdf"));
+            document.open();
+            Chunk glue = new Chunk(new VerticalPositionMark());// Khoang trong giua hang
+            
+            Paragraph para = new Paragraph(new Phrase("THÔNG TIN PHIẾU NHẬP",fontTitle));
+            para.setAlignment(Element.ALIGN_CENTER);
+            document.add(para);
+            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach 
+            
+            
+            Paragraph para1 = new Paragraph(new Phrase("Mã phiếu nhập: " + id_hd,fontHeader));
+            Paragraph para2 = new Paragraph(new Phrase("Mã nhà cung cấp: " + id_kh,fontHeader));
+            Paragraph para3 = new Paragraph(new Phrase("Ngày nhập hàng : " + ngay_mua,fontHeader));
+            Paragraph para4 = new Paragraph(new Phrase("Người tạo: " + id_nv,fontHeader));
+            para1.setIndentationLeft(40);
+            para2.setIndentationLeft(40);
+            para3.setIndentationLeft(40);
+            para4.setIndentationLeft(40);
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            document.add(para4);
+            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
+            
+            PdfPTable pdfTable = new PdfPTable(4);
+            pdfTable.setWidths(new float[]{15f, 30f, 15f, 15f});
+            PdfPCell cell;
+
+            //Set headers cho table chi tiet
+            pdfTable.addCell(new PdfPCell(new Phrase("Mã sản phẩm",fontData)));
+            pdfTable.addCell(new PdfPCell(new Phrase("Tên sản phẩm",fontData)));
+            pdfTable.addCell(new PdfPCell(new Phrase("Số kượng ",fontData)));
+            pdfTable.addCell(new PdfPCell(new Phrase("Đơn giá",fontData)));
+
+            for (int i = 0; i < 4; i++) {
+                cell = new PdfPCell(new Phrase(""));
+                pdfTable.addCell(cell);
+            }
+
+            //Truyen thong tin tung chi tiet vao table
+            for (CTPhieuNhapDTO ctpn : arrCTPN) {
+                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getIdSanPham(),fontData)));
+                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getTenSanPham(),fontData)));
+                pdfTable.addCell(new PdfPCell(new Phrase(String.valueOf(ctpn.getSoLuong() ))));
+                pdfTable.addCell(new PdfPCell(new Phrase(ctpn.getDonGia() +"",fontData)));
+            }
+            document.add(pdfTable);
+            document.add(Chunk.NEWLINE);
+            Paragraph paraTongThanhToan = new Paragraph(new Phrase("Tổng thanh toán: " + tong,fontHeader));
+            paraTongThanhToan.setIndentationLeft(300);
+            document.add(paraTongThanhToan);
+            
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
+        System.out.println(System.getProperty("user.dir"));
     }
 }

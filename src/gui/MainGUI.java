@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,6 +22,11 @@ import javax.swing.JPanel;
 
 public class MainGUI extends JFrame implements MouseListener {
     private int width = 1200, height = 700;
+    private Color colorBackground = Color.decode("#FFFFFF");
+    private Color color1 = Color.decode("#006270");
+    private Color color2 = Color.decode("#009394");
+    private Color color3 = Color.decode("#00E0C7");
+    
     private int widthCenter = 1000, heightCenter = 670;
     private JPanel header, nav, main;
     private ArrayList<String> navName = new ArrayList<>();
@@ -97,13 +103,25 @@ public class MainGUI extends JFrame implements MouseListener {
         
         });
         
+        JPanel pn_hello = new JPanel(new FlowLayout(0, 10, 7));
+        pn_hello.setBackground(color1);
+        pn_hello.setPreferredSize(new Dimension(200, 30));
+        
+        JLabel lb_hello = new JLabel("Hi " + this.user.getTenUser(), JLabel.CENTER);
+        lb_hello.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lb_hello.setForeground(this.colorBackground);
+        
+        pn_hello.add(lb_hello);
+        
         pn_header.add(lb_exit, BorderLayout.EAST);
+        pn_header.add(pn_hello, BorderLayout.WEST);
         
         return pn_header;
     } 
     
     // TAO THANH MENU NAVIGATION
     public JPanel createNav() {
+        JPanel pn_result = new JPanel(new BorderLayout());
         JPanel pn_nav = new JPanel();
         pn_nav.setLayout(new FlowLayout(1, 0, 0));
         pn_nav.setPreferredSize(new Dimension(200, this.height - 30));
@@ -185,7 +203,7 @@ public class MainGUI extends JFrame implements MouseListener {
         // tao nav item menu
         for (int i = 0; i < navName.size(); i++) {
             String[] parts = navName.get(i).split(":");
-            navModel.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], Color.decode("#006270"), Color.decode("#009394")));
+            navModel.add(new NavModel(parts[0], 200, 50, parts[1], parts[2], this.color1, this.color2));
             navModel.get(i).addMouseListener(this);
         }
         
@@ -193,7 +211,46 @@ public class MainGUI extends JFrame implements MouseListener {
             pn_nav.add(obj);
         }
         
-        return pn_nav;
+        JPanel pn_logout = new JPanel(new FlowLayout(1, 5, 10));
+        pn_logout.setPreferredSize(new Dimension(200, 70));
+        pn_logout.setBackground(this.color2);
+        JLabel lb_icon_logout = new JLabel("", JLabel.CENTER);
+        JLabel lb_logout = new JLabel("Đăng xuất", JLabel.CENTER);
+        
+        lb_icon_logout.setPreferredSize(new Dimension(30, 30));
+        lb_logout.setPreferredSize(new Dimension(100, 50));
+        
+        IconModel icon_logout = new IconModel(20, 20, "logout-white.png");
+        lb_icon_logout.setIcon(icon_logout.createIcon());
+        
+        lb_logout.setFont(new Font("Segoe UI",Font.BOLD,13));
+        lb_logout.setForeground(this.colorBackground);
+        
+        pn_logout.add(lb_icon_logout);
+        pn_logout.add(lb_logout);
+        
+        pn_logout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new LoginGUI();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pn_logout.setBackground(color3);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                pn_logout.setBackground(color2);
+            }
+        });
+        
+        pn_result.add(pn_nav, BorderLayout.CENTER);
+        pn_result.add(pn_logout, BorderLayout.SOUTH);
+        
+        return pn_result;
     }
 
     @Override

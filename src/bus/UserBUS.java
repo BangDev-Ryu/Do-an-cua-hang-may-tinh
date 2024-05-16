@@ -80,4 +80,16 @@ public class UserBUS {
         
         return id;
     }
+    
+    public ArrayList<UserDTO> filter(String gioiTinh, String quyen) {
+        ArrayList<UserDTO> res = new ArrayList<>();
+        
+        for (UserDTO user : userList) {
+            if (user.getGioiTinh().contains(gioiTinh) && user.getQuyen().contains(quyen)) {
+                res.add(user);
+            }
+        }
+        
+        return res;
+    }
 }
