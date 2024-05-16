@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 15, 2024 at 03:15 PM
+-- Generation Time: May 16, 2024 at 07:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,6 +57,7 @@ INSERT INTO `baohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`) 
 ('KH001', 'ASUS Zenbook 14 OLED', 'SP004010', '2024-05-15', '2025-05-15'),
 ('KH003', 'ASUS ROG Zephyrus G14', 'SP005001', '2024-05-09', '2025-05-09'),
 ('KH003', 'ASUS ROG Zephyrus G14', 'SP005002', '2024-05-09', '2025-05-09'),
+('KH003', 'ASUS ROG Zephyrus G14', 'SP005003', '2024-05-15', '2025-05-15'),
 ('KH003', 'LG Gram 2023', 'SP008001', '2024-05-09', '2025-05-09'),
 ('KH003', 'LG Gram 2023', 'SP008002', '2024-05-09', '2025-05-09'),
 ('KH003', 'LG Gram 2023', 'SP008003', '2024-05-09', '2025-05-09'),
@@ -76,7 +77,8 @@ INSERT INTO `baohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`) 
 ('KH002', 'MacBook Air M1', 'SP009004', '2024-03-01', '2025-03-01'),
 ('KH001', 'MacBook Air M1', 'SP009005', '2024-05-15', '2025-05-15'),
 ('KH002', 'MacBook Pro M2', 'SP010001', '2024-04-17', '2025-04-17'),
-('KH002', 'MacBook Pro M2', 'SP010002', '2024-04-17', '2025-04-17');
+('KH002', 'MacBook Pro M2', 'SP010002', '2024-04-17', '2025-04-17'),
+('KH001', 'MacBook Pro M2', 'SP010003', '2024-05-15', '2025-05-15');
 
 -- --------------------------------------------------------
 
@@ -128,7 +130,9 @@ INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUE
 ('HD006', 'SP005', 'ASUS ROG Zephyrus G14', 2, 50000),
 ('HD006', 'SP008', 'LG Gram 2023', 3, 27000),
 ('HD007', 'SP004', 'ASUS Zenbook 14 OLED', 5, 20000),
-('HD008', 'SP008', 'LG Gram 2023', 10, 27000);
+('HD008', 'SP008', 'LG Gram 2023', 10, 27000),
+('HD009', 'SP010', 'MacBook Pro M2', 1, 39999),
+('HD010', 'SP005', 'ASUS ROG Zephyrus G14', 1, 50000);
 
 -- --------------------------------------------------------
 
@@ -159,7 +163,10 @@ INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VA
 ('PN006', 'SP004', 'ASUS Zenbook 14 OLED', 15, 8000),
 ('PN007', 'SP003', 'Acer Nitro 5', 10, 14000),
 ('PN008', 'SP001', 'Acer Aspire 7', 12, 9000),
-('PN009', 'SP007', 'Dell Vostro 3530', 5, 7000);
+('PN009', 'SP007', 'Dell Vostro 3530', 5, 7000),
+('PN010', 'SP005', 'ASUS ROG Zephyrus G14', 2, 10000),
+('PN011', 'SP009', 'MacBook Air M1', 1, 6198),
+('PN012', 'SP010', 'MacBook Pro M2', 1, 8000);
 
 -- --------------------------------------------------------
 
@@ -276,6 +283,7 @@ INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
 ('SP004', 'SP004010'),
 ('SP005', 'SP005001'),
 ('SP005', 'SP005002'),
+('SP005', 'SP005003'),
 ('SP008', 'SP008001'),
 ('SP008', 'SP008002'),
 ('SP008', 'SP008003'),
@@ -295,7 +303,8 @@ INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
 ('SP009', 'SP009004'),
 ('SP009', 'SP009005'),
 ('SP010', 'SP010001'),
-('SP010', 'SP010002');
+('SP010', 'SP010002'),
+('SP010', 'SP010003');
 
 -- --------------------------------------------------------
 
@@ -323,7 +332,9 @@ INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VAL
 ('HD005', 'KH002', 'US001', '2024-04-17', 40000),
 ('HD006', 'KH003', 'US001', '2024-05-09', 181000),
 ('HD007', 'KH001', 'US001', '2024-05-15', 100000),
-('HD008', 'KH002', 'US001', '2024-05-15', 270000);
+('HD008', 'KH002', 'US001', '2024-05-15', 270000),
+('HD009', 'KH001', 'US001', '2024-05-15', 39999),
+('HD010', 'KH003', 'US001', '2024-05-15', 50000);
 
 -- --------------------------------------------------------
 
@@ -400,7 +411,10 @@ INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`)
 ('PN006', 'CC005', 'US001', '2024-04-02', 120000),
 ('PN007', 'CC004', 'US001', '2024-04-16', 140000),
 ('PN008', 'CC005', 'US001', '2024-04-28', 108000),
-('PN009', 'CC001', 'US001', '2024-05-03', 35000);
+('PN009', 'CC001', 'US001', '2024-05-03', 35000),
+('PN010', 'CC005', 'US001', '2024-05-16', 20000),
+('PN011', 'CC004', 'US001', '2024-05-16', 6198),
+('PN012', 'CC001', 'US001', '2024-05-16', 8000);
 
 -- --------------------------------------------------------
 
@@ -449,12 +463,14 @@ INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`, `enabl
 ('SP002', 'MSI modern 15', 20, 12000, 'MSI', 'SP002.png', 1),
 ('SP003', 'Acer Nitro 5', 20, 20000, 'Acer', 'SP003.png', 1),
 ('SP004', 'ASUS Zenbook 14 OLED', 20, 20000, 'Asus', 'SP004.png', 1),
-('SP005', 'ASUS ROG Zephyrus G14', 15, 50000, 'Asus', 'SP005.png', 1),
+('SP005', 'ASUS ROG Zephyrus G14', 16, 50000, 'Asus', 'SP005.png', 1),
 ('SP006', 'Dell Inspiron 15', 30, 13000, 'Dell', 'SP006.png', 1),
 ('SP007', 'Dell Vostro 3530', 20, 14000, 'Dell', 'SP007.png', 1),
 ('SP008', 'LG Gram 2023', 20, 27000, 'LG', 'SP008.png', 1),
-('SP009', 'MacBook Air M1', 19, 30990, 'Mac', 'SP009.png', 1),
-('SP010', 'MacBook Pro M2', 20, 39999, 'Mac', 'SP010.png', 1);
+('SP009', 'MacBook Air M1', 20, 30990, 'Mac', 'SP009.png', 1),
+('SP010', 'MacBook Pro M2', 20, 39999, 'Mac', 'SP010.png', 1),
+('SP011', 'abc', 0, 3, 'Mac', 'SP011.png', 0),
+('SP012', '123', 0, 1233, 'Acer', 'SP012.png', 0);
 
 -- --------------------------------------------------------
 
@@ -478,9 +494,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
-('US001', 'admin', 'Admin', 'Nam', '911', 'QU001', 'null', 1),
-('US002', 'nv1', 'nhan vien 1', 'Nam', '666', 'QU002', 'null', 1),
-('US003', '123', 'nv2', 'Nam', '1', 'QU004', 'null', 1);
+('US001', 'admin', 'Admin', 'Nam', '911', 'QU001', 'US001.png', 1),
+('US002', 'nv1', 'nhan vien 1', 'Nữ', '6666', 'QU002', 'US002.png', 1),
+('US003', '123', 'nv2', 'Nam', '12345', 'QU004', 'US003.png', 1),
+('US004', '123', 'abc', 'Nữ', '11', 'QU002', 'US004.png', 1);
 
 --
 -- Indexes for dumped tables
