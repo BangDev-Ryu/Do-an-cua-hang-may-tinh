@@ -3,20 +3,27 @@ package gui;
 import bus.QuyenBUS;
 import bus.UserBUS;
 import dto.QuyenDTO;
+import dto.SanPhamDTO;
 import dto.UserDTO;
 import gui.model.IconModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -40,6 +47,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class NhanVienGUI extends JPanel {
     private int width, height;
@@ -335,6 +349,98 @@ public class NhanVienGUI extends JPanel {
                     blankInfor();
                     table.clearSelection();
                     reloadUser(userBUS.getUserList());
+                }
+            }
+        });
+        
+        // khi ấn nút nhập excel
+        btnNhapExcel.addMouseListener(new MouseAdapter(){ 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                File excelFile;
+                FileInputStream excelFIS = null;
+                BufferedInputStream excelBIS = null;
+                XSSFWorkbook excelJTableImport = null;
+                ArrayList<UserDTO> listAccExcel = new ArrayList<UserDTO>();
+                JFileChooser jf = new JFileChooser();
+                int result = jf.showOpenDialog(null);
+                jf.setDialogTitle("Open file");
+                Workbook workbook = null;
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        excelFile = jf.getSelectedFile();
+                        excelFIS = new FileInputStream(excelFile);
+                        excelBIS = new BufferedInputStream(excelFIS);
+                        excelJTableImport = new XSSFWorkbook(excelBIS);
+                        XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
+                        for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                            XSSFRow excelRow = excelSheet.getRow(row);
+                            String id = excelRow.getCell(0).getStringCellValue();
+                            String pass = excelRow.getCell(1).getStringCellValue();
+                            String ten = excelRow.getCell(2).getStringCellValue();
+                            String gioi_tinh = excelRow.getCell(3).getStringCellValue();                            
+                            String sdt = excelRow.getCell(4).getStringCellValue();
+                            String quyen = excelRow.getCell(5).getStringCellValue();
+                            String img = excelRow.getCell(6).getStringCellValue();
+                            UserDTO us = new UserDTO(id, pass, ten, gioi_tinh, sdt, quyen, img, true);
+                            listAccExcel.add(us);
+                            DefaultTableModel table_acc = (DefaultTableModel) table.getModel();
+                            table_acc.setRowCount(0);
+                            reloadUser(listAccExcel);
+                        }
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(UserDTO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                for (int i = 0; i < listAccExcel.size(); i++) {
+                    UserDTO user = listAccExcel.get(i);
+                    UserDTO us = new UserDTO(
+                            user.getIdUser(), user.getPassword(), user.getTenUser(), user.getGioiTinh(), user.getSdt(), user.getQuyen(), user.getImgUser(), true
+                    );
+                    userBUS.updateUser(us);
+                }
+            }
+        });
+        
+        // khi ấn xuất excel
+        btnXuatExcel.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    JFileChooser jFileChooser = new JFileChooser();
+                    jFileChooser.showSaveDialog(null);
+                    File saveFile = jFileChooser.getSelectedFile();
+                    if (saveFile != null) {
+                        saveFile = new File(saveFile.toString() + ".xlsx");
+                        Workbook wb = new XSSFWorkbook();
+                        Sheet sheet = wb.createSheet("NV");
+
+                        Row rowCol = sheet.createRow(0);
+                        for (int i = 0; i < table.getColumnCount(); i++) {
+                            Cell cell = rowCol.createCell(i);
+                            cell.setCellValue(table.getColumnName(i));
+                        }
+
+                        for (int j = 0; j < table.getRowCount(); j++) {
+                            Row row = sheet.createRow(j + 1);
+                            for (int k = 0; k < table.getColumnCount(); k++) {
+                                Cell cell = row.createCell(k);
+                                if (table.getValueAt(j, k) != null) {
+                                    cell.setCellValue(table.getValueAt(j, k).toString());
+                                }
+
+                            }
+                        }
+                        FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+                        wb.write(out);
+                        wb.close();
+                        out.close();
+                        openFile(saveFile.toString());
+                    }
+                } catch (HeadlessException | IOException ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -686,5 +792,14 @@ public class NhanVienGUI extends JPanel {
         this.btnXoa.setVisible(quyenXoa);
         this.btnNhapExcel.setVisible(quyenSua);
         this.btnXuatExcel.setVisible(quyenSua);
+    }
+    
+    public void openFile(String file) {
+        try {
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }

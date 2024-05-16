@@ -18,6 +18,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -36,6 +38,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
 public class BanHangGUI extends JPanel implements ActionListener {
     private int width, height;
@@ -490,7 +497,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         }
         return sum;
     }
-    
+    int tong;
     public void taoHoaDon() {
         if (this.arrCTHD.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Hóa đơn trống!");
@@ -525,6 +532,8 @@ public class BanHangGUI extends JPanel implements ActionListener {
             sanPhamBUS.giamSoLuong(cthd.getIdSanPham(), cthd.getSoLuong());
         }
         
+        tong=hd.getTongTien();
+        writepdf();
         cleanPage();
     }
     
@@ -535,5 +544,72 @@ public class BanHangGUI extends JPanel implements ActionListener {
         this.lbTongTien.setText("0");
         this.loadSP();
         this.reloadCTHD();
+    }
+    
+    public void writepdf() {
+        String id_hd = this.arrTfInfor.get(0).getText();
+        String id_kh = this.arrTfInfor.get(1).getText();
+        String id_nv = this.arrTfInfor.get(2).getText();
+        LocalDate ngay_mua = LocalDate.now();
+             
+       Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("src/report/"+id_hd+".pdf"));
+            document.open();
+            Chunk glue = new Chunk(new VerticalPositionMark());// Khoang trong giua hang
+            Paragraph para = new Paragraph();
+            para.add(new Paragraph("THÔNG TIN HÓA ĐƠN"));
+            para.setIndentationLeft(CENTER_ALIGNMENT);
+            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach 
+            
+            
+            Paragraph para1 = new Paragraph(new Phrase("Mã hóa đơn: " + id_hd));
+            Paragraph para2 = new Paragraph(new Phrase("Mã khách hàng: " + id_kh));
+            Paragraph para3 = new Paragraph(new Phrase("Ngày mua hàng : " + ngay_mua));
+            Paragraph para4 = new Paragraph(new Phrase("Người tạo: " + id_nv));
+            para1.setIndentationLeft(40);
+            para2.setIndentationLeft(40);
+            para3.setIndentationLeft(40);
+            para4.setIndentationLeft(40);
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            document.add(para4);
+            document.add(Chunk.NEWLINE);//add hang trong de tao khoang cach
+            
+            PdfPTable pdfTable = new PdfPTable(4);
+            pdfTable.setWidths(new float[]{15f, 30f, 15f, 15f});
+            PdfPCell cell;
+
+            //Set headers cho table chi tiet
+            pdfTable.addCell(new PdfPCell(new Phrase("Mã sản phẩm")));
+            pdfTable.addCell(new PdfPCell(new Phrase("Tên sản phẩm")));
+            pdfTable.addCell(new PdfPCell(new Phrase("Số kượng ")));
+            pdfTable.addCell(new PdfPCell(new Phrase("Đơn giá")));
+
+            for (int i = 0; i < 4; i++) {
+                cell = new PdfPCell(new Phrase(""));
+                pdfTable.addCell(cell);
+            }
+
+            //Truyen thong tin tung chi tiet vao table
+            for (CTHoaDonDTO cthd : arrCTHD) {
+                pdfTable.addCell(new PdfPCell(new Phrase(cthd.getIdSanPham())));
+                pdfTable.addCell(new PdfPCell(new Phrase(cthd.getTenSanPham())));
+                pdfTable.addCell(new PdfPCell(new Phrase(String.valueOf(cthd.getSoLuong() ))));
+                pdfTable.addCell(new PdfPCell(new Phrase(cthd.getDonGia() + "đ")));
+            }
+            document.add(pdfTable);
+            document.add(Chunk.NEWLINE);
+            Paragraph paraTongThanhToan = new Paragraph(new Phrase("Tổng thanh toán: " + tong) + "đ");
+            paraTongThanhToan.setIndentationLeft(300);
+            document.add(paraTongThanhToan);
+            
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
+        System.out.println(System.getProperty("user.dir"));
     }
 }
