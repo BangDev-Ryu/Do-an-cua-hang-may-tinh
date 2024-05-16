@@ -3,7 +3,6 @@ package gui;
 import bus.QuyenBUS;
 import bus.UserBUS;
 import dto.QuyenDTO;
-import dto.SanPhamDTO;
 import dto.UserDTO;
 import gui.model.IconModel;
 import java.util.logging.Level;
