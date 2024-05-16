@@ -2,8 +2,6 @@ package gui;
 import bus.BaoHanhBUS;
 import com.toedter.calendar.JDateChooser;
 import dto.BaoHanhDTO;
-import dto.CTHoaDonDTO;
-import dto.HoaDonDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,6 +29,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 public class BaoHanhGUI  extends JPanel {
     private int width, height;
     private Color colorBackground = Color.decode("#FFFFFF");

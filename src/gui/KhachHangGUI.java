@@ -2,7 +2,6 @@ package gui;
 
 import bus.KhachHangBUS;
 import dto.KhachHangDTO;
-import dto.NhaCungCapDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -270,10 +269,6 @@ public class KhachHangGUI extends JPanel {
                     table.clearSelection();
                     reloadKH(khachHangBUS.getKhList());
                 }
-            }
-
-            private void reloadKH(ArrayList<KhachHangDTO> khList) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
         

@@ -2,7 +2,6 @@ package gui;
 
 import bus.NhaCungCapBUS;
 import dto.NhaCungCapDTO;
-import dto.UserDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
