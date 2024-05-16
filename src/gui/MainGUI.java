@@ -114,7 +114,7 @@ public class MainGUI extends JFrame implements MouseListener {
         lb_ava.setPreferredSize(new Dimension(200, 100));
         lb_ava.setOpaque(true);
         lb_ava.setBackground(Color.decode("#009394"));
-        IconModel icon = new IconModel(200, 100, "computer_label.jpg");
+        IconModel icon = new IconModel(200, 100, "logo.jpg");
         lb_ava.setIcon(icon.createIcon());
         lb_ava.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
