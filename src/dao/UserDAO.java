@@ -46,8 +46,7 @@ public class UserDAO {
         sql += "gioi_tinh='" + us.getGioiTinh() + "', ";
         sql += "sdt='" + us.getSdt() + "', ";
         sql += "quyen='" + us.getQuyen() + "', ";
-        sql += "img='" + us.getImgUser() + "', ";
-        sql += "enable='" + us.isEnable() + "' ";
+        sql += "img='" + us.getImgUser() + "' ";
         sql += "WHERE id='" + us.getIdUser() + "'";
         db.executeUpdate(sql);
     }

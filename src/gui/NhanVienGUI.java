@@ -458,15 +458,15 @@ public class NhanVienGUI extends JPanel {
                         String ten = arrTfInfor.get(2).getText();
                         String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
                         String sdt = arrTfInfor.get(3).getText();
-                        QuyenDTO quyenDTO = (QuyenDTO )cbQuyen.getSelectedItem();
+                        QuyenDTO quyenDTO = (QuyenDTO)cbQuyen.getSelectedItem();
                         String quyen = quyenDTO.getIdQuyen();
                         String newImg = imgNhanVien;
                         
                         UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
                         userBUS.updateUser(user);
-                        reloadUser(userBUS.getUserList());
                         
                         saveImg();
+                        reloadUser(userBUS.getUserList());
                         
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -479,14 +479,16 @@ public class NhanVienGUI extends JPanel {
                         String ten = arrTfInfor.get(2).getText();
                         String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
                         String sdt = arrTfInfor.get(3).getText();
-                        QuyenDTO quyenDTO = (QuyenDTO )cbQuyen.getSelectedItem();
+                        QuyenDTO quyenDTO = (QuyenDTO)cbQuyen.getSelectedItem();
                         String quyen = quyenDTO.getIdQuyen();
                         String newImg = imgNhanVien;
                         
                         UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
                         userBUS.addUser(user);
-                        reloadUser(userBUS.getUserList());
                         
+                        saveImg();                        
+                        reloadUser(userBUS.getUserList());
+
                         blankInfor();
                     }
                 }
@@ -534,7 +536,7 @@ public class NhanVienGUI extends JPanel {
                         imgNhanVien = arrTfInfor.get(0).getText().concat(".png");      
 
                         lbImgNhanVien.setText("");
-                        lbImgNhanVien.setIcon(new ImageIcon(bufferImg.getScaledInstance(200, 250, Image.SCALE_SMOOTH)));
+                        lbImgNhanVien.setIcon(new ImageIcon(bufferImg.getScaledInstance(175, 200, Image.SCALE_SMOOTH)));
                     } catch (IOException ex) {
                         Logger.getLogger(NhanVienGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -566,7 +568,7 @@ public class NhanVienGUI extends JPanel {
                 if (txt.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
                 }
-                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("NV")) {
+                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("US")) {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
                 } 
                 else {
@@ -596,14 +598,20 @@ public class NhanVienGUI extends JPanel {
         
         // Khu lọc theo một số thuộc tính giới tính
         JLabel lb_gioitinh = new JLabel("Giới tính", JLabel.CENTER);
-        String[] gioitinh = {"Nam","Nữ"};    
+        String[] gioitinh = {"", "Nam", "Nữ"};    
         JComboBox cb_gioitinh = new JComboBox(gioitinh);
         cb_gioitinh.setPreferredSize(new Dimension(100, 30));
         
-        // tạo thêm thuộc tính ngày sinh hoặc đổi sang tìm kiếm theo địa chỉ
-        JLabel lb_ngaysinh = new JLabel("Ngày sinh", JLabel.CENTER);
-        JTextField tf_ngaysinh = new JTextField();
-        tf_ngaysinh.setPreferredSize(new Dimension(150, 30));
+        JLabel lb_quyen = new JLabel("Quyền", JLabel.CENTER);
+        Vector<QuyenDTO> quyen = new Vector<>();
+        quyen.add(new QuyenDTO("", "", true));
+        for (QuyenDTO q : quyenBUS.getQuyenList()) {
+            if (q.isEnable()) {
+                quyen.add(q);
+            }
+        }
+        JComboBox cb_quyen = new JComboBox(quyen);
+        cb_gioitinh.setPreferredSize(new Dimension(100, 30));
         
         JButton btn_loc = new JButton("Lọc");
         btn_loc.setPreferredSize(new Dimension(100, 30));
@@ -611,8 +619,11 @@ public class NhanVienGUI extends JPanel {
         btn_loc.addMouseListener(new MouseAdapter() { 
             @Override
             public void mouseClicked(MouseEvent e) {
-                String gioitinh = (String) cb_gioitinh.getItemAt(cb_gioitinh.getSelectedIndex());
-//               reloadNV(nhanvienBUS.filter(gioitinh));
+                String gioitinh_filter = (String) cb_gioitinh.getItemAt(cb_gioitinh.getSelectedIndex());
+//                String quyen_filter = (String) cb_quyen.getItemAt(cb_quyen.getSelectedIndex());
+                QuyenDTO quyenDTO = (QuyenDTO)cb_quyen.getSelectedItem();
+                String quyen_filter = quyenDTO.getIdQuyen();
+                reloadUser(userBUS.filter(gioitinh_filter, quyen_filter));
             }
         });
         
@@ -623,15 +634,13 @@ public class NhanVienGUI extends JPanel {
         tf_tim_kiem.setFont(font_filter);
         lb_gioitinh.setFont(font_filter);
         cb_gioitinh.setFont(font_filter);
-        lb_ngaysinh.setFont(font_filter);
-        tf_ngaysinh.setFont(font_filter);
+        lb_quyen.setFont(font_filter);
         
         lb_tim_kiem.setForeground(color1);
         tf_tim_kiem.setForeground(color1);
         lb_gioitinh.setForeground(color1);
         cb_gioitinh.setForeground(color1);
-        lb_ngaysinh.setForeground(color1);
-        tf_ngaysinh.setForeground(color1);
+        lb_quyen.setForeground(color1);
         
         btn_loc.setBackground(color2);
         btn_loc.setFont(font_filter);
@@ -641,8 +650,8 @@ public class NhanVienGUI extends JPanel {
         pn_filter.add(tf_tim_kiem);
         pn_filter.add(lb_gioitinh);
         pn_filter.add(cb_gioitinh);
-        pn_filter.add(lb_ngaysinh);
-        pn_filter.add(tf_ngaysinh);
+        pn_filter.add(lb_quyen);
+        pn_filter.add(cb_quyen);
         pn_filter.add(btn_loc);
         
         return pn_filter;
@@ -690,7 +699,12 @@ public class NhanVienGUI extends JPanel {
                 arrTfInfor.get(2).setText(table.getModel().getValueAt(row, 2).toString());
                 arrTfInfor.get(3).setText(table.getModel().getValueAt(row, 4).toString());
                 cbGioiTinh.setSelectedItem(table.getModel().getValueAt(row, 3).toString());
-                cbQuyen.setSelectedItem(table.getModel().getValueAt(row, 5));
+                for (QuyenDTO q : quyenBUS.getQuyenList()) {
+                    if (q.isEnable() && q.getIdQuyen().equals(table.getModel().getValueAt(row, 5).toString())) {
+                        cbQuyen.setSelectedItem(q);
+                        break;
+                    }
+                }
                 
                 lbImgNhanVien.setText("");
                 lbImgNhanVien.setIcon(icon_nv.createIcon());

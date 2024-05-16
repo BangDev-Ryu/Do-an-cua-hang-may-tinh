@@ -435,9 +435,10 @@ public class SanPhamGUI extends JPanel {
                         
                         SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
                         sanPhamBUS.updateSanPham(sp);
-                        reloadSP(sanPhamBUS.getSpList());
+                        
                         
                         saveImg();
+                        reloadSP(sanPhamBUS.getSpList());
                         
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -459,6 +460,8 @@ public class SanPhamGUI extends JPanel {
                         
                         SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
                         sanPhamBUS.addSanPham(sp);
+                        
+                        saveImg();
                         
                         reloadSP(sanPhamBUS.getSpList());
                         blankInfor();
