@@ -284,30 +284,19 @@ public class ThongKeGUI extends JPanel {
         JPanel pn_chart = new JPanel(new FlowLayout(1, 70, 10));
         pn_chart.setPreferredSize(new Dimension(this.width, 370));
         
-        pn_chart.add(this.chartDoanhSoTongThang(LocalDate.now().minusYears(1), LocalDate.now()));
+        // Tạo dữ liệu cho biểu đồ
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+        JFreeChart chart = ChartFactory.createBarChart(
+                "", "Tháng", "Tiền (USD)", dataset, PlotOrientation.VERTICAL, true, true, false
+        );
         
-        return pn_chart; 
-    }
-    
-    public JPanel chartDoanhSoNhapTheoThang() {
-        JPanel pn_chart = new JPanel(new FlowLayout(1, 0, 0));
-        pn_chart.setPreferredSize(new Dimension(900, 350));
-        
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        pieDataset.setValue("One", Integer.valueOf(10));
-        pieDataset.setValue("Two", Integer.valueOf(20));
-        pieDataset.setValue("Three", Integer.valueOf(30));
-        pieDataset.setValue("Four", Integer.valueOf(40));
-        
-        JFreeChart chart = ChartFactory.createPieChart("", pieDataset, false, true, false);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(900, 350));
-        
         pn_chart.add(chartPanel);
-        
-        return pn_chart;
+                
+        return pn_chart; 
     }
-    
+        
     public int tongSoSanPham() {
         if (sanPhamBUS.getSpList() == null) {
             sanPhamBUS.list();

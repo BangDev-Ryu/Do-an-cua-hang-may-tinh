@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 16, 2024 at 07:22 AM
+-- Generation Time: May 19, 2024 at 08:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,28 +78,13 @@ INSERT INTO `baohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`) 
 ('KH001', 'MacBook Air M1', 'SP009005', '2024-05-15', '2025-05-15'),
 ('KH002', 'MacBook Pro M2', 'SP010001', '2024-04-17', '2025-04-17'),
 ('KH002', 'MacBook Pro M2', 'SP010002', '2024-04-17', '2025-04-17'),
-('KH001', 'MacBook Pro M2', 'SP010003', '2024-05-15', '2025-05-15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chucnang`
---
-
-CREATE TABLE `chucnang` (
-  `id` varchar(10) NOT NULL,
-  `ten` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `chucnang`
---
-
-INSERT INTO `chucnang` (`id`, `ten`) VALUES
-('NV0', 'Xem nhân viên'),
-('NV1', 'Thêm nhân viên'),
-('NV2', 'Sửa nhân viên'),
-('NV3', 'Xóa nhân viên');
+('KH001', 'MacBook Pro M2', 'SP010003', '2024-05-15', '2025-05-15'),
+('KH002', 'MacBook Pro M5', 'SP010004', '2024-05-16', '2025-05-16'),
+('KH003', 'MacBook Pro M5', 'SP010005', '2024-05-16', '2025-05-16'),
+('KH003', 'MacBook Pro M5', 'SP010006', '2024-05-16', '2025-05-16'),
+('KH003', 'MacBook Pro M5', 'SP010007', '2024-05-16', '2025-05-16'),
+('KH003', 'MacBook Pro M5', 'SP010008', '2024-05-16', '2025-05-16'),
+('KH002', 'abc', 'SP011001', '2024-05-16', '2025-05-16');
 
 -- --------------------------------------------------------
 
@@ -132,7 +117,10 @@ INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUE
 ('HD007', 'SP004', 'ASUS Zenbook 14 OLED', 5, 20000),
 ('HD008', 'SP008', 'LG Gram 2023', 10, 27000),
 ('HD009', 'SP010', 'MacBook Pro M2', 1, 39999),
-('HD010', 'SP005', 'ASUS ROG Zephyrus G14', 1, 50000);
+('HD010', 'SP005', 'ASUS ROG Zephyrus G14', 1, 50000),
+('HD011', 'SP010', 'MacBook Pro M5', 1, 39999),
+('HD011', 'SP011', 'abc', 1, 1000),
+('HD012', 'SP010', 'MacBook Pro M5', 4, 39999);
 
 -- --------------------------------------------------------
 
@@ -166,7 +154,10 @@ INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VA
 ('PN009', 'SP007', 'Dell Vostro 3530', 5, 7000),
 ('PN010', 'SP005', 'ASUS ROG Zephyrus G14', 2, 10000),
 ('PN011', 'SP009', 'MacBook Air M1', 1, 6198),
-('PN012', 'SP010', 'MacBook Pro M2', 1, 8000);
+('PN012', 'SP010', 'MacBook Pro M2', 1, 8000),
+('PN013', 'SP001', 'Acer Aspire 7', 1, 7500),
+('PN013', 'SP002', 'MSI modern 15', 1, 6000),
+('PN013', 'SP011', 'abc', 100, 500);
 
 -- --------------------------------------------------------
 
@@ -247,8 +238,12 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU005', '14'),
 ('QU005', '20'),
 ('QU005', '24'),
-('QU005', '30'),
-('QU005', '34');
+('QU005', '34'),
+('QU006', '00'),
+('QU006', '01'),
+('QU006', '02'),
+('QU006', '03'),
+('QU006', '13');
 
 -- --------------------------------------------------------
 
@@ -304,7 +299,13 @@ INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
 ('SP009', 'SP009005'),
 ('SP010', 'SP010001'),
 ('SP010', 'SP010002'),
-('SP010', 'SP010003');
+('SP010', 'SP010003'),
+('SP010', 'SP010004'),
+('SP010', 'SP010005'),
+('SP010', 'SP010006'),
+('SP010', 'SP010007'),
+('SP010', 'SP010008'),
+('SP011', 'SP011001');
 
 -- --------------------------------------------------------
 
@@ -334,7 +335,9 @@ INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VAL
 ('HD007', 'KH001', 'US001', '2024-05-15', 100000),
 ('HD008', 'KH002', 'US001', '2024-05-15', 270000),
 ('HD009', 'KH001', 'US001', '2024-05-15', 39999),
-('HD010', 'KH003', 'US001', '2024-05-15', 50000);
+('HD010', 'KH003', 'US001', '2024-05-15', 50000),
+('HD011', 'KH002', 'US001', '2024-05-16', 40999),
+('HD012', 'KH003', 'US001', '2024-05-16', 159996);
 
 -- --------------------------------------------------------
 
@@ -355,9 +358,9 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
-('KH001', 'Võ Kim Bằng', 'abc, 123, xyz', '09221101923', 1),
-('KH002', 'Donald Trump', 'USA', '0666999', 1),
-('KH003', 'Vangogh', 'Italy', '09111', 1);
+('KH001', 'Võ Kim Bằng', 'abc, 123, xyz', '911', 1),
+('KH002', 'Donald Trump', 'Korean', '0666999', 1),
+('KH003', 'Vangogh', 'India', '113 ', 1);
 
 -- --------------------------------------------------------
 
@@ -414,7 +417,8 @@ INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`)
 ('PN009', 'CC001', 'US001', '2024-05-03', 35000),
 ('PN010', 'CC005', 'US001', '2024-05-16', 20000),
 ('PN011', 'CC004', 'US001', '2024-05-16', 6198),
-('PN012', 'CC001', 'US001', '2024-05-16', 8000);
+('PN012', 'CC001', 'US001', '2024-05-16', 8000),
+('PN013', 'CC003', 'US001', '2024-05-16', 63500);
 
 -- --------------------------------------------------------
 
@@ -436,7 +440,9 @@ INSERT INTO `quyen` (`id`, `ten`, `enable`) VALUES
 ('QU001', 'Admin', 1),
 ('QU002', 'Nhân viên bán hàng', 1),
 ('QU003', 'Nhân viên nhập hàng', 1),
-('QU004', 'Quản lý nhân viên', 1);
+('QU004', 'Quản lý nhân viên', 1),
+('QU005', 'abc', 1),
+('QU006', '123', 0);
 
 -- --------------------------------------------------------
 
@@ -459,8 +465,8 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`, `enable`) VALUES
-('SP001', 'Acer Aspire 7', 30, 15000, 'Acer', 'SP001.png', 1),
-('SP002', 'MSI modern 15', 20, 12000, 'MSI', 'SP002.png', 1),
+('SP001', 'Acer Aspire 7', 31, 15000, 'Acer', 'SP001.png', 1),
+('SP002', 'MSI modern 15', 21, 12000, 'MSI', 'SP002.png', 1),
 ('SP003', 'Acer Nitro 5', 20, 20000, 'Acer', 'SP003.png', 1),
 ('SP004', 'ASUS Zenbook 14 OLED', 20, 20000, 'Asus', 'SP004.png', 1),
 ('SP005', 'ASUS ROG Zephyrus G14', 16, 50000, 'Asus', 'SP005.png', 1),
@@ -468,9 +474,8 @@ INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_ban`, `hang`, `img`, `enabl
 ('SP007', 'Dell Vostro 3530', 20, 14000, 'Dell', 'SP007.png', 1),
 ('SP008', 'LG Gram 2023', 20, 27000, 'LG', 'SP008.png', 1),
 ('SP009', 'MacBook Air M1', 20, 30990, 'Mac', 'SP009.png', 1),
-('SP010', 'MacBook Pro M2', 20, 39999, 'Mac', 'SP010.png', 1),
-('SP011', 'abc', 0, 3, 'Mac', 'SP011.png', 0),
-('SP012', '123', 0, 1233, 'Acer', 'SP012.png', 0);
+('SP010', 'MacBook Pro M5', 20, 39999, 'Mac', 'SP010.png', 1),
+('SP011', 'abc', 99, 1000, 'Mac', 'SP011.png', 0);
 
 -- --------------------------------------------------------
 
@@ -495,7 +500,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
 ('US001', 'admin', 'Admin', 'Nam', '911', 'QU001', 'US001.png', 1),
-('US002', 'nv1', 'nhan vien 1', 'Nữ', '6666', 'QU002', 'US002.png', 1),
+('US002', '123', 'nhan vien 1', 'Nữ', '6666', 'QU005', 'US002.png', 1),
 ('US003', '123', 'nv2', 'Nam', '12345', 'QU004', 'US003.png', 1),
 ('US004', '123', 'abc', 'Nữ', '11', 'QU002', 'US004.png', 1);
 
@@ -508,12 +513,6 @@ INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`,
 --
 ALTER TABLE `baohanh`
   ADD PRIMARY KEY (`serial`);
-
---
--- Indexes for table `chucnang`
---
-ALTER TABLE `chucnang`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cthoadon`
